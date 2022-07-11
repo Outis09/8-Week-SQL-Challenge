@@ -108,5 +108,32 @@ ramen|	8
 The most purchased item is `ramen` and it was ordered 8 times.
 
 
+**QUESTION 5:** Which item was the most popular for each customer?
+
+```sql
+WITH fav_item AS (
+		SELECT s.customer_id,
+		       m.product_name, 
+		       COUNT(s.product_id) AS quantity,
+		       DENSE_RANK() OVER (PARTITION BY s.customer_id ORDER BY COUNT(s.product_id) DESC ) AS ranks
+		FROM sales s
+	        JOIN menu m
+		   ON s.product_id = m.product_id
+	        GROUP BY 1,2)
+SELECT customer_id,product_name,quantity
+FROM fav_item
+WHERE ranks = 1;
+
+I created a CTE to create a temporary table that contained `customer_id`, `product_name`, a count of purchases and I used `dense_rank()` to rank the count of `product_id` in descending order for each customer. I joined the `menu` table so i could use the name associated with the `product_id`.
 
 
+customer_id |product_name |quantity
+--------|--------|--------
+A	|ramen	|3
+B	|sushi	|2
+B	|curry	|2
+B	|ramen	|2
+C	|ramen	|3
+
+
+Customer A's most popular item is ramen and it was ordered 3 times. For customer B, all items were ordered twice therefore is no single most popular item. Customer C's most popular item was ramen and it was ordered 3 times.

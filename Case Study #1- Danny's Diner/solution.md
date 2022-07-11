@@ -88,6 +88,24 @@ B	|curry
 C	|ramen
 
 
+**QUESTION 4:** What is the most purchased item on the menu and how many times was it purchased by all customers?
+
+```sql
+SELECT  m.product_name as fav_prod,
+	COUNT(s.*) as order_count
+FROM sales s 
+JOIN menu m 
+ON s.product_id = m.product_id
+GROUP BY 1
+ORDER BY 2 DESC
+LIMIT 1;
+```
+
+fav_prod |order_count
+------|-------
+ramen|	8
+
+The most purchased item is `ramen` and it was ordered 8 times.
 
 
 

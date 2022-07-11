@@ -259,7 +259,7 @@ C	|360
 Customer B, with the most points, had 940 points. Customer A following had 860 points while Customer C had 360 points.
 
 
-**QUESTION 10:* In the first week after a customer joins the program (including their join date) they earn 2x points on all items, not just sushi - how many points do customer A and B have at the end of January?
+**QUESTION 10:** In the first week after a customer joins the program (including their join date) they earn 2x points on all items, not just sushi - how many points do customer A and B have at the end of January?
 
 
 ```sql
@@ -286,6 +286,40 @@ B	|940
 
 Given the criteria, customer A had the most points with 1370 points and customer B had 940 points.
 
+
+**BONUS QUESTIONS**
+
+**JOIN ALL THINGS**
+
+```sql
+SELECT s.customer_id, 
+       s.order_date, 
+       m.product_name,m.price, 
+       CASE WHEN order_date >= join_date THEN 'Y' ELSE 'N' END AS member
+FROM sales s
+LEFT JOIN menu m
+ON s.product_id = m.product_id
+LEFT JOIN members mem
+ON s.customer_id = mem.customer_id;
+```
+
+customer_id	|order_date	|product_name	|price	|member
+---------|---------|-------|-------|--------
+A	|07/01/2021	|curry	|15	|Y
+A	|11/01/2021	|ramen	|12	|Y
+A	|11/01/2021	|ramen	|12	|Y
+A	|10/01/2021	|ramen	|12	|Y
+A	|01/01/2021	|sushi	|10	|N
+A	|01/01/2021	|curry	|15	|N
+B	|04/01/2021	|sushi	|10	|N
+B	|11/01/2021	|sushi	|10	|Y
+B	|01/01/2021	|curry	|15	|N
+B	|02/01/2021	|curry	|15	|N
+B	|16/01/2021	|ramen	|12	|Y
+B	|01/02/2021	|ramen	|12	|Y
+C	|01/01/2021	|ramen	|12	|N
+C	|01/01/2021	|ramen	|12	|N
+C	|07/01/2021	|ramen	|12	|N
 
 
 

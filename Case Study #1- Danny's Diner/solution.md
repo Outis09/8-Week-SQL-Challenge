@@ -45,7 +45,7 @@ Customer A visited the restaurant on 4 different days, customer B visited on 6 d
 **QUESTION 3:** What was the first item from the menu purchased by each customer?
 
 ```sql
-WITH t1 AS (
+WITH first_item AS (
 	SELECT customer_id, 
 	       product_name,
 	       DENSE_RANK() OVER (PARTITION BY customer_id ORDER BY order_date) AS ranks
@@ -53,11 +53,11 @@ WITH t1 AS (
 	JOIN menu
         USING (product_id) )
 SELECT customer_id, product_name
-FROM t1
+FROM first_item
 WHERE ranks = 1
 GROUP BY 1,2;
 ```
-I created a CTE and used the dense rank windows function to rank all orders for each customer by partititioning by `customer_id` and ordering by `order_date`. The earliest orders are ranked as 1 and the rest follow. Then I join the menu table to get the name of the products in customer's first purchases. For customer A, two items were purchased on the first day and there is no time of order therefore this query returns two items as first purchase for customer A.
+I created a CTE (`first_item`) and used the dense rank windows function to rank all orders for each customer by partititioning by `customer_id` and ordering by `order_date`. The earliest orders are ranked as 1 and the rest follow. Then I join the menu table to get the name of the products in customer's first purchases. For customer A, two items were purchased on the first day and there is no time of order therefore this query returns two items as first purchase for customer A.
 
 customer_id|	product_name
 --------|-------
@@ -125,7 +125,7 @@ FROM fav_item
 WHERE ranks = 1;
 ```
 
-I created a CTE to create a temporary table that contained `customer_id`, `product_name`, a count of purchases and I used `dense_rank()` to rank the count of `product_id` in descending order for each customer. I joined the `menu` table so i could use the name associated with the `product_id`.
+I created a CTE (fav_item) to create a temporary table that contained `customer_id`, `product_name`, a count of purchases and I used `dense_rank()` to rank the count of `product_id` in descending order for each customer. I joined the `menu` table so I could use the name associated with the `product_id`.
 
 
 customer_id |product_name |quantity
@@ -137,4 +137,38 @@ B	|ramen	|2
 C	|ramen	|3
 
 
-Customer A's most popular item is ramen and it was ordered 3 times. For customer B, all items were ordered twice therefore is no single most popular item. Customer C's most popular item was ramen and it was ordered 3 times.
+Customer A's most popular item is ramen and it was ordered 3 times. For customer B, all items were ordered twice therefore there is no single most popular item. Customer C's most popular item was ramen and it was ordered 3 times.
+
+
+**QUESTION 6:** Which item was purchased first by the customer after they became a member?
+
+```sql
+WITH purchase_after_membership AS (
+				SELECT s.customer_id,
+				       s.order_date,
+				       m.product_name,
+				       me.join_date,
+				       DENSE_RANK() OVER (PARTITION BY s.customer_id ORDER BY s.order_date) AS ranks
+				FROM sales s
+				JOIN members me
+				ON s.customer_id = me.customer_id
+				JOIN menu m 
+				ON s.product_id = m.product_id
+				WHERE s.order_date >= me.join_date)
+SELECT customer_id, product_name, order_date, join_date
+FROM purchase_after_membership
+WHERE ranks = 1;
+```
+
+
+I put `customer_id`, `order_date`, `product_name` and `join_date` into a CTE(`purchase_after_membership`) and I ranked orders using the `order_date` for each customer. I had to join all three tables in the CTE so i could access different elements from the tables and put it into one table I filtered the query so that only orders that were made after `join_date` were displayed. Then I selected from the CTE all the orders that had a rank of 1.
+
+
+customer_id	|product_name	|order_date	|join_date
+---------|-------|------|-------
+A|	curry	|07/01/2021	|07/01/2021
+B|	sushi|	11/01/2021	|09/01/2021
+
+After becoming a member, customer A first purchased `curry` and customer B purchased `sushi`.
+
+

@@ -277,12 +277,14 @@ FROM points_cte
 GROUP BY customer_id;
 ```
 
-I used a CTE(`points_cte`) to calculate the points for each customer based on the given criteria. Then i queried the results from the CTE.
+I used a CTE(`points_cte`) to calculate the points for each customer based on the given criteria. I used the `interval` data type to specify 7 days which is a week so i could give points according to the criteria. Then i queried the results from the CTE.
 
 customer_id	|points
 -----|-----
 A	|1370
 B	|940
+
+Given the criteria, customer A had the most points with 1370 points and customer B had 940 points.
 
 
 

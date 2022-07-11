@@ -123,6 +123,7 @@ WITH fav_item AS (
 SELECT customer_id,product_name,quantity
 FROM fav_item
 WHERE ranks = 1;
+```
 
 I created a CTE to create a temporary table that contained `customer_id`, `product_name`, a count of purchases and I used `dense_rank()` to rank the count of `product_id` in descending order for each customer. I joined the `menu` table so i could use the name associated with the `product_id`.
 

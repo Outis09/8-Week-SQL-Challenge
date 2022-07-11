@@ -231,7 +231,7 @@ A	|2	|25
 Before customer B became a member, they ordered 3 items and spent $40 while customer A ordered 2 items and spent $25
 
 
-**QUESTION 9:* If each $1 spent equates to 10 points and sushi has a 2x points multiplier - how many points would each customer have?
+**QUESTION 9:** If each $1 spent equates to 10 points and sushi has a 2x points multiplier - how many points would each customer have?
 
 ```sql
 SELECT customer_id, SUM(points) AS points
@@ -257,6 +257,32 @@ C	|360
 
 
 Customer B, with the most points, had 940 points. Customer A following had 860 points while Customer C had 360 points.
+
+
+**QUESTION 10:* In the first week after a customer joins the program (including their join date) they earn 2x points on all items, not just sushi - how many points do customer A and B have at the end of January?
+
+
+```sql
+WITH points_cte AS (SELECT s.customer_id, s.order_date, s.product_id,
+			CASE WHEN s.product_id = 1 THEN price * 20
+     			     WHEN s.order_date >= mem.join_date AND s.order_date < (mem.join_date + interval '7 days') THEN price*20
+			     ELSE price *10 END AS points
+		    FROM sales s
+		    JOIN members mem
+			ON s.customer_id = mem.customer_id
+		    JOIN menu m
+			ON s.product_id = m.product_id )
+SELECT customer_id, SUM(points) AS points
+FROM points_cte
+GROUP BY customer_id;
+```
+
+I used a CTE(`points_cte`) to calculate the points for each customer based on the given criteria. Then i queried the results from the CTE.
+
+customer_id	|points
+-----|-----
+A	|1370
+B	|940
 
 
 

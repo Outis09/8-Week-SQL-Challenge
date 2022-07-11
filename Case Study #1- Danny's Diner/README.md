@@ -1,4 +1,4 @@
-#Danny's Diner
+# Danny's Diner
 
 This case study tests 
 1. Common Table Expressions (CTE)

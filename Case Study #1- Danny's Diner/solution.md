@@ -45,12 +45,13 @@ Customer A visited the restaurant on 4 different days, customer B visited on 6 d
 **QUESTION 3:** What was the first item from the menu purchased by each customer?
 
 ```sql
-WITH t1 AS (SELECT customer_id, 
-					product_name,
-					DENSE_RANK() OVER (PARTITION BY customer_id ORDER BY order_date) AS ranks
-		   FROM sales
-		   JOIN menu
-		   USING (product_id) )
+WITH t1 AS (
+	SELECT customer_id, 
+	       product_name,
+	       DENSE_RANK() OVER (PARTITION BY customer_id ORDER BY order_date) AS ranks
+	FROM sales
+	JOIN menu
+        USING (product_id) )
 SELECT customer_id, product_name
 FROM t1
 WHERE ranks = 1

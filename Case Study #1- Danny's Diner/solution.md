@@ -303,6 +303,7 @@ LEFT JOIN members mem
 ON s.customer_id = mem.customer_id;
 ```
 
+The resulting table is expected to look like 
 customer_id	|order_date	|product_name	|price	|member
 ---------|---------|-------|-------|--------
 A	|07/01/2021	|curry	|15	|Y
@@ -322,4 +323,44 @@ C	|01/01/2021	|ramen	|12	|N
 C	|07/01/2021	|ramen	|12	|N
 
 
+
+**RANK ALL THINGS**
+
+```sql
+WITH members AS (SELECT s.customer_id, 
+			s.order_date, 
+			m.product_name,m.price, 
+			CASE WHEN order_date >= join_date THEN 'Y' ELSE 'N' END AS member
+		FROM sales s
+		LEFT JOIN menu m
+			ON s.product_id = m.product_id
+		LEFT JOIN members mem
+			ON s.customer_id = mem.customer_id )
+SELECT customer_id, 
+       order_date, 
+       product_name,
+       price,
+       member,
+       CASE WHEN member = 'Y' THEN RANK() OVER (PARTITION BY customer_id,member ORDER BY order_date) ELSE NULL END AS ranking
+FROM members;
+```
+
+
+customer_id	|order_date	|product_name	|price	|member	|ranking
+-------|--------|--------|--------|----------
+A	|01/01/2021	|sushi	|10	|N	|NULL
+A	|01/01/2021	|curry	|15	|N	|NULL
+A	|07/01/2021	|curry	|15	|Y	|1
+A	|10/01/2021	|ramen	|12	|Y	|2
+A	|11/01/2021	|ramen	|12	|Y	|3
+A	|11/01/2021	|ramen	|12	|Y	|3
+B	|01/01/2021	|curry	|15	|N	|NULL
+B	|02/01/2021	|curry	|15	|N	|NULL
+B	|04/01/2021	|sushi	|10	|N	|NULL
+B	|11/01/2021	|sushi	|10	|Y	|1
+B	|16/01/2021	|ramen	|12	|Y	|2
+B	|01/02/2021	|ramen	|12	|Y	|3
+C	|01/01/2021	|ramen	|12	|N	|NULL
+C	|01/01/2021	|ramen	|12	|N	|NULL
+C	|07/01/2021	|ramen	|12	|N	|NULL
 

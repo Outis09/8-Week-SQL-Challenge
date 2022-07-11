@@ -231,3 +231,33 @@ A	|2	|25
 Before customer B became a member, they ordered 3 items and spent $40 while customer A ordered 2 items and spent $25
 
 
+**QUESTION 9:* If each $1 spent equates to 10 points and sushi has a 2x points multiplier - how many points would each customer have?
+
+```sql
+SELECT customer_id, SUM(points) AS points
+FROM (SELECT s.customer_id,
+	     CASE WHEN s.product_id = 1 THEN m.price * 20
+		  ELSE price*10
+		  END AS points 
+      FROM sales s
+      JOIN menu m
+	ON s.product_id = m.product_id) points
+GROUP BY 1 
+ORDER BY 2 DESC;
+```
+
+I used a subquery to  calculate the points for each customer according to the given criteria. In the main query, I displayed the data from the subquery.
+I ordered the table with `points` in descending order to display the customer with the most points first.
+
+customer_id	|points
+-------|-----
+B	|940
+A	|860
+C	|360
+
+
+Customer B, with the most points, had 940 points. Customer A following had 860 points while Customer C had 360 points.
+
+
+
+

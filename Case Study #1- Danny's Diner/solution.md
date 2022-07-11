@@ -172,3 +172,38 @@ B|	sushi|	11/01/2021	|09/01/2021
 After becoming a member, customer A first purchased `curry` and customer B purchased `sushi`.
 
 
+
+**QUESTION 7:** Which item was purchased just before the customer became a member?
+
+```sql
+WITH purchase_before_membership AS (
+				SELECT s.customer_id,
+					s.order_date,
+					m.product_name,
+					me.join_date,
+					DENSE_RANK() OVER (PARTITION BY s.customer_id ORDER BY s.order_date DESC) AS ranks
+				FROM sales s
+				JOIN members me
+				    ON s.customer_id = me.customer_id
+				JOIN menu m 
+				    ON s.product_id = m.product_id
+				WHERE s.order_date < me.join_date)
+SELECT customer_id, product_name, order_date, join_date
+FROM purchase_before_membership
+WHERE ranks = 1;
+```
+
+This query is similar to the query is question 6 except I filtered to display results where `order_date` was before `join_date`. In the windows functions, i ordered in descending order because I wanted the ranking to start from the date closest to `join_date`.
+
+customer_id	|product_name	|order_date	|join_date
+---------|-------|-------|---------
+A	|sushi	|01/01/2021	|07/01/2021
+A	|curry	|01/01/2021	|07/01/2021
+B	|sushi	|04/01/2021	|09/01/2021
+
+Just before customer A became a member, they ordered `sushi` and `curry`. Customer B ordered `sushi`.
+
+
+
+
+

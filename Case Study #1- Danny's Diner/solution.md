@@ -349,7 +349,7 @@ FROM members;
 The resulting table is expected to look like a table which can be found in [case study.md](case-study.md)
 
 customer_id	|order_date	|product_name	|price	|member	|ranking
--------|--------|--------|--------|----------
+-------|--------|--------|--------|----------|----------
 A	|01/01/2021	|sushi	|10	|N	|NULL
 A	|01/01/2021	|curry	|15	|N	|NULL
 A	|07/01/2021	|curry	|15	|Y	|1

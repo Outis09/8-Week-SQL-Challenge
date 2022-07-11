@@ -303,7 +303,8 @@ LEFT JOIN members mem
 ON s.customer_id = mem.customer_id;
 ```
 
-The resulting table is expected to look like 
+The resulting table is expected to look like a table which can be found in [case study.md](case-study.md)
+
 customer_id	|order_date	|product_name	|price	|member
 ---------|---------|-------|-------|--------
 A	|07/01/2021	|curry	|15	|Y
@@ -345,6 +346,7 @@ SELECT customer_id,
 FROM members;
 ```
 
+The resulting table is expected to look like a table which can be found in [case study.md](case-study.md)
 
 customer_id	|order_date	|product_name	|price	|member	|ranking
 -------|--------|--------|--------|----------

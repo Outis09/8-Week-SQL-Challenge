@@ -140,6 +140,9 @@ C	|ramen	|3
 Customer A's most popular item is ramen and it was ordered 3 times. For customer B, all items were ordered twice therefore there is no single most popular item. Customer C's most popular item was ramen and it was ordered 3 times.
 
 
+
+I assumed that any order placed on `join_date` was placed after the customer had become a member.
+
 **QUESTION 6:** Which item was purchased first by the customer after they became a member?
 
 ```sql
@@ -205,5 +208,26 @@ Just before customer A became a member, they ordered `sushi` and `curry`. Custom
 
 
 
+**QUESTION 8:** What is the total items and amount spent for each member before they became a member?
+
+```sql
+SELECT s.customer_id,
+       COUNT(s.product_id) order_count,
+       SUM(m.price) AS amount_spent
+FROM sales s
+JOIN menu m
+   ON s.product_id = m.product_id
+JOIN members me
+   ON s.customer_id = me.customer_id
+WHERE s.order_date < me.join_date
+GROUP BY 1;
+```
+
+customer_id	|order_count	|amount_spent
+------|-------|-------
+B	|3	|40
+A	|2	|25
+
+Before customer B became a member, they ordered 3 items and spent $40 while customer A ordered 2 items and spent $25
 
 

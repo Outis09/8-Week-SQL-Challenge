@@ -5,5 +5,7 @@ This case study tests
 2. Aggregates in SQL
 3. Windows Functions 
 4. Table Joins
+5. Intervals
+
 
 The case study can be accessed at [Case Study #1- danny's diner](https://8weeksqlchallenge.com/case-study-1/)

@@ -20,4 +20,25 @@ A	|76
 B	|74
 C	|36
 
-Customer A spent $76, customer B spent spent $74, customer C spent $36
+Customer A spent $76, customer B spent spent $74, customer C spent $36.
+
+Customer A spent the most money.
+
+**QUESTION 2:** How many days has each customer visited the restaurant?
+
+```sql
+SELECT customer_id, COUNT(DISTINCT(order_date)) AS days_visited
+FROM sales 
+GROUP BY 1;
+```
+
+customer_id|	days_visited
+---------|--------
+A	|4
+B	|6
+C	|2
+
+Customer A visited the restaurant on 4 different days, customer B visited on 6 different days, and customer C visited on 2 different days.
+
+
+

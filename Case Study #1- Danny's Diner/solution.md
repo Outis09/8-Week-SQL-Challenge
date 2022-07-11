@@ -65,15 +65,16 @@ A	|sushi
 B	|curry
 C	|ramen
 
-However, it is possible to limit customer A's first order to one item by adding s.product_id to the `ORDER BY` in the windows function. Even though the following query returns one item, it is not certain if that is actually the first order because time is what can show exactly which item was purchased first and the data lacks time.
+However, it is possible to limit customer A's first order to one item by adding s.product_id to the `ORDER BY` in the windows function. Even though the following query returns one item, it is not certain if that is actually the first order because the time of purchase is what can show exactly which item was purchased first and the data does not provide the time of purchase.
 
 ```sql
-WITH t1 AS (SELECT customer_id, 
-					         product_name,
-					         DENSE_RANK() OVER (PARTITION BY customer_id ORDER BY order_date, s.product_id) AS ranks
-		       FROM sales s
-		       JOIN menu
-		       USING (product_id) )
+WITH t1 AS (
+	SELECT customer_id, 
+	       product_name,
+	       DENSE_RANK() OVER (PARTITION BY customer_id ORDER BY order_date, s.product_id) AS ranks
+        FROM sales s
+        JOIN menu
+        USING (product_id) )
 SELECT customer_id, product_name
 FROM t1
 WHERE ranks = 1

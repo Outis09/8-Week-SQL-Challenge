@@ -79,7 +79,7 @@ A	|sushi
 B	|curry
 C	|ramen
 
-* Customer A first purchase was curry and sushi
+* Customer A's first purchase was curry and sushi
 * Customer B's first item purchased was curry
 * Customer C's first item purchased was ramen 
 
@@ -123,7 +123,7 @@ fav_prod |order_count
 ------|-------
 ramen|	8
 
-The most purchased item is `ramen` and it was ordered 8 times.
+* The most purchased item is `ramen` and it was purchased 8 times.
 
 -----------
 
@@ -156,7 +156,9 @@ B	|ramen	|2
 C	|ramen	|3
 
 
-Customer A's most popular item is ramen and it was ordered 3 times. For customer B, all items were ordered twice therefore there is no single most popular item. Customer C's most popular item was ramen and it was ordered 3 times.
+* Customer A's most popular item is ramen and it was purchased 3 times. 
+* Customer B purchased all items equally.
+* Customer C's most popular item was ramen and it was ordered 3 times.
 
 
 -----------
@@ -192,7 +194,9 @@ customer_id	|product_name	|order_date	|join_date
 A|	curry	|07/01/2021	|07/01/2021
 B|	sushi|	11/01/2021	|09/01/2021
 
-After becoming a member, customer A first purchased `curry` and customer B purchased `sushi`.
+After becoming a member, 
+* Customer A first purchased `curry` 
+* Customer B purchased `sushi`.
 
 -----------
 
@@ -225,7 +229,9 @@ A	|sushi	|01/01/2021	|07/01/2021
 A	|curry	|01/01/2021	|07/01/2021
 B	|sushi	|04/01/2021	|09/01/2021
 
-Just before customer A became a member, they ordered `sushi` and `curry`. Customer B ordered `sushi`.
+Just before becominga member,
+* Customer A purchased `sushi` and `curry`
+* Customer B ordered `sushi`
 
 -------------
 
@@ -250,7 +256,9 @@ customer_id	|order_count	|amount_spent
 B	|3	|40
 A	|2	|25
 
-Before customer B became a member, they ordered 3 items and spent $40 while customer A ordered 2 items and spent $25
+Before becoming a member, 
+* Customer B purchased 3 items and spent $40 
+* Customer A ordered 2 items and spent $25
 
 -------------
 
@@ -279,7 +287,9 @@ A	|860
 C	|360
 
 
-Customer B, with the most points, had 940 points. Customer A following had 860 points while Customer C had 360 points.
+* Customer B, with the most points, had 940 points.
+* Customer A  had 860 points 
+* Customer C had 360 points.
 
 --------------
 
@@ -308,7 +318,8 @@ customer_id	|points
 A	|1370
 B	|940
 
-Given the criteria, customer A had the most points with 1370 points and customer B had 940 points.
+* Customer A had the most points with 1370 points 
+* Customer B had 940 points
 
 ---------------
 
@@ -328,7 +339,7 @@ LEFT JOIN members mem
 ON s.customer_id = mem.customer_id;
 ```
 
-The resulting table is expected to look like a table which can be found in [case study.md](case-study.md)
+The resulting table is expected to look like a table which can be found at [case study.md](case-study.md)
 
 customer_id	|order_date	|product_name	|price	|member
 ---------|---------|-------|-------|--------
@@ -372,7 +383,7 @@ SELECT customer_id,
 FROM members;
 ```
 
-The resulting table is expected to look like a table which can be found in [case study.md](case-study.md)
+The resulting table is expected to look like a table which can be found at [case study.md](case-study.md)
 
 customer_id	|order_date	|product_name	|price	|member	|ranking
 -------|--------|--------|--------|----------|----------

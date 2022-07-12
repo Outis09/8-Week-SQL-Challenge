@@ -1,6 +1,8 @@
 ```sql
 SET search_path TO dannys_diner;
 ```
+-------------
+
 
 **QUESTION 1:** What is the total amount each customer spent at the restaurant?
 

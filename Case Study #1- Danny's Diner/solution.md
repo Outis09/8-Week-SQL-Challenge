@@ -49,9 +49,9 @@ A	|4
 B	|6
 C	|2
 
-* Customer A visited the restaurant on 4 different days
-* Customer B visited on 6 different days
-* Customer C visited on 2 different days.
+* Customer A visited on 4 unique days
+* Customer B visited on 6 unique days
+* Customer C visited on 2 unique days.
 
 ------------
 

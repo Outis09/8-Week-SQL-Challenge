@@ -265,7 +265,8 @@ Before becoming a member,
 **QUESTION 9:** If each $1 spent equates to 10 points and sushi has a 2x points multiplier - how many points would each customer have?
 
 ```sql
-SELECT customer_id, SUM(points) AS points
+SELECT customer_id, 
+       SUM(points) AS points
 FROM (SELECT s.customer_id,
 	     CASE WHEN s.product_id = 1 THEN m.price * 20
 		  ELSE price*10

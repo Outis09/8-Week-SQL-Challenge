@@ -86,7 +86,7 @@ C	|ramen
 However, it is possible to limit customer A's first order to one item by adding s.product_id to the `ORDER BY` in the windows function. Even though the following query returns one item, it is not certain if that is actually the first order because the time of purchase is what can show exactly which item was purchased first and the data does not provide the time of purchase.
 
 ```sql
-WITH t1 AS (
+WITH first_item AS (
 	SELECT customer_id, 
 	       product_name,
 	       DENSE_RANK() OVER (PARTITION BY customer_id ORDER BY order_date, s.product_id) AS ranks
@@ -94,7 +94,7 @@ WITH t1 AS (
         JOIN menu
         USING (product_id) )
 SELECT customer_id, product_name
-FROM t1
+FROM first_item
 WHERE ranks = 1
 GROUP BY 1,2;
 ```
@@ -109,8 +109,8 @@ C	|ramen
 **QUESTION 4:** What is the most purchased item on the menu and how many times was it purchased by all customers?
 
 ```sql
-SELECT  m.product_name as fav_prod,
-	COUNT(s.*) as order_count
+SELECT  m.product_name as most_purchased,
+	COUNT(s.*) as quantity
 FROM sales s 
 JOIN menu m 
 ON s.product_id = m.product_id
@@ -119,7 +119,7 @@ ORDER BY 2 DESC
 LIMIT 1;
 ```
 
-fav_prod |order_count
+most_purchased |quantity
 ------|-------
 ramen|	8
 

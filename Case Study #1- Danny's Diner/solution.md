@@ -27,6 +27,8 @@ Customer A spent $76, customer B spent spent $74, customer C spent $36. I ordere
 
 Customer A spent the most money.
 
+-------------
+
 **QUESTION 2:** How many days has each customer visited the restaurant?
 
 ```sql
@@ -43,6 +45,8 @@ B	|6
 C	|2
 
 Customer A visited the restaurant on 4 different days, customer B visited on 6 different days, and customer C visited on 2 different days.
+
+------------
 
 **QUESTION 3:** What was the first item from the menu purchased by each customer?
 
@@ -89,6 +93,7 @@ A	|sushi
 B	|curry
 C	|ramen
 
+------------
 
 **QUESTION 4:** What is the most purchased item on the menu and how many times was it purchased by all customers?
 
@@ -109,6 +114,7 @@ ramen|	8
 
 The most purchased item is `ramen` and it was ordered 8 times.
 
+-----------
 
 **QUESTION 5:** Which item was the most popular for each customer?
 
@@ -142,9 +148,10 @@ C	|ramen	|3
 Customer A's most popular item is ramen and it was ordered 3 times. For customer B, all items were ordered twice therefore there is no single most popular item. Customer C's most popular item was ramen and it was ordered 3 times.
 
 
-
+-----------
 I assumed that any order placed on `join_date` was placed after the customer had become a member.
 
+------------
 **QUESTION 6:** Which item was purchased first by the customer after they became a member?
 
 ```sql
@@ -176,6 +183,7 @@ B|	sushi|	11/01/2021	|09/01/2021
 
 After becoming a member, customer A first purchased `curry` and customer B purchased `sushi`.
 
+-----------
 
 
 **QUESTION 7:** Which item was purchased just before the customer became a member?
@@ -208,6 +216,7 @@ B	|sushi	|04/01/2021	|09/01/2021
 
 Just before customer A became a member, they ordered `sushi` and `curry`. Customer B ordered `sushi`.
 
+-------------
 
 
 **QUESTION 8:** What is the total items and amount spent for each member before they became a member?
@@ -232,6 +241,7 @@ A	|2	|25
 
 Before customer B became a member, they ordered 3 items and spent $40 while customer A ordered 2 items and spent $25
 
+-------------
 
 **QUESTION 9:** If each $1 spent equates to 10 points and sushi has a 2x points multiplier - how many points would each customer have?
 
@@ -260,6 +270,7 @@ C	|360
 
 Customer B, with the most points, had 940 points. Customer A following had 860 points while Customer C had 360 points.
 
+--------------
 
 **QUESTION 10:** In the first week after a customer joins the program (including their join date) they earn 2x points on all items, not just sushi - how many points do customer A and B have at the end of January?
 
@@ -288,6 +299,7 @@ B	|940
 
 Given the criteria, customer A had the most points with 1370 points and customer B had 940 points.
 
+---------------
 
 **BONUS QUESTIONS**
 
@@ -326,6 +338,7 @@ C	|01/01/2021	|ramen	|12	|N
 C	|07/01/2021	|ramen	|12	|N
 
 
+-------------------
 
 **RANK ALL THINGS**
 

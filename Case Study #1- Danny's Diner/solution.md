@@ -306,21 +306,22 @@ WITH points_cte AS (SELECT s.customer_id, s.order_date, s.product_id,
 		    JOIN members mem
 			ON s.customer_id = mem.customer_id
 		    JOIN menu m
-			ON s.product_id = m.product_id )
+			ON s.product_id = m.product_id 
+		    WHERE s.order_date <= to_date('2021 01 31','YYYY MM DD'))
 SELECT customer_id, SUM(points) AS points
 FROM points_cte
 GROUP BY customer_id;
 ```
 
-I used a CTE(`points_cte`) to calculate the points for each customer based on the given criteria. I used the `interval` data type to specify 7 days which is a week so i could give points according to the criteria. Then i queried the results from the CTE.
+I used a CTE(`points_cte`) to calculate the points for each customer based on the given criteria. I used the `interval` data type to specify 7 days which is a week so I could give points according to the criteria. Then i queried the results from the CTE. I filtered to exclude `order_date` after January so i used `to_date()` to convert 2021-01-31 to a date so I could compare it with `order_date`
 
 customer_id	|points
 -----|-----
 A	|1370
-B	|940
+B	|820
 
 * Customer A had the most points with 1370 points 
-* Customer B had 940 points
+* Customer B had 820 points
 
 ---------------
 
@@ -342,25 +343,25 @@ ON s.customer_id = mem.customer_id;
 
 The resulting table is expected to look like a table which can be found at [case study.md](case-study.md)
 
-customer_id	|order_date	|product_name	|price	|member
----------|---------|-------|-------|--------
+
+
+customer_id |order_date |product_name |price |member
+-------|-----------|-------|---------|--------
+A	|01/01/2021	|curry	|15	|N	
+A	|01/01/2021	|sushi	|10	|N	
 A	|07/01/2021	|curry	|15	|Y
+A	|10/01/2021	|ramen	|12	|Y	
 A	|11/01/2021	|ramen	|12	|Y
-A	|11/01/2021	|ramen	|12	|Y
-A	|10/01/2021	|ramen	|12	|Y
-A	|01/01/2021	|sushi	|10	|N
-A	|01/01/2021	|curry	|15	|N
-B	|04/01/2021	|sushi	|10	|N
-B	|11/01/2021	|sushi	|10	|Y
-B	|01/01/2021	|curry	|15	|N
-B	|02/01/2021	|curry	|15	|N
-B	|16/01/2021	|ramen	|12	|Y
-B	|01/02/2021	|ramen	|12	|Y
-C	|01/01/2021	|ramen	|12	|N
-C	|01/01/2021	|ramen	|12	|N
+A	|11/01/2021	|ramen	|12	|Y	
+B	|01/01/2021	|curry	|15	|N	
+B	|02/01/2021	|curry	|15	|N	
+B	|04/01/2021	|sushi	|10	|N	
+B	|11/01/2021	|sushi	|10	|Y	
+B	|16/01/2021	|ramen	|12	|Y	
+B	|01/02/2021	|ramen	|12	|Y	
+C	|01/01/2021	|ramen	|12	|N	
+C	|01/01/2021	|ramen	|12	|N	
 C	|07/01/2021	|ramen	|12	|N
-
-
 -------------------
 
 **RANK ALL THINGS**
@@ -386,10 +387,11 @@ FROM members;
 
 The resulting table is expected to look like a table which can be found at [case study.md](case-study.md)
 
-customer_id	|order_date	|product_name	|price	|member	|ranking
--------|--------|--------|--------|----------|----------
-A	|01/01/2021	|sushi	|10	|N	|NULL
+
+customer_id |order_date |product_name |price |member	|ranking
+-------|-----------|-------|---------|--------|--------
 A	|01/01/2021	|curry	|15	|N	|NULL
+A	|01/01/2021	|sushi	|10	|N	|NULL
 A	|07/01/2021	|curry	|15	|Y	|1
 A	|10/01/2021	|ramen	|12	|Y	|2
 A	|11/01/2021	|ramen	|12	|Y	|3

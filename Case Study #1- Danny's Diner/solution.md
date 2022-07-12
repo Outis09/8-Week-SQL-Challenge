@@ -156,9 +156,9 @@ B	|ramen	|2
 C	|ramen	|3
 
 
-* Customer A's most popular item is ramen and it was purchased 3 times. 
-* Customer B purchased all items equally.
-* Customer C's most popular item was ramen and it was ordered 3 times.
+* Customer A's most popular item is ramen and they purchased it 3 times. 
+* Customer B purchased all items on the menu twice.
+* Customer C's most popular item was ramen and they purchased it 3 times.
 
 
 -----------

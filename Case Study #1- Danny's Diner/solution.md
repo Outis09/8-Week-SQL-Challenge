@@ -221,7 +221,7 @@ FROM purchase_before_membership
 WHERE ranks = 1;
 ```
 
-This query is similar to the query is question 6 except I filtered to display results where `order_date` was before `join_date`. In the windows functions, i ordered in descending order because I wanted the ranking to start from the date closest to `join_date`.
+This query is similar to the query is question 6 except I filtered to display results where `order_date` was before `join_date`. In the `dense_rank()` windows function, I ordered in descending order because I wanted the ranking to start from the date closest to `join_date`.
 
 customer_id	|product_name	|order_date	|join_date
 ---------|-------|-------|---------

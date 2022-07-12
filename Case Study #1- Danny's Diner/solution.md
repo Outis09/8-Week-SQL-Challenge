@@ -42,7 +42,7 @@ FROM sales
 GROUP BY 1;
 ```
 
-I use `distinct` to count unique days .
+I used `distinct` to count unique days .
 customer_id|	days_visited
 ---------|--------
 A	|4
@@ -78,6 +78,10 @@ A	|curry
 A	|sushi
 B	|curry
 C	|ramen
+
+* Customer A first purchase was curry and sushi
+* Customer B's first item purchased was curry
+* Customer C's first item purchased was ramen 
 
 However, it is possible to limit customer A's first order to one item by adding s.product_id to the `ORDER BY` in the windows function. Even though the following query returns one item, it is not certain if that is actually the first order because the time of purchase is what can show exactly which item was purchased first and the data does not provide the time of purchase.
 

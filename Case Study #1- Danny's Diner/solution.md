@@ -23,7 +23,9 @@ A	|76
 B	|74
 C	|36
 
-Customer A spent $76, customer B spent spent $74, customer C spent $36. I ordered by the total amount spent to show the highest spender first.
+*Customer A spent $76
+*Customer B spent spent $74
+*Customer C spent $36 I ordered by the total amount spent to show the highest spender first.
 
 Customer A spent the most money.
 

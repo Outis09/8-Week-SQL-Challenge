@@ -23,9 +23,11 @@ A	|76
 B	|74
 C	|36
 
-*Customer A spent $76
-*Customer B spent spent $74
-*Customer C spent $36 I ordered by the total amount spent to show the highest spender first.
+* Customer A spent $76
+* Customer B spent spent $74
+* Customer C spent $36 
+
+**I ordered by the total amount spent to show the highest spender first.**
 
 Customer A spent the most money.
 
@@ -40,13 +42,16 @@ FROM sales
 GROUP BY 1;
 ```
 
+I use `distinct` to count unique days .
 customer_id|	days_visited
 ---------|--------
 A	|4
 B	|6
 C	|2
 
-Customer A visited the restaurant on 4 different days, customer B visited on 6 different days, and customer C visited on 2 different days.
+* Customer A visited the restaurant on 4 different days
+* Customer B visited on 6 different days
+* Customer C visited on 2 different days.
 
 ------------
 

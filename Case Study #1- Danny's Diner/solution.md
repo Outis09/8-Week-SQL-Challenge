@@ -162,7 +162,7 @@ C	|ramen	|3
 
 
 -----------
-I assumed that any order placed on `join_date` was placed after the customer had become a member.
+I assumed that any order placed on the same date as  `join_date` was placed after the customer had become a member.
 
 ------------
 **QUESTION 6:** Which item was purchased first by the customer after they became a member?

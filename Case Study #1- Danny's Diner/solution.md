@@ -70,7 +70,7 @@ FROM first_item
 WHERE ranks = 1
 GROUP BY 1,2;
 ```
-I created a CTE (`first_item`) and used the dense rank windows function to rank all orders for each customer by partititioning by `customer_id` and ordering by `order_date`. The earliest orders are ranked as 1 and the rest follow. Then I join the menu table to get the name of the products in customer's first purchases. For customer A, two items were purchased on the first day and there is no time of order therefore this query returns two items as first purchase for customer A.
+I created a CTE (`first_item`) and used the `dense_rank()` windows function to rank all orders for each customer by partititioning by `customer_id` and ordering by `order_date`. The earliest orders are ranked as 1 and the rest follow. Then I join the menu table to get the name of the products in customer's first purchases. For customer A, two items were purchased on the first day and there is no time of order therefore this query returns two items as first purchase for customer A.
 
 customer_id|	product_name
 --------|-------

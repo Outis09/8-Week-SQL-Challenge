@@ -313,7 +313,7 @@ FROM points_cte
 GROUP BY customer_id;
 ```
 
-I used a CTE(`points_cte`) to calculate the points for each customer based on the given criteria. I used the `interval` data type to specify 7 days which is a week so I could give points according to the criteria. Then i queried the results from the CTE. I filtered to exclude `order_date` after January so i used `to_date()` to convert 2021-01-31 to a date so I could compare it with `order_date`
+I used a CTE(`points_cte`) to calculate the points for each customer based on the given criteria. I used the `interval` data type to specify 6 days because 6 days plus the `join_date` makes the first week so I could give points according to the criteria. Then i queried the results from the CTE. I filtered to exclude `order_date` after January so i used `to_date()` to convert 2021-01-31 to a date so I could compare it with `order_date`
 
 customer_id	|points
 -----|-----

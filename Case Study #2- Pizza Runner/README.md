@@ -1,3 +1,6 @@
+<p align="center">
+    # Pizza Runner :pizza:
+</p>
 
 <p align="center">
     <img src="https://8weeksqlchallenge.com/images/case-study-designs/2.png" width="400" height="400">

@@ -1,6 +1,5 @@
-<p align="center">
-    Pizza Runner :pizza:
-</p>
+# Pizza Runner :pizza:
+
 
 <p align="center">
     <img src="https://8weeksqlchallenge.com/images/case-study-designs/2.png" width="400" height="400">
@@ -10,6 +9,7 @@ This is the second challenge of the 8 week SQL challenge created by Danny Ma. Th
 My solution to the previous challenge can be found [here](https://github.com/Outis09/8-Week-SQL-Challenge/tree/main/Case%20Study%20%231-%20Danny's%20Diner). 
 
 This case study tests :
+-----------
   
   * Data Cleaning with SQL
   * Temporary Tables

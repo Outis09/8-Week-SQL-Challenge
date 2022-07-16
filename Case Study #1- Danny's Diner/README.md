@@ -1,6 +1,14 @@
-# Danny's Diner :ramen:
+<p align="center">
+    # Danny's Diner :ramen:
+</p>
 
-This case study tests 
+
+<p align="center">
+    <img src="https://8weeksqlchallenge.com/images/case-study-designs/1.png" width="400" height="400">
+</p>
+
+
+This case study tests :
 1. Common Table Expressions (CTE)
 2. Aggregates in SQL
 3. Windows Functions 

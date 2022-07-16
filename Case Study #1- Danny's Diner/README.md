@@ -1,6 +1,4 @@
-<p align="center">
- Danny's Diner :ramen:
-</p>
+# Danny's Diner :ramen:
 
 
 <p align="center">
@@ -9,6 +7,8 @@
 
 
 This case study tests :
+------------
+
 1. Common Table Expressions (CTE)
 2. Aggregates in SQL
 3. Windows Functions 

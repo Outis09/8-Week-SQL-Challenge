@@ -4,7 +4,9 @@ SET search_path TO dannys_diner;
 -------------
 
 
-**QUESTION 1:** What is the total amount each customer spent at the restaurant?
+**QUESTION 1:** 
+-------------
+What is the total amount each customer spent at the restaurant?
 
 
 ```sql
@@ -33,7 +35,10 @@ Customer A spent the most money.
 
 -------------
 
-**QUESTION 2:** How many days has each customer visited the restaurant?
+**QUESTION 2:** 
+--------------
+
+How many days has each customer visited the restaurant?
 
 ```sql
 SELECT customer_id, 
@@ -55,7 +60,10 @@ C	|2
 
 ------------
 
-**QUESTION 3:** What was the first item from the menu purchased by each customer?
+**QUESTION 3:**
+-----------
+
+What was the first item from the menu purchased by each customer?
 
 ```sql
 WITH first_item AS (
@@ -106,7 +114,10 @@ C	|ramen
 
 ------------
 
-**QUESTION 4:** What is the most purchased item on the menu and how many times was it purchased by all customers?
+**QUESTION 4:**
+-------------
+
+What is the most purchased item on the menu and how many times was it purchased by all customers?
 
 ```sql
 SELECT  m.product_name as most_purchased,
@@ -127,7 +138,9 @@ ramen|	8
 
 -----------
 
-**QUESTION 5:** Which item was the most popular for each customer?
+**QUESTION 5:** 
+---------------
+Which item was the most popular for each customer?
 
 ```sql
 WITH fav_item AS (
@@ -165,7 +178,10 @@ C	|ramen	|3
 I assumed that any order placed on the same date as  `join_date` was placed after the customer had become a member.
 
 ------------
-**QUESTION 6:** Which item was purchased first by the customer after they became a member?
+**QUESTION 6:** 
+----------
+
+Which item was purchased first by the customer after they became a member?
 
 ```sql
 WITH purchase_after_membership AS (
@@ -201,7 +217,9 @@ After becoming a member,
 -----------
 
 
-**QUESTION 7:** Which item was purchased just before the customer became a member?
+**QUESTION 7:** 
+--------------
+Which item was purchased just before the customer became a member?
 
 ```sql
 WITH purchase_before_membership AS (
@@ -236,7 +254,10 @@ Just before becominga member,
 -------------
 
 
-**QUESTION 8:** What is the total items and amount spent for each member before they became a member?
+**QUESTION 8:** 
+----------------
+
+What is the total items and amount spent for each member before they became a member?
 
 ```sql
 SELECT s.customer_id,
@@ -262,7 +283,9 @@ Before becoming a member,
 
 -------------
 
-**QUESTION 9:** If each $1 spent equates to 10 points and sushi has a 2x points multiplier - how many points would each customer have?
+**QUESTION 9:** 
+--------------
+If each $1 spent equates to 10 points and sushi has a 2x points multiplier - how many points would each customer have?
 
 ```sql
 SELECT customer_id, 
@@ -294,7 +317,9 @@ C	|360
 
 --------------
 
-**QUESTION 10:** In the first week after a customer joins the program (including their join date) they earn 2x points on all items, not just sushi - how many points do customer A and B have at the end of January?
+**QUESTION 10:** 
+----------------
+In the first week after a customer joins the program (including their join date) they earn 2x points on all items, not just sushi - how many points do customer A and B have at the end of January?
 
 
 ```sql
@@ -326,6 +351,7 @@ B	|820
 ---------------
 
 **BONUS QUESTIONS**
+----------------------
 
 **JOIN ALL THINGS**
 

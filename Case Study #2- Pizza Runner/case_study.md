@@ -1,9 +1,10 @@
-**Case Study #2 - Pizza Runner**
+# Case Study #2 - Pizza Runner 🍕
 
 
 <img src="https://8weeksqlchallenge.com/images/case-study-designs/2.png" width="400" height="400">
 
 **Introduction**
+-----------
 
 Did you know that over 115 million kilograms of pizza is consumed daily worldwide??? (Well according to Wikipedia anyway…)
 
@@ -14,12 +15,13 @@ Danny was sold on the idea, but he knew that pizza alone was not going to help h
 Danny started by recruiting “runners” to deliver fresh pizza from Pizza Runner Headquarters (otherwise known as Danny’s house) and also maxed out his credit card to pay freelance developers to build a mobile app to accept orders from customers.
 
 **Available Data**
-
+------------
 
 Because Danny had a few years of experience as a data scientist - he was very aware that data collection was going to be critical for his business’ growth.
 
 
 **Table 1: runners**
+------------
 
 
 | runner_id | registration_date        |
@@ -29,8 +31,11 @@ Because Danny had a few years of experience as a data scientist - he was very aw
 | 3         | 2021-01-08 |
 | 4         | 2021-01-15 |
 
+  
+ **Table 2: customer_orders**
+ --------------
 
-**Table 2: customer_orders**  
+
 | order_id | customer_id | pizza_id | exclusions | extras | order_time               |
 | -------- | ----------- | -------- | ---------- | ------ | ------------------------ |
 | 1        | 101         | 1        |            |        | 2020-01-01 18:05:02 |
@@ -49,7 +54,9 @@ Because Danny had a few years of experience as a data scientist - he was very aw
 | 10       | 104         | 1        | 2, 6       | 1, 4   | 2020-01-11 18:34:49 |
 
 
+
 **Table 3: runner_orders**
+-----------
 
 | order_id | runner_id | pickup_time         | distance | duration   | cancellation            |
 | -------- | --------- | ------------------- | -------- | ---------- | ----------------------- |
@@ -66,6 +73,7 @@ Because Danny had a few years of experience as a data scientist - he was very aw
 
 
 **Table 4: pizza_names**
+----------
 
 | pizza_id | pizza_name |
 | -------- | ---------- |
@@ -74,6 +82,7 @@ Because Danny had a few years of experience as a data scientist - he was very aw
 
 
 **Table 5: pizza_recipes**
+---------------
 
 | pizza_id | toppings                |
 | -------- | ----------------------- |
@@ -82,7 +91,7 @@ Because Danny had a few years of experience as a data scientist - he was very aw
 
 
 **Table 6: pizza_toppings**
-
+-------------
 
 | topping_id | topping_name |
 | ---------- | ------------ |
@@ -102,22 +111,24 @@ Because Danny had a few years of experience as a data scientist - he was very aw
 
 
 **Case Study Questions**
+-----------
 
 This case study has LOTS of questions - they are broken up by area of focus including:
 
-* **Pizza Metrics**
+  * **Pizza Metrics**
 
-* **Runner and Customer Experience**
+  * **Runner and Customer Experience**
 
-* **Ingredient Optimisation**
+  * **Ingredient Optimisation**
 
-* **Pricing and Ratings**
+  * **Pricing and Ratings**
 
-* **Bonus DML Challenges (DML = Data Manipulation Language)**
+  * **Bonus DML Challenges (DML = Data Manipulation Language)**
 
 
 
 **A. Pizza Metrics**
+--------------
 
 1. How many pizzas were ordered?
 
@@ -141,6 +152,8 @@ This case study has LOTS of questions - they are broken up by area of focus incl
 
 
 **B. Runner and Customer Experience**
+-------------
+
 1. How many runners signed up for each 1 week period? (i.e. week starts `2021-01-01`)
 
 2. What was the average time in minutes it took for each runner to arrive at the Pizza Runner HQ to pickup the order?
@@ -157,6 +170,7 @@ This case study has LOTS of questions - they are broken up by area of focus incl
 
 
 **C. Ingredient Optimisation**
+------------
 
 1. What are the standard ingredients for each pizza?
 
@@ -166,54 +180,57 @@ This case study has LOTS of questions - they are broken up by area of focus incl
 
 4. Generate an order item for each record in the customers_orders table in the format of one of the following:
 
-* `Meat Lovers`
+    * `Meat Lovers`
 
-* `Meat Lovers - Exclude Beef`
+    * `Meat Lovers - Exclude Beef`
 
-* `Meat Lovers - Extra Bacon`
+    * `Meat Lovers - Extra Bacon`
 
-* `Meat Lovers - Exclude Cheese, Bacon - Extra Mushroom, Peppers`
+    * `Meat Lovers - Exclude Cheese, Bacon - Extra Mushroom, Peppers`
 
 5. Generate an alphabetically ordered comma separated ingredient list for each pizza order from the customer_orders table and add a 2x in front of any relevant ingredients
 
-* For example: `"Meat Lovers: 2xBacon, Beef, ... , Salami"`
+    * For example: `"Meat Lovers: 2xBacon, Beef, ... , Salami"`
 
 6. What is the total quantity of each ingredient used in all delivered pizzas sorted by most frequent first?
 
 
 **D. Pricing and Ratings**
+------------
+
 1. If a Meat Lovers pizza costs $12 and Vegetarian costs $10 and there were no charges for changes - how much money has Pizza Runner made so far if there are no delivery fees?
 
 2. What if there was an additional $1 charge for any pizza extras?
 
-* Add cheese is $1 extra
+    * Add cheese is $1 extra
 
 3. The Pizza Runner team now wants to add an additional ratings system that allows customers to rate their runner, how would you design an additional table for this new dataset - generate a schema for this new table and insert your own data for ratings for each successful customer order between 1 to 5.
 
 4. Using your newly generated table - can you join all of the information together to form a table which has the following information for successful deliveries?
 
-* `customer_id`
+    * `customer_id`
 
-* `order_id`
+    * `order_id`
 
-* `runner_id`
+    * `runner_id`
 
-* `rating`
+    * `rating`
 
-* `order_time`
+    * `order_time`
 
-* `pickup_time`
+    * `pickup_time`
 
-* `Time between order and pickup`
+    * `Time between order and pickup`
 
-* `Delivery duration`
+    * `Delivery duration`
 
-* `Average speed`
+    * `Average speed`
 
-* `Total number of pizzas`
+    * `Total number of pizzas`
 
 5. If a Meat Lovers pizza was $12 and Vegetarian $10 fixed prices with no cost for extras and each runner is paid $0.30 per kilometre traveled - how much money does Pizza Runner have left over after these deliveries?
 
 **E. Bonus Questions**
+------------
 
 If Danny wants to expand his range of pizzas - how would this impact the existing data design? Write an `INSERT` statement to demonstrate what would happen if a new `Supreme` pizza with all the toppings was added to the Pizza Runner menu?

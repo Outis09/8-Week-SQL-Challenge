@@ -100,3 +100,12 @@ Because Danny had a few years of experience as a data scientist - he was very aw
 | 12         | Tomato Sauce |
 
 
+
+**Case Study Questions**
+This case study has LOTS of questions - they are broken up by area of focus including:
+
+**Pizza Metrics**
+**Runner and Customer Experience**
+**Ingredient Optimisation**
+**pricing and Ratings**
+**Bonus DML Challenges (DML = Data Manipulation Language)**

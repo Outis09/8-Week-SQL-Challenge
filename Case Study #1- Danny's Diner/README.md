@@ -1,5 +1,5 @@
 <p align="center">
-    # Danny's Diner :ramen:
+ Danny's Diner :ramen:
 </p>
 
 

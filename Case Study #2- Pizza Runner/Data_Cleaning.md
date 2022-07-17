@@ -5,7 +5,7 @@ To clean the data, i used temporary tables to create a copy of the `runner_order
 
 Cleaning `runner_orders`
 -------------
-
+* The original `runner_orders` table can be accessed [here](case_study.md)
 ```sql
 DROP TABLE IF EXISTS runner_orders_temp;
 CREATE TEMP TABLE runner_orders_temp AS (
@@ -82,7 +82,7 @@ From the new table above, the columns have now been converted to the appropriate
 
  Cleaning `customer_orders`
  ----------------
- 
+ * The original `customer_orders` table can be accessed [here](case_study.md)
  The `customer_orders` table also needs to be cleaned because it has some `'null'` values. Converting all the `'null'` values to actual `NULL` values will make the table clumsy so one again I converted them to `''`.
  
  ```sql

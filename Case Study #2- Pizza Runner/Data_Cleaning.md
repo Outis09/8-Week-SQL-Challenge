@@ -1,13 +1,14 @@
 # Pizza Runner 🍕
 
 The data in the `runner_orders` and `customer_orders` tables contain some `'null'` and `NaN` values therefore the data has to be clean so that we can query the data from those tables to solve Danny's problems. 
-To clean the data, i used temporary tables to create a copy of the `runner_orders` and `customer_orders` tables and used `CASE WHEN` statements to clean the data into those temporary tables.
+To clean the data, I used temporary tables to create a copy of the `runner_orders` and `customer_orders` tables and used `CASE WHEN` statements to clean the data into those temporary tables.
 
 --------
 
 Cleaning `runner_orders`
 -------------
 * The original `runner_orders` table can be accessed [here](case_study.md)
+
 ```sql
 DROP TABLE IF EXISTS runner_orders_temp;
 CREATE TEMP TABLE runner_orders_temp AS (
@@ -26,11 +27,11 @@ CREATE TEMP TABLE runner_orders_temp AS (
                       );
 ```
 
-I used `CREATE TEMP TABLE` syntax to create a temporary table called `runner_orders_temp`. The `order_id` and `runner_id` do not cleaning so I selected them into the temporary table just as they were in the original table.
+I used `CREATE TEMP TABLE` syntax to create a temporary table called `runner_orders_temp`. The `order_id` and `runner_id` columns do not need cleaning so I selected them into the temporary table just as they were in the original table.
 The `pickup_time` column had two `'null'` values so I converted those values into actual `NULL` values.
 
 The `distance` column also has some `'null'` values so I converted those values to actual `NULL` values. However, the other values had `km` attached to the numbers so I had to remove to enable me convert the column to an `int` later.
-I did this by identifying the values with `km` and using the `TRIM()` function to trim `km` from the nnumbers.
+I did this by identifying the values with `km` and using the `TRIM()` function to trim `km` from the numbers.
 
 The duration column also has `'null'` values so I used `CASE WHEN` statement to convert them to actual `NULL` values. The other values have `'mins'`, `'minutes'` and `'minute'`
 attached to their numeric values so I had to remove them to enable me convert the column to an `int` later. I used the `WHEN` statement to identify the values with  `'mins'`, `'minutes'` and `'minute'` then I used the `TRIM()` function to remove those words from the 
@@ -58,12 +59,12 @@ The resulting table is below.
 | 10       | 1         | 2020-01-11 18:50:20 | 10       | 10       |                         |
 
 
-Even though the table looks clean now, there are still come changes that need to be made. Below is how the table looks on pgAdmin4
+Even though the table looks clean now, there are still come changes to be made. Below is how the table looks on pgAdmin4
 
     
  ![Screenshot (3)](https://user-images.githubusercontent.com/104911707/179404674-4ddd9254-a2b2-4b29-b41f-d2bc1c9e8eb6.png)
  
- From the table we can tell that the data type for the `pickup_time`, `distance` and  `duration` columns is `varying characters`. If the columns remain like this we cannot perform the appropriate date and numeric functions on these columns. Therefore I altered the table to alter the columns stated.
+ From the table we can tell that the data type for the `pickup_time`, `distance` and  `duration` columns is `character varying`. If the columns remain like this we cannot perform the appropriate date and numeric functions on these columns. Therefore I altered the table to alter the columns stated.
  
  ```SQL
  ALTER TABLE runner_orders_temp
@@ -79,13 +80,14 @@ The resulting table:
 ![Screenshot (4)](https://user-images.githubusercontent.com/104911707/179405848-c7ec2e6e-87ae-4aa2-95d1-9ab6dc475721.png)
 
 
-From the new table above, the columns have now been converted to the appropriate. We can now work on the columns. `runner_orders_temp` is the clean version of `runner_orders` therefore I will be using `runner_orders_temp` to solve the case study. 
+From the new table above, the columns have now been converted to the appropriate data types. We can now work on the columns. `runner_orders_temp` is the clean version of `runner_orders` therefore I will be using `runner_orders_temp` to solve the case study. 
 
 --------------
 
  Cleaning `customer_orders`
  ----------------
  * The original `customer_orders` table can be accessed [here](case_study.md)
+ 
  The `customer_orders` table also needs to be cleaned because it has some `'null'` values. Converting all the `'null'` values to actual `NULL` values will make the table clumsy so one again I converted them to `''`.
  
  ```sql
@@ -102,7 +104,7 @@ From the new table above, the columns have now been converted to the appropriate
 					);
 ```
 
-I created a temporary table called `customer_orders_temp`.The `order_id`, `pizza_id`, `customer_id` and `order_time` columns were clean so I just had to clean the `exclusions` and `extras` columns. I used `CASE WHEN` statements to convert `'null'` and `NULL` to `''`. 
+I created a temporary table called `customer_orders_temp`.The `order_id`, `pizza_id`, `customer_id` and `order_time` columns were clean so I just had to clean the `exclusions` and `extras` columns. I used `CASE WHEN` statements to convert `'null'` and `NULL` values to `''`. 
 
 Below is the resulting table.
 

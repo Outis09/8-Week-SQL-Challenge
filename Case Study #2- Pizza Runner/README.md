@@ -14,6 +14,8 @@ The **dataset** can be found in the [schema](schema.md) file.
 
 The **case** study can be found in the [case study](case_study.md) file.
 
+The **solutions** have been subdivided and can be found in the [solutions](Solutions) folder.
+
 This case study tests :
 -----------
   

@@ -59,7 +59,17 @@ The resulting table is below.
 
 Even though the table looks clean now, there are still come changes that need to be made. Below is how the table looks on pgAdmin4
 
-
-    <img src="" width="400" height="400">
     
- yyy
+ ![Screenshot (3)](https://user-images.githubusercontent.com/104911707/179404674-4ddd9254-a2b2-4b29-b41f-d2bc1c9e8eb6.png)
+ 
+ From the table we can tell that the data type for the `pickup_time`, `distance` and  `duration` columns is `varying characters`. If the columns remain like this we cannot perform the appropriate date and numeric functions on these columns. Therefore I altered the table to alter the columns stated.
+ 
+ ```SQL
+ ALTER TABLE runner_orders_temp
+	ALTER COLUMN pickup_time TYPE timestamp USING pickup_time::timestamp without time zone,
+	ALTER COLUMN distance TYPE double precision USING distance::double precision,
+	ALTER COLUMN duration TYPE int USING duration::int;
+```
+
+I used the query above to alter the temporary table. I casted the `pickup_time` column to  a `timestamp without time zone`. I casted the `distance` column to a `double precision` which is another name for `float` because it had some decimal values. Lastly, I casted the `duration` column to an `int`.
+ 

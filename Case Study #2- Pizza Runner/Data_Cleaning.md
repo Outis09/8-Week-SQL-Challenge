@@ -57,4 +57,9 @@ The resulting table is below.
 | 10       | 1         | 2020-01-11 18:50:20 | 10       | 10       |                         |
 
 
-Even though this 
+Even though the table looks clean now, there are still come changes that need to be made. Below is how the table looks on pgAdmin4
+
+
+    <img src="https://photos.app.goo.gl/JQK1hagTCwu5qk3C8" width="400" height="400">
+    
+ yyy

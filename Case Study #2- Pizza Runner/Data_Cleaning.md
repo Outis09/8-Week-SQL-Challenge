@@ -3,6 +3,8 @@
 The data in the `runner_orders` and `customer_orders` tables contain some `'null'` and `NaN` values therefore the data has to be clean so that we can query the data from those tables to solve Danny's problems. 
 To clean the data, i used temporary tables to create a copy of the `runner_orders` and `customer_orders` tables and used `CASE WHEN` statements to clean the data into those temporary tables.
 
+--------
+
 Cleaning `runner_orders`
 -------------
 * The original `runner_orders` table can be accessed [here](case_study.md)
@@ -79,6 +81,7 @@ The resulting table:
 
 From the new table above, the columns have now been converted to the appropriate. We can now work on the columns. `runner_orders_temp` is the clean version of `runner_orders` therefore I will be using `runner_orders_temp` to solve the case study. 
 
+--------------
 
  Cleaning `customer_orders`
  ----------------

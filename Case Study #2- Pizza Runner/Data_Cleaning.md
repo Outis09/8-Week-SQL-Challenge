@@ -72,4 +72,12 @@ Even though the table looks clean now, there are still come changes that need to
 ```
 
 I used the query above to alter the temporary table. I casted the `pickup_time` column to  a `timestamp without time zone`. I casted the `distance` column to a `double precision` which is another name for `float` because it had some decimal values. Lastly, I casted the `duration` column to an `int`.
+
+The resulting table looks as follows:
+
+
+
+From the new table above, the columns have now been converted to the appropriate. We can now work on the columns. `runner_orders_temp` is the clean version of `runner_orders` therefore I will be using `runner_orders_temp` to solve the case study. 
+
+
  

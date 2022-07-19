@@ -302,6 +302,6 @@ I wanted to extract the names of the days of the week so I used the `TO_CHAR` fu
 
 ---------------------------
 
-My solution to the other areas can be found in the [solutions](Solutions) folder.
+
 
 

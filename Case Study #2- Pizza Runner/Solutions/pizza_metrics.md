@@ -13,7 +13,7 @@ FROM customer_orders_temp;
 | ------------- |
 | 14            |
 
-14 pizzas were ordered in all
+* 14 pizzas were ordered in all
 
 ----------------
 
@@ -34,7 +34,7 @@ To get the unique orders, I used `DISTINCT` to ensure that only unique orders we
 | ------------------ |
 | 10                 |
 
-10 unique customer orders were made
+* 10 unique customer orders were made
 
 ------------
 

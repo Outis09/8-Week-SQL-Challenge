@@ -139,5 +139,30 @@ The average distance travelled for;
 
 ----------------------------
 
+QUESTION 5
+--------------
 
+What was the difference between the longest and shortest delivery times for all orders?
+
+```sql
+SELECT (MAX(duration) - MIN(duration)) as range
+FROM runner_orders_temp
+```
+
+**Results**
+
+| range |
+| ----- |
+| 30    |
+
+* The difference between the longest and shortest delivery times for all orders is 30 minutes
+
+-------------------------
+
+QUESTION 6
+---------------
+
+What was the average speed for each runner for each delivery and do you notice any trend for these values?
+
+```sql
 

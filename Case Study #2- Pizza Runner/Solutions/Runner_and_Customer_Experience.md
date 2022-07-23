@@ -165,4 +165,83 @@ QUESTION 6
 What was the average speed for each runner for each delivery and do you notice any trend for these values?
 
 ```sql
+SELECT r.runner_id, r.order_id, COUNT(c.pizza_id), ROUND(((distance/duration)*60 ):: numeric ,1) as speed_in_KmH
+FROM runner_orders_temp r
+JOIN customer_orders_temp c
+ON r.order_id = c.order_id
+WHERE distance IS NOT NULL
+GROUP BY 1,2,distance,duration
+ORDER BY runner_id,order_id;
+```
+
+I selected the `runner_id`, `order_id` and counted `pizza_id`. To get the average speed for each runner for each delivery I divided `distance` by `duration` and multiplied by 60. This is beacause the formula for speed is distance(km)/duration(h).I wanted to round the results to 1 decimal place so i casted the results to a numeric data type. I grouped by `runner_id` and `order_id` so that the count of `pizza_id` was doen for each runner and each order they delivered.
+
+**Results**
+| runner_id | order_id | count | speed_in_kmh |
+| --------- | -------- | ----- | ------------ |
+| 1         | 1        | 1     | 37.5         |
+| 1         | 2        | 1     | 44.4         |
+| 1         | 3        | 2     | 40.2         |
+| 1         | 10       | 2     | 60.0         |
+| 2         | 4        | 3     | 35.1         |
+| 2         | 7        | 1     | 60.0         |
+| 2         | 8        | 1     | 93.6         |
+| 3         | 5        | 1     | 40.0         |
+
+
+* `runner_id` 1's average speed for each delivery was 37.5km/h for order 1, 44.4km/h for order 2, 40.2km/h for order 3, and 60.0 km/h for order 10
+* `runner_id` 2's average speed for each delivery was  35.1km/h for order 4, 60.0km/h for order 7 and 93.6km/h for order 2
+* `runner_id` 3's average speed for each delivery was 40.0km/h for order 5
+
+----------------------------
+
+QUESTION 7
+--------------
+
+What is the successful delivery percentage for each runner?
+
+```sql
+SELECT runner_id, 
+		COUNT(order_id):: double precision,
+		SUM(CASE WHEN pickup_time IS NOT NULL THEN 1 ELSE 0 END )::double precision AS delivered_orders,
+		(SUM(CASE WHEN pickup_time IS NOT NULL THEN 1 ELSE 0 END )/COUNT(order_id):: double precision)*100 AS delivery_percent
+FROM runner_orders_temp
+GROUP BY 1
+ORDER BY runner_id;
+```
+I selected `runner_id` and counted all orders. I used a `CASE WHEN` to assign 1 to orders that had been delivered and 0 to ones that were not delivered and I summed the results and grouped by `runner_id` so that the count and sum functions were done for each runner. I casted the results of the count and sum functions to a double precision because if it remained an int the calculations would be inaccurate. I then divided the sum of the results in the `CASE WHEN` statements by the `count` and multiplied by 100 to get the percentage. Assuming I did not cast the results to a double precision and the results of the division was 0.45, PostgreSQL will convert it to an int and calculate 0*100 instead of 0.45*100.
+
+**Results**
+
+| runner_id | count | delivered_orders | delivery_percent |
+| --------- | ----- | ---------------- | ---------------- |
+| 1         | 4     | 4                | 100              |
+| 2         | 4     | 3                | 75               |
+| 3         | 2     | 1                | 50               |
+
+* `runner_id` 1 completed 100% of their deliveries
+* `runner_id` 2 completed 75% of their deliveries
+* `runner_id` 3 completed 50% of their deliveries
+
+This is however not an accurate measure of successful deliveries because some of the orders of `runner_id` 2 and 3 were either cancelled by the restaurant or restaurant or the customer. In actual fact, all runners had a successful delivery percentage of 100% on orders that were not cancelled as shown below.
+
+```sql
+SELECT runner_id, 
+		COUNT(order_id):: double precision,
+		SUM(CASE WHEN pickup_time IS NOT NULL THEN 1 ELSE 0 END ):: double precision AS delivered_orders,
+		(SUM(CASE WHEN pickup_time IS NOT NULL THEN 1 ELSE 0 END )/COUNT(order_id):: double precision)*100 AS delivery_percent
+FROM runner_orders_temp r
+WHERE r.distance IS NOT NULL
+GROUP BY 1
+ORDER BY runner_id;
+```
+
+| runner_id | count | delivered_orders | delivery_percent |
+| --------- | ----- | ---------------- | ---------------- |
+| 1         | 4     | 4                | 100              |
+| 2         | 3     | 3                | 100              |
+| 3         | 1     | 1                | 100              |
+
+-------------------------
+
 

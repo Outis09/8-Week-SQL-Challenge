@@ -5,14 +5,13 @@ The `pizza_recipes` table looks like this:
 | 1        | 1, 2, 3, 4, 5, 6, 8, 10 |
 | 2        | 4, 6, 7, 9, 11, 12      |
 
-Running queries with the table in this format requires long queries therefore I opted to reformat the table but still maintain the same information. This makes it easier
-faster to query the table for data.
+Running queries with the table in this format requires long queries therefore I opted to reformat the table but still maintain the information. This makes it easier and faster to query the table for data.
 
 ```sql
 CREATE TEMPORARY TABLE pizza_recipes_temp AS (
                                     SELECT pizza_id, 
                                            TRIM(' ' FROM unnest(string_to_array(toppings, ',')))::int as toppings
-											              FROM pizza_recipes);
+  				    FROM pizza_recipes);
 ```
 
 I created a temporary table (`pizza_recipes_temp`). The datatype of the `toppings` column in the original column is string or text. So I converted it to an array and 
@@ -89,7 +88,7 @@ What was the most commonly added extra?
 WITH common_extras AS (
                   SELECT order_id,
                          unnest(string_to_array(extras, ','))::int as extras
-						      FROM customer_orders_temp
+		  FROM customer_orders_temp
                       )
 SELECT pt.topping_name AS extras, COUNT(order_id)
 FROM common_extras cex
@@ -111,7 +110,7 @@ Results:
 | ------ | ----- |
 | Bacon  | 4     |
 
-* The most commonly added extra is Bacon and it was added as an extra to 4 different orders
+* The most commonly added extras is Bacon and it was added as an extra to 4 different orders
 
 ----------------------------------
 
@@ -136,7 +135,7 @@ LIMIT 1;
 
 The `exclusions` column also had two numbers in rows as strings so i created a CTE(`common_exclusions`) and converted the strings to an array and unnested the array.
 Then i casted the datatype to an `int`. I joined the `pizza_toppings` table so i could extract the name of the exclusion. I selected the name of the toppings, counted 
-the number of orders and gruped by exclusions so that for each exclusions i could get the number of orders on which the exclsuions were made. I ordered by the count
+the number of orders and grouped by exclusions so that for each exclusions i could get the number of orders on which the exclsuions were made. I ordered by the count
 in descending order and limited the results to one row so that only the highest count was displayed.
 
 Results:
@@ -298,20 +297,18 @@ ORDER BY eppme DESC;
 
 I created 3 CTEs. 
 
-I created the first CTE(`t1`) to get the ingredients and the number of times they had been used to prepare different pizzas. In the subquery, I selected `pizza_id` and 
+I created the first CTE(`ingredients_cte`) to get the ingredients and the number of times they had been used to prepare different pizzas. In the subquery(`sq1`), I selected `pizza_id` and 
 the standard ingredients used to prepare each pizza each time it was orders. Then I filtered to include only those that were not cancelled which means they
 were delivered. The subquery returns the IDs of the pizza and the ingredients. In the CTE `t1` I selected the name of the ingredients from the `pizza_toppings` table.
 I then counted all the pizzas from the results of the subquery so that for each ingredient, I got the number of times it was used to prepare delivered pizzas.
 
-In the second CTE(`t2`) I wanted to get exclusion and the number of times it was excluded on delivered pizzas. In the subquery in this CTE, i converted the exclusions
+In the second CTE(`exclusions_cte`) I wanted to get exclusion and the number of times it was excluded on delivered pizzas. In the subquery(`sq2`) in this CTE, i converted the exclusions
 column to an array then i unnested the array and casted the datatype to an int and filtered to only include delivered orders. The results of this subquery would be 
 the orders with exclusions, the pizza contained in those orders and the exclusions. Because I wanted to use the name, I joined the `pizza_toppings` table and selected 
 the name of the ingredients being the exclusions. I then counted the pizzas and grouped by the name of the exclusion. The result of this CTE is the name of the 
 exclusion and the number of times it was excluded on delivered pizzas.
 
-In the third query(`t3`) I wanted to get the extras and the number of times they were added to delivered pizzas. I wrote a subquery to get the orders which were 
-delivered, the pizzas in those orders and the ingredients that were added as extras. In the CTE i used the `pizza_toppings` table to get the name of the extras and
-counted the number of delivered pizzas that had these extras.
+In the third query(`extras_cte`) I wanted to get the extras and the number of times they were added to delivered pizzas. I wrote a subquery(`sq3`) to get the orders which were delivered, the pizzas in those orders and the ingredients that were added as extras. In the CTE i used the `pizza_toppings` table to get the name of the extras and counted the number of delivered pizzas that had these extras.
 
 I combined the results of these CTE and used `CASE WHEN` statements to specify conditions. For each ingredient, the number of times it was used as `extras` was added 
 to and the number of times it was used as `exclusions` was subtracted from the number of times it was supposed to have been used as a standard ingredient.

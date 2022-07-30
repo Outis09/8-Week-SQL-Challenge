@@ -4,9 +4,9 @@ If a Meat Lovers pizza costs $12 and Vegetarian costs $10 and there were no char
 there are no delivery fees?
 
 ```sql
-SELECT SUM(CASE WHEN oct.pizza_id= 1 THEN order_count*12
-						    WHEN oct.pizza_id = 2 THEN order_count*10
-						    END) sales_in_dollars
+SELECT SUM(CASE WHEN sq.pizza_id= 1 THEN order_count*12
+		WHEN sq.pizza_id = 2 THEN order_count*10
+		END) as sales_in_dollars
 FROM (SELECT c.pizza_id, COUNT(c.order_id) as order_count
       FROM customer_orders_temp c
       JOIN runner_orders_temp r
@@ -16,8 +16,8 @@ FROM (SELECT c.pizza_id, COUNT(c.order_id) as order_count
 ```
 
 I used a subquery(`sq`) to find the number of pizzas that were delivered for each pizza type. Then I used `CASE WHEN` to assign the prices as stated in the question.
-So if the pizza Id was 1 then the number of orders for that pizza was multiplied by 12 to get the sales from that pizza. If the pizza ID was 2 then the 
-number of orders for that pizza was multiplied by 10. Then i summed the results.
+So if the pizza Id was 1 then the number of orders was multiplied by 12 to get the sales from that pizza. If the pizza ID was 2 then the 
+number of orders was multiplied by 10. Then I summed the results.
 
 Results:
 
@@ -36,9 +36,9 @@ What if there was an additional $1 charge for any pizza extras?
 
 ```sql
 WITH standard_sales AS (
-          SELECT SUM(CASE WHEN oct.pizza_id= 1 THEN order_count*12
-						              WHEN oct.pizza_id = 2 THEN order_count*10
-						              END) sales_in_dollars
+          SELECT SUM(CASE WHEN sq1.pizza_id= 1 THEN order_count*12
+			  WHEN sq1.pizza_id = 2 THEN order_count*10
+			  END) sales_in_dollars
           FROM (SELECT c.pizza_id, COUNT(c.order_id) as order_count
                 FROM customer_orders_temp c
                 JOIN runner_orders_temp r
@@ -57,17 +57,19 @@ extras AS (
 
 SELECT sales_in_dollars + extras_sales_in_dollars AS total_sales_in_dollars
 FROM standard_sales, extras;
+```
 
-I created two CTEs. In the first CTE(`standard_sales`) I calculated for the total amount os sales minus the extras. In the second CTE(`extras`) I converted the 
-strings in the `extras` column to an array and unnested it. I then counted the number of extras and multiplied by 1($1). Then i added the total sales minus extras and 
-exclusions(`sales_in_dollars`) to the total cost of extras(`extras_sales_in_dollars).
+I created two CTEs. In the first CTE(`standard_sales`) I calculated for the total amount of sales using the standard price. In the second CTE(`extras`) I converted the 
+strings in the `extras` column to an array and unnested it. I then counted the number of extras and multiplied by 1($1). Then I added the total sales (`sales_in_dollars`) to the total cost of extras(`extras_sales_in_dollars).
 
 Results:
 | total_sales_in_dollars |
 | ---------------------- |
 | 142                    |
 
-* Pizza Runner made $142 dollars for charging extra $1 on extras .
+
+* Pizza Runner made $142 dollars for charging extra $1 on extras
+
 
 ---------------------------------
 
@@ -86,19 +88,19 @@ rating INT NOT NULL);
 
 INSERT INTO rating_system(order_id, customer_id,runner_id,rating)
 VALUES (1, 101, 1, 3),
-		(2, 101, 1, 4 ),
-		(3, 102, 1, 5),
-		(4, 103, 2, 5),
-		(5, 104, 3, 5),
-		(7, 105, 2, 2),
-		(8, 102, 2, 4),
-		(10, 104, 1, 5);
+       (2, 101, 1, 4 ),
+       (3, 102, 1, 5),
+       (4, 103, 2, 5),
+       (5, 104, 3, 5),
+       (7, 105, 2, 2),
+       (8, 102, 2, 4),
+       (10, 104, 1, 5);
 		
 SELECT *
 FROM rating_system;
 ```
 
-I created a table with 4 columns. The columns included the `rating` column where the customer rated the runners.
+I created a table with 4 columns. The columns included the `rating` column showing how the customers rated the runners.
 
 Results:
 
@@ -154,7 +156,7 @@ ORDER BY 1;
 ```
 
 I used a subquery(`sq`) to calculate the difference between `order_time` and `pickup_time` and later aliased it as `order_prep_dur`. I selected the remaining
-columns from the their respective tables by joining  the tables and selecting the columns I needed.
+columns from their respective tables by joining  the tables and selecting the columns I needed.
 
 Results:
 
@@ -179,8 +181,8 @@ much money does Pizza Runner have left over after these deliveries?
 ```sql
 WITH sales AS (
           SELECT SUM(CASE WHEN oct.pizza_id= 1 THEN order_count*12
-						              WHEN oct.pizza_id = 2 THEN order_count*10
-						              END) sales_in_dollars
+		          WHEN oct.pizza_id = 2 THEN order_count*10
+			  END) as sales_in_dollars
           FROM (SELECT c.pizza_id, COUNT(c.order_id) as order_count
                 FROM customer_orders_temp c
                 JOIN runner_orders_temp r
@@ -197,9 +199,9 @@ FROM sales,runners_cost;
 ```
 
 
-I created two CTEs. In the first CTE(`sales`) I calculated the total sales Pizza Runner made from selling Meatlovers $12 and Vegetarian $10 and not charging for
+I created two CTEs. In the first CTE(`sales`) I calculated the total sales Pizza Runner made from selling Meatlovers pizza for $12 and Vegetarian pizza for $10 and not charging for
 extras.
-In the second CTE(`runners_cost`), i multiplied 0.30 by the total distance all the runners covered. Then i subtracted that cost from the total sales.
+In the second CTE(`runners_cost`), i multiplied 0.30 by the total distance covered by the runners. Then I subtracted that cost from the total sales.
 
 Results:
 

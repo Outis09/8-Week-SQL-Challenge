@@ -80,7 +80,7 @@ The resulting table:
 ![Screenshot (4)](https://user-images.githubusercontent.com/104911707/179405848-c7ec2e6e-87ae-4aa2-95d1-9ab6dc475721.png)
 
 
-From the new table above, the columns have now been converted to the appropriate data types. We can now work on the columns. `runner_orders_temp` is the clean version of `runner_orders` therefore I will be using `runner_orders_temp` to solve the case study. 
+From the new table above, the columns have now been converted to the appropriate data types. We can now work on the columns. `runner_orders_temp` is the clean version of `runner_orders` therefore I will be using `runner_orders_temp` to solve Danny's problems. 
 
 --------------
 
@@ -88,7 +88,7 @@ From the new table above, the columns have now been converted to the appropriate
  ----------------
  * The original `customer_orders` table can be accessed [here](case_study.md)
  
- The `customer_orders` table also needs to be cleaned because it has some `'null'` values. Converting all the `'null'` values to actual `NULL` values will make the table clumsy so one again I converted them to `''`.
+ The `customer_orders` table also needs to be cleaned because it has some `'null'` values. Converting all the `'null'` values to actual `NULL` values will make the table clumsy so once again I converted them to `''`.
  
  ```sql
  CREATE TEMP TABLE customer_orders_temp AS(
@@ -125,4 +125,4 @@ Below is the resulting table.
 | 10       | 104         | 1        |            |        | 2020-01-11 18:34:49 |
 | 10       | 104         | 1        | 2, 6       | 1, 4   | 2020-01-11 18:34:49 |
 
-The above table is more suitable for writing queries than the original `customer_orders` therefore I used `customer_orders_temp` so solve the case study.
+The above table is more suitable for writing queries than the original `customer_orders` therefore I used `customer_orders_temp` so solve Danny's problems.

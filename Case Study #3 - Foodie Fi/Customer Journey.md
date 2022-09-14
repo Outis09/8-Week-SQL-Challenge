@@ -181,4 +181,57 @@ months.they then upgraded to the pro monthly plan.However they upgraded after th
 were on their subcription for basic monthly for the fifth month when they upgraded.
 
 -----------------------------------
+Customer 18
+----------
+
+```sql
+SELECT s.customer_id,p.plan_name,s.start_date
+  FROM subscriptions s
+  JOIN plans p
+    ON s.plan_id = p.plan_id
+ WHERE s.customer_id = 18;
+```
+
+#### Results
+
+| customer_id | plan_name   | start_date               |
+| ----------- | ----------- | ------------------------ |
+| 18          | trial       | 2020-07-06 |
+| 18          | pro monthly | 2020-07-13 |
+
+#### Analysis
+
+Customer 18 started the 7 day free trial on 6th july 2020 and subscribed to the pro monthly plan when the free trial ended
+
+
+-------------------
+
+Customer 19
+---------
+
+```sql
+SELECT s.customer_id,p.plan_name,s.start_date
+  FROM subscriptions s
+  JOIN plans p
+    ON s.plan_id = p.plan_id
+ WHERE s.customer_id = 19;
+```
+
+#### Results
+| customer_id | plan_name   | start_date               |
+| ----------- | ----------- | ------------------------ |
+| 19          | trial       | 2020-06-22 |
+| 19          | pro monthly | 2020-06-29 |
+| 19          | pro annual  | 2020-08-29 |
+
+#### Analysis
+Customer 19 started the free trial on 22nd June 2020. When it ended they subscribed to the pro monthly plan for 2 months after which they upgraded to the pro annual plan
+
+
+
+
+
+
+
+
 

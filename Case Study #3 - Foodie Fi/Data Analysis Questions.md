@@ -79,3 +79,5 @@ What plan start_date values occur after the year 2020 for our dataset? Show the 
    WHERE start_date > '2020-12-31'
 GROUP BY 1;
 ```
+I counted the number of plans before 31st December 2020 and grouped by the plan name
+

@@ -104,9 +104,10 @@ By 31st December 2020 there were;
 What is the customer count and percentage of customers who have churned rounded to 1 decimal place?
 
 ```sql
-    WITH churn_cte as (SELECT COUNT(DISTINCT customer_id) as num_of_churn
-    FROM subscriptions
-   WHERE plan_id = 4)
+    WITH churn_cte as (
+             SELECT COUNT(DISTINCT customer_id) as num_of_churn
+               FROM subscriptions
+              WHERE plan_id = 4)
 
   SELECT num_of_churn, 
          num_of_churn/COUNT(distinct customer_id) :: double precision *100 as churn_percent

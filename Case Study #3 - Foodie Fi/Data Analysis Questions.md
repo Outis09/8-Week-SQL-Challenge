@@ -81,3 +81,80 @@ GROUP BY 1;
 ```
 I counted the number of plans before 31st December 2020 and grouped by the plan name
 
+Results:
+
+| plan_name     | count |
+| ------------- | ----- |
+| pro annual    | 63    |
+| churn         | 71    |
+| pro monthly   | 60    |
+| basic monthly | 8     |
+
+By 31st December 2020 there were;
+
+* 63 pro annual plans 
+* 71 churns
+* 60 pro monthly plans
+* 8 basic monthly plans
+
+----------------------------------
+
+**Question 4**
+
+What is the customer count and percentage of customers who have churned rounded to 1 decimal place?
+
+```sql
+    WITH churn_cte as (SELECT COUNT(DISTINCT customer_id) as num_of_churn
+    FROM subscriptions
+   WHERE plan_id = 4)
+
+  SELECT num_of_churn, 
+         num_of_churn/COUNT(distinct customer_id) :: double precision *100 as churn_percent
+    FROM churn_cte,subscriptions
+GROUP BY 1;
+```
+I used a CTE to get the number of customer's who churned and divided it by the number of total number of customers. 
+
+Results:
+| num_of_churn | churn_percent |
+| ------------ | ------------- |
+| 307          | 30.7          |
+
+* Approximately 30.7 percent of the customers churned.
+
+---------------------------------------------------
+
+**Question 5**
+
+How many customers have churned straight after their initial free trial - what percentage is this rounded to the nearest whole number?
+
+```sql
+WITH churn_after_trial as (
+  SELECT customer_id,
+         plan_id,
+         start_date,
+         dense_rank() over (partition by customer_id order by plan_id) as rank
+    FROM subscriptions),
+       total_customers as (
+  SELECT COUNT(DISTINCT customer_id) as total_number FROM subscriptions)
+
+  SELECT COUNT(c.customer_id) as churn_after_trial_count, 
+         round(count(c.customer_id)/total_number:: double precision *100) as percentage_of_total
+    FROM churn_after_trial c,total_customers t
+   WHERE c.plan_id = 4 and c.rank = 2
+GROUP BY total_number;
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+

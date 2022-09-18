@@ -1,5 +1,6 @@
-# Pizza Runner :pizza:
-
+<div align="center">
+ <h1>Pizza Runner :pizza:</h1>
+</div>
 
 <p align="center">
     <img src="https://8weeksqlchallenge.com/images/case-study-designs/2.png" width="400" height="400">

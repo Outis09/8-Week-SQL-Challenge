@@ -1,5 +1,6 @@
-# FOODIE-FI 🥑
-
+<div align="center">
+ <h1>FOODIE-FI 🥑</h1>
+</div>
 
 <p align="center">
     <img src="https://8weeksqlchallenge.com/images/case-study-designs/3.png" width="400" height="400">

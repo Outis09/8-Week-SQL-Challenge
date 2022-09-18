@@ -1,4 +1,6 @@
-# 
+<div align="center">
+ <h1>About Project</h1>
+</div>
 
 The 8 week SQL challenge was created by Danny Ma. 
 It contains 8 case studies to be solved using SQL.

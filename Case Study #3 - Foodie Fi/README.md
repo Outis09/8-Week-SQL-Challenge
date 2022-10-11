@@ -6,13 +6,14 @@
     <img src="https://8weeksqlchallenge.com/images/case-study-designs/3.png" width="400" height="400">
 </p>
 
-The Foodie-Fi challenge is the third challenge of the 8 Week SQL Challenge created by Danny Ma which can be accessed [here](https://8weeksqlchallenge.com).
+Foodie-Fi is a subscription based streaming service that has only food content. Kind of like Netflix but for food-related content. The owner sells monthly and annual subscriptions and has collected data on customers and their subscriptions. The owner has important business questions that can be answered using the data he has provided.
 
-My solution to the first two challenges can be found on [GitHub](https://github.com/Outis09/8-Week-SQL-Challenge).
+The owner's business questions have been divided into four:
 
-This challenge consists of Customer Tracking , Data Analysis and Business Intelligence.
+* **Customer Journey** - The owner wants to know the subscription journey of 8 select customers out of the 1000 customers.
+* **Data Analysis Questions** - Specific business questions spanning customer, churns, and subscription upgrades.
+* **Challenge Payment Question** - The Foodie-Fi teams wants a new table to contain the payment date and amounts based on certain conditions.
+* **Business Questions** - Business Recommendations.
 
-It tests the following SQL skills:
-
-
+**NB:** PostgreSQL was used in the analysis. 
 

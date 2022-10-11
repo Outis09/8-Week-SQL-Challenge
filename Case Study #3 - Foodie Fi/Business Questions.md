@@ -47,4 +47,18 @@ pro monthly and pro annual plans. By year's end in 2021, growth can be calculate
 
 ----------------------------------------------------
 
-**Question:**
+**Question:** What key metrics would you recommend Foodie-Fi management to track over time to assess performance of their overall business?
+
+The key metrics to track to assess performance over time include:
+* number of new customers for each month in a year
+* number of churns after trial for each month
+* number of upgrades from basic monthly to pro monthly or pro annual plans
+* revenue from each month for each year
+* number of customers for each month
+
+These metrics are suggested in months however at the end of the each year, the same metric can be used to compare one year to the previous year and assess performnce.
+
+---------------------------------------------------------
+
+
+

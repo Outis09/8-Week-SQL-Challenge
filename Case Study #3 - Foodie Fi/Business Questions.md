@@ -77,6 +77,16 @@ characteristics align with the trend of any group.
 
 ------------------------------------------------------
 
+**Question:** If the Foodie-Fi team were to create an exit survey shown to customers who wish to cancel their subscription, what questions would you include in the survey?
+-----
+
+* Why did you sign up for the service?
+* Was the service what you expected?
+* Have you tried a similar service? How does our service compare?
+* What would it take for you to consider re-subscribing to our service?
+* How can we improve?
+
+-----------------------------------
 
 
 

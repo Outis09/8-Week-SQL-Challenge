@@ -12,7 +12,7 @@ The topics covered in the case studies include;
 * People analytics
 * Financial markets
 * Fast moving consumer goods
-* Digital marketing
+* [Digital marketing](https://github.com/Outis09/8-Week-SQL-Challenge/tree/main/Case%20Study%20%233%20-%20Foodie%20Fi)
 
 I used PostgreSQL to solve the case studies
 

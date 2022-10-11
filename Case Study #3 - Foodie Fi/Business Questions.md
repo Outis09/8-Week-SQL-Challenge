@@ -88,5 +88,24 @@ characteristics align with the trend of any group.
 
 -----------------------------------
 
+**Question:** What business levers could the Foodie-Fi team use to reduce the customer churn rate? How would you validate the effectiveness of your ideas?
+------
+
+##### Analyzing customers who churn
+
+By analyzing customers who churn, foodie-Fi can identify traits that are common amongst these customers. After identifying these traits, Foodie-fi can use them to identify new customers who are at risk of churning and find ways to retain them. These ways could be:
+
+* offering discounts
+* offering an option to pause subscriptions
+* offering special packages engaging them
+
+To evaluate this, Foodie-Fi would have to monitor customers who are most likely to churn, and after using various means to retain the, calculate the percentage that was retained and for those who still churned, how long it took for them to churn.
+
+##### Identifying and targeting the right audience. 
+
+Customers could be churning because they do not like the service and there is little to nothing that Foodie-Fi can do to convince these customers. So to reduce churns and improve customer retention, Foodie-Fi can identify the right audience and make them the target market. This can be done by analyzing customers that have upgraded, customers who subscribed after trial and customers who have been subscribed for a period of time. The common traits these customers share can be analyzed and used as the basis for targeting a particular market. For example, if these customers are students or newly wedded couples or belong to a particular geographical location, Foodie-Fi could then target them because they have  a higher probability of being retained. This can be evaluated by analysing customers gained after this target marketing and calculating the retention rate.
+
+
+--------------------------------------------------
 
 

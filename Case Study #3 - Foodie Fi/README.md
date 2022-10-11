@@ -13,7 +13,7 @@ The owner's business questions have been divided into four:
 * **[Customer Journey](https://github.com/Outis09/8-Week-SQL-Challenge/blob/main/Case%20Study%20%233%20-%20Foodie%20Fi/Customer%20Journey.md)** - The owner wants to know the subscription journey of 8 select customers out of the 1000 customers.
 * **[Data Analysis Questions](https://github.com/Outis09/8-Week-SQL-Challenge/blob/main/Case%20Study%20%233%20-%20Foodie%20Fi/Data%20Analysis%20Questions.md)** - Specific business questions spanning customers, churns, and subscription upgrades.
 * **[Challenge Payment Question](https://github.com/Outis09/8-Week-SQL-Challenge/blob/main/Case%20Study%20%233%20-%20Foodie%20Fi/Challenge%20Payments%20Question.md)** - The Foodie-Fi teams wants a new table to contain the payment date and amounts based on certain conditions.
-* **[Business Questions]*(https://github.com/Outis09/8-Week-SQL-Challenge/blob/main/Case%20Study%20%233%20-%20Foodie%20Fi/Business%20Questions.md)* - Business Recommendations.
+* **[Business Questions](https://github.com/Outis09/8-Week-SQL-Challenge/blob/main/Case%20Study%20%233%20-%20Foodie%20Fi/Business%20Questions.md)** - Business Recommendations.
 
 The [schema](https://github.com/Outis09/8-Week-SQL-Challenge/blob/main/Case%20Study%20%233%20-%20Foodie%20Fi/Schema.md) file contains the codes to create the database.
 

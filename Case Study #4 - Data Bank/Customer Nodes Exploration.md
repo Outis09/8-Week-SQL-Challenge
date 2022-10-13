@@ -6,8 +6,9 @@ How many unique nodes are there on the Data Bank system?
 SELECT count(distinct(node_id)) as num_of_nodes
   FROM customer_nodes;
 ```
+I counted the distinct number of nodes in the entire Data Bank system.
 
-Results:
+**Results:**
 
 | num_of_nodes |
 | ----- |
@@ -28,8 +29,10 @@ What is the number of nodes per region?
       ON cn.region_id = r.region_id
 GROUP BY 1;
 ```
+I joined the `customer_nodes` table to the `regions` table using `region_id`. I selected the region name and counted the number of nodes then grouped by the regions.
 
-Results: 
+**Results:**
+
 | region    | number_of_nodes |
 | --------- | --------------- |
 | America   | 735             |
@@ -59,7 +62,9 @@ How many customers are allocated to each region?
 GROUP BY 1;
 ```
 
-Results:
+I counted the number of customers and grouped by the regions.
+
+**Results:**
 
 | region    | num_of_customers |
 | --------- | ---------------- |
@@ -98,8 +103,9 @@ WITH reallocation_cte AS (
 SELECT round(avg(reallocation_days),1) as average_reallocation_days
   FROM reallocation_cte;
 ```
+I created a CTE (`reallocation_cte`) where I selected customer ID, node ID and start date. Using a case when statement, I specified a condition that for each row for each customer, if node ID was not equal to the previous node ID then the start date of the previous node should be subtracted from the start date of the current node so that it resulted in the number of days it took for the reallocation to happen. If the node ID on one row was equal to the node on the previous row then it should return null. I named the column `reallocation_days`. I then queried the CTE for the average of the reallocation days and rounded to 1 decimal point.
 
-Results:
+**Results:**
 
 | average_reallocation_days |
 | ------------------------- |
@@ -131,8 +137,9 @@ SELECT percentile_cont(0.5) within group(order by reallocation_days) as median,
 	     percentile_cont(0.95) within group(order by reallocation_days) as ninetyfifith_percentile
   FROM reallocation_cte;
 ```
+I used the same CTE I used in the previous business question. I then queried the CTE for the median, 80th percentile and 95th percentile using the `percentile_cont` function.
 
-Results:
+**Results:**
 | median | eightieth_percentile | ninetyfifith_percentile |
 | ------ | ---------------------- | ----------------------- |
 | 16     | 24                     | 29                      |

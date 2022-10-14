@@ -18,7 +18,7 @@ The topics covered in the case studies include;
 
 |Case Study|Description|Status|
 |--------------|-----------------------|--------------------|
-|[#1 Pizza Runner](https://github.com/Outis09/8-Week-SQL-Challenge/tree/main/Case%20Study%20%231-%20Danny's%20Diner)|The owner of a pizza restaurant wants to analyze the visiting patterns of his customers,how much they spent and their favorite items on the menu so he can deliver a better and more personalized experience for his loyal customers. He has asked a few business questions which can be answered by analyzing the data he has collected|Completed|
+|[#1 Danny's Diner](https://github.com/Outis09/8-Week-SQL-Challenge/tree/main/Case%20Study%20%231-%20Danny's%20Diner)|The owner of a Japanese restaurant wants to analyze the visiting patterns of his customers,how much they spent and their favorite items on the menu so he can deliver a better and more personalized experience for his loyal customers. He has asked a few business questions which can be answered by analyzing the data he has collected|Completed|
 
 I used PostgreSQL to solve the case studies
 

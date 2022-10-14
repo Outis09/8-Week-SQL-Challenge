@@ -9,3 +9,11 @@ What is the unique count and total amount for each transaction type?
     FROM customer_transactions
 GROUP BY 1;
 ```
+
+**Results:**
+
+| txn_type   | num_of_unique_txn | total_amount |
+| ---------- | ----------------- | ------------ |
+| deposit    | 500               | 1359168      |
+| withdrawal | 439               | 793003       |
+| purchase   | 448               | 806537       |

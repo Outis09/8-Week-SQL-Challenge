@@ -25,7 +25,7 @@ Results:
 What is the monthly distribution of trial plan start_date values for our dataset - use the start of the month as the group by value
 
 ```sql
-  SELECT to_char(start_date, 'month'),count(plan_id) as num_of_trial
+  SELECT to_char(start_date, 'month')as month,count(plan_id) as num_of_trial
     FROM subscriptions
    WHERE plan_id = 0
 GROUP BY date_trunc('month',start_date),to_char(start_date, 'month')
@@ -36,7 +36,7 @@ I counted the number of trials and grouped by each month then I used `to_char` t
 
 Results :
 
-| to_char   | num_of_trial |
+| month   | num_of_trial |
 | --------- | ------------ |
 | january   | 88           |
 | february  | 68           |

@@ -101,4 +101,10 @@ In the main query, I joined the two CTEs and  filtered for customers who for a g
 * In March 2020, 192 customers had more than 1 deposit and at least 1 purchase or withdrawal.
 * In April 2020, 70 customers had more than 1 deposit and at least 1 purchase or withdrawal.
 
--------------------------------------
+----------------------------------------------------
+
+**QUESTION 4:**
+What is the closing balance for each customer at the end of the month?
+-----
+
+

@@ -81,6 +81,12 @@ other_txns as (
    WHERE multi_depo = 1 and other_txn = 1
 GROUP BY 1
 ```
+I created two CTEs. In the first CTE,`dep_txn`, I filtered for transactions that were deposits. Then, I selected the customer IDs and  truncated the transaction date to month. Using a `CASE WHEN` statement, I created a new column,`multi_depo`, where 1 was assigned to customers with more than 1 deposit in a month and null for those less than 1.
+
+In the second CTE,`other_txns`, I filtered for transactions that were not deposits. Then, I selected the customer IDs and truncated the transaction date to month. I used a `CASE WHEN` statement to create a new column,`other_txn`, to assign 1 to customers who had at least 1 transaction for a given month. Because I had filtered to leave out deposits, this transaction could be either withdrawals or purchases.
+
+In the main query, I joined the two CTEs and  filtered for customers who for a given month had more than 1 deposit and 1 withdrawal or deposit. That is, 1 in the `multi_depo` column and 1 in the `other_txn` column. I selected the truncated transaction dates, and counted the number of customers who met the condition. I grouped the results by the truncated date.
+
 **Results:**
 
 | month                    | num_of_customers |
@@ -90,4 +96,9 @@ GROUP BY 1
 | 2020-03-01    | 192              |
 | 2020-04-01    | 70               |
 
+* In January 2020, 168 customers had more than 1 deposit and at least 1 purchase or withdrawal.
+* In February 2020, 181 customers had more than 1 deposit and at least 1 purchase or withdrawal.
+* In March 2020, 192 customers had more than 1 deposit and at least 1 purchase or withdrawal.
+* In April 2020, 70 customers had more than 1 deposit and at least 1 purchase or withdrawal.
 
+-------------------------------------

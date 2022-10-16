@@ -9,7 +9,7 @@ What is the unique count and total amount for each transaction type?
     FROM customer_transactions
 GROUP BY 1;
 ```
-I selected the distinct transaction types which i used to group the count of the distinct number of customers and total amount. So the query will display the distinct transaction type, the number of transactions from distinct customers and the sum of transactions for each transaction type.
+I selected the distinct transaction types which I used to group the count of the distinct number of customers and total amount. So the query will display the distinct transaction type, the number of transactions from distinct customers and the sum of transactions for each transaction type.
 
 **Results:**
 
@@ -34,6 +34,7 @@ SELECT COUNT(txn_type)/COUNT(DISTINCT(customer_id)) as avg_deposit_count,
   FROM customer_transactions
  WHERE txn_type = 'deposit';
 ```
+I filtered for transactions that were only deposits. I then counted the number of transactions (deposits) and divided by the number of distinct customers. I also summed the total of transactions (deposits) and divided by the number of unique customers.
 
 **Results:**
 
@@ -41,6 +42,8 @@ SELECT COUNT(txn_type)/COUNT(DISTINCT(customer_id)) as avg_deposit_count,
 | ----------------- | --------------- |
 | 5                 | 2718            |
 
+* The average deposit count for all customers is 5
+* The average deposit amount for all customers is US$2,718
 -------------------------------------------------------------------------------------------------------
 
 **QUESTION 3:**

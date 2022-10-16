@@ -9,6 +9,7 @@ What is the unique count and total amount for each transaction type?
     FROM customer_transactions
 GROUP BY 1;
 ```
+I selected the distinct transaction types which i used to group the count of the distinct number of customers and total amount. So the query will display the distinct transaction type, the number of transactions from distinct customers and the sum of transactions for each transaction type.
 
 **Results:**
 
@@ -18,6 +19,9 @@ GROUP BY 1;
 | withdrawal | 439               | 793003       |
 | purchase   | 448               | 806537       |
 
+* 500 unique deposits with a total amount of US$1,359,168
+* 439 unique withdrawals with a total sum of US$793,003
+* 448 unique purchases with a total sum of US$806,537
 ----------------------------------------------------------------------------------------------------
 
 **QUESTION 2:**

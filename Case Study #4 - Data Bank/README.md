@@ -12,4 +12,8 @@ The management team at Data Bank want to increase their total customer base - bu
 
 This case study is about calculating metrics, growth and helping the business analyse their data in a smart way to better forecast and plan for their future developments.
 
+Data Banks' business problems and questions have been divided into the following sections:
+
+* **[Customer Nodes Exploration](https://github.com/Outis09/8-Week-SQL-Challenge/blob/main/Case%20Study%20%234%20-%20Data%20Bank/Customer%20Nodes%20Exploration.md)** - Questions regarding unique nodes, number of nodes in each Region and descriptive statistics of node reallocation days.
+
 In progress...

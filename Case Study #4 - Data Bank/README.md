@@ -15,5 +15,6 @@ This case study is about calculating metrics, growth and helping the business an
 Data Banks' business problems and questions have been divided into the following sections:
 
 * **[Customer Nodes Exploration](https://github.com/Outis09/8-Week-SQL-Challenge/blob/main/Case%20Study%20%234%20-%20Data%20Bank/Customer%20Nodes%20Exploration.md)** - Questions regarding unique nodes, number of nodes in each Region and descriptive statistics of node reallocation days.
+* **[Customer Transactions](https://github.com/Outis09/8-Week-SQL-Challenge/blob/main/Case%20Study%20%234%20-%20Data%20Bank/Customer%20Transactions.md)** - Questions regarding transactions, transaction types and opening and closing balances.
 
 In progress...

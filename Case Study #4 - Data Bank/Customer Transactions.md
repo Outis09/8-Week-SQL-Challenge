@@ -4,7 +4,7 @@ What is the unique count and total amount for each transaction type?
 
 ```sql
   SELECT DISTINCT(txn_type),
-         COUNT(DISTINCT(customer_id)) as num_of_unique_txn,
+         COUNT(customer_id) as num_of_txns,
          SUM(txn_amount) as total_amount
     FROM customer_transactions
 GROUP BY 1;
@@ -13,11 +13,11 @@ I selected the distinct transaction types which I used to group the count of the
 
 **Results:**
 
-| txn_type   | num_of_unique_txn | total_amount |
+| txn_type   | num_of_txns | total_amount |
 | ---------- | ----------------- | ------------ |
-| deposit    | 500               | 1359168      |
-| withdrawal | 439               | 793003       |
-| purchase   | 448               | 806537       |
+| deposit    | 2671       | 1359168      |
+| withdrawal | 1617              | 793003       |
+| purchase   | 1580              | 806537       |
 
 * 500 unique deposits with a total amount of US$1,359,168
 * 439 unique withdrawals with a total sum of US$793,003

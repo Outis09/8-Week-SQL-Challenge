@@ -122,6 +122,7 @@ What is the median, 80th and 95th percentile for this same reallocation days met
 ```sql
 WITH reallocation_cte AS (
         SELECT customer_id,
+	       region_name as region,
                node_id,
                start_date,
                CASE WHEN 
@@ -129,22 +130,28 @@ WITH reallocation_cte AS (
                     THEN start_date - LAG(start_date) OVER(PARTITION BY customer_id ORDER BY start_date) 
                     ELSE null
                     END AS reallocation_days
-         FROM customer_nodes
+         FROM customer_nodes cn
+	 JOIN regions r
+	   ON cn.region_id = r.region_id
                         )
 							
-SELECT percentile_cont(0.5) within group(order by reallocation_days) as median,
-       percentile_cont(0.8) within group(order by reallocation_days) as eightieth_percentile,
-	     percentile_cont(0.95) within group(order by reallocation_days) as ninetyfifith_percentile
-  FROM reallocation_cte;
+  SELECT region,
+         percentile_cont(0.5) within group(order by reallocation_days) as median,
+         percentile_cont(0.8) within group(order by reallocation_days) as eightieth_percentile,
+	 percentile_cont(0.95) within group(order by reallocation_days) as ninetyfifith_percentile
+    FROM reallocation_cte
+GROUP BY regions;
 ```
 I used the same CTE I used in the previous business question. I then queried the CTE for the median, 80th percentile and 95th percentile using the `percentile_cont` function.
 
 **Results:**
-| median | eightieth_percentile | ninetyfifith_percentile |
-| ------ | ---------------------- | ----------------------- |
-| 16     | 24                     | 29                      |
+| region    | median | eightyfifth_percentile | ninetyfifith_percentile |
+| --------- | ------ | ---------------------- | ----------------------- |
+| Africa    | 16     | 25                     | 29                      |
+| America   | 16     | 24                     | 29                      |
+| Asia      | 15     | 24                     | 29                      |
+| Australia | 15.5   | 24                     | 29                      |
+| Europe    | 16     | 26                     | 29                      |
 
-* The median allocation day is 16 days
-* The 80th percentile is 24 days
-* The 95th percentile is 29 days
+
 

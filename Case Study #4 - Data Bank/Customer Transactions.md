@@ -169,6 +169,7 @@ What is the percentage of customers who increase their closing balance by more t
 ------
 
 ```sql
+--summing transactions for each month
 WITH sum_txns as (
 	SELECT customer_id,
 	       date_trunc('month',txn_date)+ interval '1 month' - interval '1 day' as eomonth,

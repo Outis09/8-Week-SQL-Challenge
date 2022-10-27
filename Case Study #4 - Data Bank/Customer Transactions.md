@@ -203,7 +203,9 @@ SELECT *,
        LAG(closing_balance) OVER(PARTITION BY customer_id ORDER BY month_id) as prev_closing_bal
   FROM closing_balances
 	   )
-SELECT round((count(distinct(customer_id))::numeric/(select count(distinct customer_id)::numeric from customer_transactions))*100,2) as percentage
+SELECT round((count(DISTINCT(customer_id))::numeric /
+			--number of customers
+			(SELECT count(distinct customer_id)::numeric FROM customer_transactions))*100,2) as percentage
   FROM prev_balances
  WHERE closing_balance > (105/100)*prev_closing_bal and prev_closing_bal::text not like '-%'
  ```

@@ -135,3 +135,34 @@ LEFT JOIN sum_txns st
  ORDER BY cd.customer_id,ROW_NUMBER() OVER(PARTITION BY cd.customer_id ORDER BY cd.month);
 ```
 
+**Results:**
+
+| customer_id | month     | closing_balance |
+| ----------- | --------- | --------------- |
+| 1           | january   | 312             |
+| 1           | february  | 312             |
+| 1           | march     | -640            |
+| 1           | april     | -640            |
+| 2           | january   | 549             |
+| 2           | february  | 549             |
+| 2           | march     | 610             |
+| 2           | april     | 610             |
+| 3           | january   | 144             |
+| 3           | february  | -821            |
+| 3           | march     | -1222           |
+| 3           | april     | -729            |
+| 4           | january   | 848             |
+| 4           | february  | 848             |
+| 4           | march     | 655             |
+| 4           | april     | 655             |
+| 5           | january   | 954             |
+| 5           | february  | 954             |
+| 5           | march     | -1923           |
+| 5           | april     | -2413           |
+
+**NB:** Only the first five customers are displayed because the full results contains 2000 rows.
+
+-------------------------------------------------------------
+
+**QUESTION 5: **
+

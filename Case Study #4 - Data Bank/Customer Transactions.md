@@ -206,3 +206,8 @@ SELECT round((count(distinct(customer_id))::numeric/(select count(distinct custo
   FROM prev_balances
  WHERE closing_balance > (105/100)*prev_closing_bal and prev_closing_bal::text not like '-%'
  ```
+ **Results:**
+ | percentage |
+| ---------- |
+| 37.80      |
+

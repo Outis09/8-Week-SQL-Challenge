@@ -51,6 +51,7 @@ For each month - how many Data Bank customers make more than 1 deposit and eithe
 -----
 
 ```sql
+--customers with more than 1 deposit for each month
 WITH dep_txn as (
           SELECT customer_id, 
                  DATE_TRUNC('month',txn_date) as txn_date,
@@ -61,7 +62,7 @@ WITH dep_txn as (
         GROUP BY 1,2
         ORDER BY 1,2
                ),
-
+--customers with at least 1 purchase or withdrawal for each month
 other_txns as (
           SELECT customer_id,
                  DATE_TRUNC('month',txn_date) as txn_date,

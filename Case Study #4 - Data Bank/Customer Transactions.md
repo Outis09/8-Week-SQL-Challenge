@@ -167,3 +167,42 @@ LEFT JOIN sum_txns st
 **QUESTION 5:**
 What is the percentage of customers who increase their closing balance by more than 5%?
 ------
+
+```sql
+WITH sum_txns as (
+	SELECT customer_id,
+	       date_trunc('month',txn_date)+ interval '1 month' - interval '1 day' as eomonth,
+	       SUM(CASE WHEN txn_type = 'deposit' then txn_amount
+	                ELSE -txn_amount
+			END) as amount
+	 FROM customer_transactions
+     GROUP BY customer_id,eomonth
+     ORDER BY customer_id,eomonth
+	),
+-- generate closing dates till end of April
+closing_dates as (
+	SELECT DISTINCT customer_id,
+	       to_date('2020-01-31','YYYY-MM-DD') + (generate_series(0,3,1)*interval '1 month') as month
+	  FROM customer_transactions
+      ORDER BY customer_id,month),
+--closing balance for each month
+closing_balances as(
+	SELECT cd.customer_id,
+	       ROW_NUMBER() OVER(PARTITION BY cd.customer_id ORDER BY cd.month) as month_id,
+	       to_char(month,'month') as month,
+	       SUM(amount) OVER(PARTITION BY cd.customer_id ORDER BY month) as closing_balance
+	  FROM closing_dates cd
+     LEFT JOIN sum_txns st
+            ON cd.customer_id = st.customer_id and cd.month = st.eomonth
+      ORDER BY cd.customer_id,month_id
+                     ),
+--closing balances for the previous month
+prev_balances as(
+SELECT *,
+       LAG(closing_balance) OVER(PARTITION BY customer_id ORDER BY month_id) as prev_closing_bal
+  FROM closing_balances
+	   )
+SELECT round((count(distinct(customer_id))::numeric/(select count(distinct customer_id)::numeric from customer_transactions))*100,2) as percentage
+  FROM prev_balances
+ WHERE closing_balance > (105/100)*prev_closing_bal and prev_closing_bal::text not like '-%'
+ ```

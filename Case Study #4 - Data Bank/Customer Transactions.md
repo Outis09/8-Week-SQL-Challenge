@@ -164,5 +164,6 @@ LEFT JOIN sum_txns st
 
 -------------------------------------------------------------
 
-**QUESTION 5: **
-
+**QUESTION 5:**
+What is the percentage of customers who increase their closing balance by more than 5%?
+------

@@ -88,6 +88,7 @@ How many days on average are customers reallocated to a different node?
 -----
 
 ```sql
+--reallocation days
 WITH reallocation_cte AS (
         SELECT customer_id,
                node_id,
@@ -120,6 +121,7 @@ What is the median, 80th and 95th percentile for this same reallocation days met
 -----
 
 ```sql
+--reallocation days
 WITH reallocation_cte AS (
         SELECT customer_id,
 	       region_name as region,

@@ -136,6 +136,12 @@ LEFT JOIN sum_txns st
  ORDER BY cd.customer_id,ROW_NUMBER() OVER(PARTITION BY cd.customer_id ORDER BY cd.month);
 ```
 
+The first CTE, `sum_txns`, sums the transaction for a given customer and a given month. I used a case when statement to convert purchases and withdrawals to negatives leaving only deposits as positives. That way, when they are added,purchases and withdrawals will actually be subtracted from deposits. I also converted the transaction dates to end of month dates.
+
+In the second CTE,`closing_dates`, I generated end of the month dates for January - April for all customers. This is because the first transactions were in January and the last transactions were in April.
+
+In the main query, I selected the customer IDs and extracted the month names from the `closing_dates` CTE. I used a windows function to get a running sum for every customer after each month. In months that transactions had not been recorded, this function put the preceding balance there as closing balance. I used the `ROW_NUMBER()` windows function to number the rows and ordered by that number.
+
 **Results:**
 
 | customer_id | month     | closing_balance |

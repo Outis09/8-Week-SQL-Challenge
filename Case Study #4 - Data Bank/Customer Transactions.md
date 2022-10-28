@@ -136,11 +136,11 @@ LEFT JOIN sum_txns st
  ORDER BY cd.customer_id,ROW_NUMBER() OVER(PARTITION BY cd.customer_id ORDER BY cd.month);
 ```
 
-The first CTE, `sum_txns`, sums the transaction for a given customer and a given month. I used a case when statement to convert purchases and withdrawals to negatives leaving only deposits as positives. That way, when they are added,purchases and withdrawals will actually be subtracted from deposits. I also converted the transaction dates to end of month dates.
+The first CTE, `sum_txns`, sums the transaction for each customer in a given month. I used a `CASE WHEN` statement to convert purchases and withdrawals to negatives leaving only deposits as positives. That way, when they are added,purchases and withdrawals will actually be subtracted from deposits. I also converted the transaction dates to end of month dates.
 
 In the second CTE,`closing_dates`, I generated end of the month dates for January - April for all customers. This is because the first transactions were in January and the last transactions were in April.
 
-In the main query, I selected the customer IDs and extracted the month names from the `closing_dates` CTE. I used a windows function to get a running sum for every customer after each month. In months that transactions had not been recorded, this function put the preceding balance there as closing balance. I used the `ROW_NUMBER()` windows function to number the rows and ordered by that number.
+In the main query, I selected the customer IDs and extracted the month names from the `closing_dates` CTE. I used a windows function to get a running sum for every each customer after each month. In months that transactions had not been recorded, this function put the preceding balance there as closing balance. I used the `ROW_NUMBER()` windows function to number the rows and ordered by that number.
 
 **Results:**
 
@@ -216,8 +216,17 @@ SELECT round((count(DISTINCT(customer_id))::numeric /
   FROM prev_balances
  WHERE closing_balance > (105/100)*prev_closing_bal and prev_closing_bal::text not like '-%'
  ```
- **Results:**
+I used the first two CTEs from the question 4. The first CTE,`sum_txns`, subtracts purchases and withdrawals from deposits for each customer and each month. The second CTE, `closing_dates`, generates end of the month dates for January to April for each customer.
+
+The third CTE,`closing_balances`, calculates the closing balance for each of the four months for each customer.
+
+The fourth CTE,`prev_balances`, returns the preceding closing balance. The first month transactions get null because there is no preceding closing balance but the rest of the month get the closing balance of the previous month.
+
+In the main query, I used a condition to retrieve customers who had increased their closing balances by more than 5%. That is, their closing balance for the month is more than 105% their closing balance for the previous month. I also excluded customers with negative balances in a given month. I counted unique customer IDs who met this condition. Using a subquery, I also counted the unique number of customers in the database. I divided the number of customers who met the condition by the number of customers in the database. I multiplied the results by 100 to get the percentage and rounded to two decimal places.
+
+**Results:**
  | percentage |
 | ---------- |
 | 37.80      |
 
+37.80% of customers increased their closing balances by more than 5 percent.

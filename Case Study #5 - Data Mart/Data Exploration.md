@@ -37,3 +37,27 @@ LEFT JOIN clean_weekly_sales
 | 1,2,3,4,5,6,7,8,9,10,11,12,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52 |
 
 ---------------------------------------------------------------------------------
+
+**Question 3:**
+How many total transactions were there for each year in the dataset?
+-----
+
+**Query:**
+
+```sql
+  SELECT calendar_year as year,
+         count(transactions) as num_of_txns
+    FROM clean_weekly_sales
+GROUP BY calendar_year
+ORDER BY calendar_year;
+```
+
+**Results:**
+
+| year | num_of_txns |
+| ---- | ----------- |
+| 2018 | 5698        |
+| 2019 | 5708        |
+| 2020 | 5711        |
+
+---------------------------------------

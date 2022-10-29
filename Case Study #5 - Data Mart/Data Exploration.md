@@ -105,3 +105,27 @@ ORDER BY region,calendar_year,month_number;
 | ASIA          | 2018          | march     | 119180883 |
 | ASIA          | 2018          | april     | 603716301 |
 | ASIA          | 2018          | may       | 472634283 |
+
+------------------------------------------
+
+**Question 5:**
+What is the total count of transactions for each platform
+-----
+
+**Query:**
+```sql
+SELECT platform,
+       count(transactions)
+FROM clean_weekly_sales
+GROUP BY platform;
+```
+
+**Results:**
+
+| platform | count |
+| -------- | ----- |
+| Shopify  | 8549  |
+| Retail   | 8568  |
+
+--------------------
+

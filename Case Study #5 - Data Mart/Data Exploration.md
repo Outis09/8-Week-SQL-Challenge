@@ -214,3 +214,50 @@ ORDER BY year;
 | 2020 | 28.72                 | 32.73             | 38.55                 |
 
 ----------------------
+
+**Question 8:**
+Which age_band and demographic values contribute the most to Retail sales?
+------
+
+**Query:**
+
+```sql
+SELECT age_band,
+       demographic,
+	   sum(sales) as retail_sales,
+	   round(((sum(sales)::numeric/(SELECT sum(sales) FROM clean_weekly_sales WHERE platform='Retail')::numeric)*100),2) as percentage
+FROM clean_weekly_sales
+WHERE platform = 'Retail'
+GROUP BY age_band, demographic
+ORDER BY retail_sales DESC;
+```
+
+**Results:**
+
+| age_band     | demographic | retail_sales | percentage |
+| ------------ | ----------- | ------------ | ---------- |
+| unknown      | unknown     | 16067285533  | 40.52      |
+| Retirees     | Families    | 6634686916   | 16.73      |
+| Retirees     | Couples     | 6370580014   | 16.07      |
+| Middle Aged  | Families    | 4354091554   | 10.98      |
+| Young Adults | Couples     | 2602922797   | 6.56       |
+| Middle Aged  | Couples     | 1854160330   | 4.68       |
+| Young Adults | Families    | 1770889293   | 4.47       |
+
+------------------------------------
+
+**Question 9:**
+Can we use the avg_transaction column to find the average transaction size for each year for Retail vs Shopify? If not - how would you calculate it instead?
+-----
+
+**Query:**
+
+```sql
+SELECT calendar_year,
+       platform,
+	   round(avg(avg_transaction),2) as avg_transaction_row,
+	   round((sum(sales)::numeric/sum(transactions)::numeric),2) as avg_transaction_group
+FROM clean_weekly_sales
+GROUP BY calendar_year,platform
+ORDER BY calendar_year;
+```

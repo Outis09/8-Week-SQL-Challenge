@@ -129,3 +129,54 @@ GROUP BY platform;
 
 --------------------
 
+**Question 6:**
+What is the percentage of sales for Retail vs Shopify for each month?
+-----
+
+**Query:**
+
+```sql
+--gets total sales,total retail sales and total shopify sales
+WITH platform_sales as(
+SELECT calendar_year as year,
+       to_char(week_date,'month') as month,
+	   sum(sales) as monthly_sales,
+	   sum(CASE WHEN platform = 'Retail' THEN sales ELSE 0 end)as retail_sales,
+	   sum(CASE WHEN platform = 'Shopify' THEN sales ELSE 0 end) as shopify_sales
+FROM clean_weekly_sales
+GROUP BY 1,month_number,2
+ORDER BY 1,month_number)
+
+SELECT year,
+       month,
+	   round(((retail_sales::numeric/monthly_sales::numeric)*100),2) as retail_sales_percentage,
+	   round(((shopify_sales::numeric/monthly_sales::numeric)*100),2) as shopify_sales_percentage
+FROM platform_sales;
+```
+
+**Results:**
+
+| year | month     | retail_sales_percentage | shopify_sales_percentage |
+| ---- | --------- | ----------------------- | ------------------------ |
+| 2018 | march     | 97.92                   | 2.08                     |
+| 2018 | april     | 97.93                   | 2.07                     |
+| 2018 | may       | 97.73                   | 2.27                     |
+| 2018 | june      | 97.76                   | 2.24                     |
+| 2018 | july      | 97.75                   | 2.25                     |
+| 2018 | august    | 97.71                   | 2.29                     |
+| 2018 | september | 97.68                   | 2.32                     |
+| 2019 | march     | 97.71                   | 2.29                     |
+| 2019 | april     | 97.80                   | 2.20                     |
+| 2019 | may       | 97.52                   | 2.48                     |
+| 2019 | june      | 97.42                   | 2.58                     |
+| 2019 | july      | 97.35                   | 2.65                     |
+| 2019 | august    | 97.21                   | 2.79                     |
+| 2019 | september | 97.09                   | 2.91                     |
+| 2020 | march     | 97.30                   | 2.70                     |
+| 2020 | april     | 96.96                   | 3.04                     |
+| 2020 | may       | 96.71                   | 3.29                     |
+| 2020 | june      | 96.80                   | 3.20                     |
+| 2020 | july      | 96.67                   | 3.33                     |
+| 2020 | august    | 96.51                   | 3.49                     |
+
+------------------------------------------

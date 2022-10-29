@@ -37,7 +37,7 @@ Query
 ```sql
 SET search_path to data_mart;
 
-SELECT week_date :: date, --1
+SELECT week_date :: date as week_date, --1
        extract('week' from week_date::date) as week_number, --2
        extract('month' from week_date::date) as month_number, --3
        extract('year' from week_date::date) as calendar_year, --4
@@ -61,15 +61,12 @@ SELECT week_date :: date, --1
        round((sales::numeric/transactions::numeric),2) as avg_transaction --8
   INTO clean_weekly_sales --new table
   FROM weekly_sales;
-
-SELECT *
-  FROM clean_weekly_sales 
- LIMIT 20;
 ```	   
+I numbered some of the statements to indicate which of the requirements I was tackling. The results contained more than 17000 rows so I just displayed the first 20 columns here.
 
 **Results:**
 
-| to_date                  | week_number | month_number | calendar_year | region        | platform | segment | age_band     | demographic | customer_type | transactions | sales    | avg_transaction |
+| week_date                  | week_number | month_number | calendar_year | region        | platform | segment | age_band     | demographic | customer_type | transactions | sales    | avg_transaction |
 | ------------------------ | ----------- | ------------ | ------------- | ------------- | -------- | ------- | ------------ | ----------- | ------------- | ------------ | -------- | --------------- |
 | 2020-08-31     | 36          | 8            | 2020          | ASIA          | Retail   | C3      | Retirees     | Couples     | New           | 120631       | 3656163  | 30.31           |
 | 2020-08-31     | 36          | 8            | 2020          | ASIA          | Retail   | F1      | Young Adults | Families    | New           | 31574        | 996575   | 31.56           |
@@ -92,4 +89,4 @@ SELECT *
 | 2020-08-31     | 36          | 8            | 2020          | OCEANIA       | Retail   | C2      | Middle Aged  | Couples     | New           | 111219       | 2980673  | 26.80           |
 | 2020-08-31     | 36          | 8            | 2020          | USA           | Retail   | F1      | Young Adults | Families    | New           | 11820        | 463738   | 39.23           |
 	   
-  
+  The new columns have been successfully created. The new table,`clean-weekly_sales`, is what I used to answer Data Mart's business questions.

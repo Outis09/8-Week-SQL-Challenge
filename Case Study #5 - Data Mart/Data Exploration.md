@@ -224,8 +224,8 @@ Which age_band and demographic values contribute the most to Retail sales?
 ```sql
 SELECT age_band,
        demographic,
-	   sum(sales) as retail_sales,
-	   round(((sum(sales)::numeric/(SELECT sum(sales) FROM clean_weekly_sales WHERE platform='Retail')::numeric)*100),2) as percentage
+       sum(sales) as retail_sales,
+       round(((sum(sales)::numeric/(SELECT sum(sales) FROM clean_weekly_sales WHERE platform='Retail')::numeric)*100),2) as percentage
 FROM clean_weekly_sales
 WHERE platform = 'Retail'
 GROUP BY age_band, demographic

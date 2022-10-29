@@ -180,3 +180,37 @@ FROM platform_sales;
 | 2020 | august    | 96.51                   | 3.49                     |
 
 ------------------------------------------
+
+**Question 7**
+What is the percentage of sales by demographic for each year in the dataset?
+-----
+
+**Query:**
+
+```sql
+WITH demo_sales as (
+SELECT calendar_year as year,
+       sum(sales) as total_sales,
+	   sum(CASE WHEN demographic = 'Couples' THEN sales ELSE 0 END)as couples_sales,
+	   sum(CASE WHEN demographic = 'Families' THEN sales ELSE 0 END) as families_sales,
+	   sum(CASE WHEN demographic = 'unknown' THEN sales ELSE 0 END) as unknown_demo_sales
+FROM clean_weekly_sales
+GROUP BY 1
+					)
+SELECT year,
+       round(((couples_sales::numeric/total_sales::numeric)*100),2) as couples_sales_percent,
+	   round(((families_sales::numeric/total_sales::numeric)*100),2) as fam_sales_percent,
+	   round(((unknown_demo_sales::numeric/total_sales::numeric)*100),2) as unknown_sales_percent
+FROM demo_sales
+ORDER BY year;
+```
+
+**Results:**
+
+| year | couples_sales_percent | fam_sales_percent | unknown_sales_percent |
+| ---- | --------------------- | ----------------- | --------------------- |
+| 2018 | 26.38                 | 31.99             | 41.63                 |
+| 2019 | 27.28                 | 32.47             | 40.25                 |
+| 2020 | 28.72                 | 32.73             | 38.55                 |
+
+----------------------

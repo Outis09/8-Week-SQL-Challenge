@@ -261,3 +261,16 @@ FROM clean_weekly_sales
 GROUP BY calendar_year,platform
 ORDER BY calendar_year;
 ```
+
+**Results:**
+
+| calendar_year | platform | avg_transaction_row | avg_transaction_group |
+| ------------- | -------- | ------------------- | --------------------- |
+| 2018          | Retail   | 42.91               | 36.56                 |
+| 2018          | Shopify  | 188.28              | 192.48                |
+| 2019          | Retail   | 41.97               | 36.83                 |
+| 2019          | Shopify  | 177.56              | 183.36                |
+| 2020          | Shopify  | 174.87              | 179.03                |
+| 2020          | Retail   | 40.64               | 36.56                 |
+
+-------------------------------

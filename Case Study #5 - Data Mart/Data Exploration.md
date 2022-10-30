@@ -7,6 +7,7 @@ What day of the week is used for each week_date value?
 SELECT DISTINCT(to_char(week_date,'day')) as dow
   FROM clean_weekly_sales;
 ```
+I used `to_char` to get the name of the day from `week_date`. Then I selected the distinct day name.
 
 **Results:**
 
@@ -29,6 +30,7 @@ LEFT JOIN clean_weekly_sales
        ON week_number = id
     WHERE week_number is null;
 ```
+There are 52 weeks in a year so I generated a series from 1 to 52. Using `LEFT JOIN`, I joined the `clean_weekly_sales` table. For numbers on the generated series that were not in the `week_number` column, the left join will return null so i filtered for that. In the select statement, I converted the results to an array.
 
 **Results:**
 
@@ -51,6 +53,7 @@ How many total transactions were there for each year in the dataset?
 GROUP BY calendar_year
 ORDER BY calendar_year;
 ```
+I selected the calendar year and counted the transactions which I grouped by the calendar year.
 
 **Results:**
 

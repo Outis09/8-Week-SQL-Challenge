@@ -200,22 +200,24 @@ What is the percentage of sales by demographic for each year in the dataset?
 **Query:**
 
 ```sql
+--gets sales for each demograhpic for each year
 WITH demo_sales as (
-SELECT calendar_year as year,
-       sum(sales) as total_sales,
-	   sum(CASE WHEN demographic = 'Couples' THEN sales ELSE 0 END)as couples_sales,
-	   sum(CASE WHEN demographic = 'Families' THEN sales ELSE 0 END) as families_sales,
-	   sum(CASE WHEN demographic = 'unknown' THEN sales ELSE 0 END) as unknown_demo_sales
-FROM clean_weekly_sales
-GROUP BY 1
-					)
-SELECT year,
-       round(((couples_sales::numeric/total_sales::numeric)*100),2) as couples_sales_percent,
-	   round(((families_sales::numeric/total_sales::numeric)*100),2) as fam_sales_percent,
-	   round(((unknown_demo_sales::numeric/total_sales::numeric)*100),2) as unknown_sales_percent
-FROM demo_sales
+	SELECT calendar_year as year,
+	       sum(sales) as total_sales,
+	       sum(CASE WHEN demographic = 'Couples' THEN sales ELSE 0 END)as couples_sales,
+	       sum(CASE WHEN demographic = 'Families' THEN sales ELSE 0 END) as families_sales,
+	       sum(CASE WHEN demographic = 'unknown' THEN sales ELSE 0 END) as unknown_demo_sales
+	  FROM clean_weekly_sales
+	 GROUP BY calendar_year
+	           )
+  SELECT year,
+         round(((couples_sales::numeric/total_sales::numeric)*100),2) as couples_sales_percent,
+	 round(((families_sales::numeric/total_sales::numeric)*100),2) as fam_sales_percent,
+	 round(((unknown_demo_sales::numeric/total_sales::numeric)*100),2) as unknown_sales_percent
+    FROM demo_sales
 ORDER BY year;
 ```
+In the CTE,`demo_sales`,I selected the calendar year and for each demographic, I calculated the total sales for each year. In the main query I selected the year and divided the sales for each demographic for each year then I multiplied by 100 and rounded to two decimal places.
 
 **Results:**
 

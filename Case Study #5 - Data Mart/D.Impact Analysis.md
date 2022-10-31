@@ -98,7 +98,6 @@ ORDER BY percent_change;
 
 -----------------------------
 
-
 Demographic
 -----
 
@@ -129,3 +128,32 @@ ORDER BY percent_change;
 
 -------------
 
+Customer Type
+-----
+
+**Query:**
+```sql
+WITH customer_sales as (
+SELECT customer_type,
+       sum(CASE WHEN week_number between 13 and 24 then sales else 0 end) as tot_sales_bfr,
+	   sum(CASE WHEN week_number between 25 and 36 then sales else 0 end) as tot_sales_aft
+FROM clean_weekly_sales
+GROUP BY customer_type)
+
+SELECT customer_type,
+       tot_sales_bfr,
+	   tot_sales_aft,
+	   round(((tot_sales_aft::numeric-tot_sales_bfr::numeric)/tot_sales_bfr::numeric)*100,2) as percent_change
+FROM customer_sales
+ORDER BY percent_change;
+```
+
+**Results:**
+
+| customer_type | tot_sales_bfr | tot_sales_aft | percent_change |
+| ------------- | ------------- | ------------- | -------------- |
+| Existing      | 10168877642   | 10117367239   | -0.51          |
+| Guest         | 7630353739    | 7595150744    | -0.46          |
+| New           | 2606990480    | 2624894383    | 0.69           |
+
+---------------------------

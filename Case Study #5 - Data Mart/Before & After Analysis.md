@@ -45,3 +45,47 @@ SELECT sales_before,
        round(((sales_after::numeric-sales_before::numeric)/sales_before::numeric)*100,2) as percent_change
  FROM impact;
 ```
+
+**Results:**
+
+| sales_before | sales_after | change    | percent_change |
+| ------------ | ----------- | --------- | -------------- |
+| 2345878357   | 2318994169  | -26884188 | -1.15          |
+
+
+Now I will look compare the four weeks before and after week by week.
+
+**Query:**
+
+```sql
+WITH running_change as (
+        SELECT week_number,
+               sum(sales) as tot_sales,
+               LAG(sum(sales)) OVER(ORDER BY week_number) as prev_week_sales
+          FROM clean_weekly_sales
+         WHERE calendar_year = 2020 and week_number between 21 and 28
+      GROUP BY week_number
+      ORDER BY week_number
+                       )
+  SELECT week_number,
+         tot_sales,
+         prev_week_sales,
+         round(((tot_sales::numeric-prev_week_sales::numeric)/prev_week_sales::numeric)*100,2) as percent_change
+    FROM running_change
+ORDER BY week_number;
+```
+
+**Results:**
+
+| week_number | tot_sales | prev_week_sales | percent_change |
+| ----------- | --------- | --------------- | -------------- |
+| 21          | 585008090 |                 |                |
+| 22          | 589120804 | 585008090       | 0.70           |
+| 23          | 585466073 | 589120804       | -0.62          |
+| 24          | 586283390 | 585466073       | 0.14           |
+| 25          | 570025348 | 586283390       | -2.77          |
+| 26          | 583242828 | 570025348       | 2.32           |
+| 27          | 575390599 | 583242828       | -1.35          |
+| 28          | 590335394 | 575390599       | 2.60           |
+
+----------------------------------------

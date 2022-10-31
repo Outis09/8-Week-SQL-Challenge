@@ -103,6 +103,7 @@ The highest decrease in the 8 week period was recorded in the 25th week whihc is
 
 **Query:**
 ```sql
+--gets total sales for 12 weeks before and after the change
 WITH impact as(
         SELECT SUM(CASE WHEN week_number BETWEEN 25 and 36 THEN sales ELSE 0 END)as sales_after,
                SUM(CASE WHEN week_number BETWEEN 13 and 24 THEN sales ELSE 0 END)as sales_before
@@ -111,17 +112,17 @@ WITH impact as(
               )
 SELECT sales_before,
        sales_after,
-	   sales_after-sales_before as change,
+       sales_after-sales_before as change,
        round(((sales_after::numeric-sales_before::numeric)/sales_before::numeric)*100,2) as percent_change
   FROM impact;
 ```
-
+I used a CTE,`impact`, to get the sales for the two 12 week periods. In the main query, I calculated the change and the change percentage.
 **Results:**
 | sales_before | sales_after | change     | percent_change |
 | ------------ | ----------- | ---------- | -------------- |
 | 7126273147   | 6973947753  | -152325394 | -2.14          |
 
-
+There was a percentage decrease of 2.14% in sales in the 12 weeks after the change was introduced compared to the period before the change was introduced.
 
 I will compare the weeks in the 24 week period.
 
@@ -173,5 +174,7 @@ ORDER BY week_number;
 | 34          | 581075406 | 580024393       | 0.18           |
 | 35          | 593379892 | 581075406       | 2.12           |
 | 36          | 591603888 | 593379892       | -0.30          |
+
+There were relatively high percentage decreases of 5.84%, 2.55%, 5.65% and 2.47% before the change was introduced. In the 12 weeks after the change was introduced, there were relatively high percentage decreases of 2.77%, 1.35%, and 1.85%. The percentage decreases in the 12 week period before the change are higher than the 12 week period after the change was introduced. Is the change the cause of the decrease? Are there extraneous variables affecting sales that have not been accounted for? More information is needed to answer these questions and the data does not provide enough information.
 
 ----------------------------------------------

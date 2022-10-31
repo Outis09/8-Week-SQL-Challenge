@@ -33,6 +33,7 @@ Now I will look at the change and percent change between the two periods.
 **Query:**
 
 ```sql
+--gets total sales for the four weeks before and after the baseline week
 WITH impact as(
     SELECT SUM(CASE WHEN week_number BETWEEN 25 and 28 THEN sales ELSE 0 END)as sales_after,
            SUM(CASE WHEN week_number BETWEEN 21 and 24 THEN sales ELSE 0 END)as sales_before
@@ -45,6 +46,7 @@ SELECT sales_before,
        round(((sales_after::numeric-sales_before::numeric)/sales_before::numeric)*100,2) as percent_change
  FROM impact;
 ```
+I used a CTE,`impact`, to get the sum of sales for the four weeks before and after period. In the main query, I calculated the difference between the sales in the two periods and the percent change.
 
 **Results:**
 
@@ -52,12 +54,15 @@ SELECT sales_before,
 | ------------ | ----------- | --------- | -------------- |
 | 2345878357   | 2318994169  | -26884188 | -1.15          |
 
+There was a decrease in sales by 1.15% four weeks after the change was introduced as compared to four weeks before the change was introduced.
+
 
 Now I will look compare the four weeks before and after week by week.
 
 **Query:**
 
 ```sql
+--gets week sales and previous week sales
 WITH running_change as (
         SELECT week_number,
                sum(sales) as tot_sales,
@@ -74,6 +79,7 @@ WITH running_change as (
     FROM running_change
 ORDER BY week_number;
 ```
+I used a CTE,`running_change`, to get the total sales for each week in the 8 week period and the sales of the previous week. In the main query, I compared the sales for each week to the sales for the previous week in percentages.
 
 **Results:**
 
@@ -87,6 +93,8 @@ ORDER BY week_number;
 | 26          | 583242828 | 570025348       | 2.32           |
 | 27          | 575390599 | 583242828       | -1.35          |
 | 28          | 590335394 | 575390599       | 2.60           |
+
+The highest decrease in the 8 week period was recorded in the 25th week whihc is the week the change was introduced. The next highest decrease was recorded in the 27th week. These two percentage decreases are significantly higher than the decrease that was recorded in the four weeks before period which is 0.62.
 
 ----------------------------------------
 

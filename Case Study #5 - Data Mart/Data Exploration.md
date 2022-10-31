@@ -236,15 +236,17 @@ Which age_band and demographic values contribute the most to Retail sales?
 **Query:**
 
 ```sql
-SELECT age_band,
-       demographic,
-       sum(sales) as retail_sales,
-       round(((sum(sales)::numeric/(SELECT sum(sales) FROM clean_weekly_sales WHERE platform='Retail')::numeric)*100),2) as percentage
+  SELECT age_band,
+         demographic,
+	 sum(sales) as retail_sales,
+	 round(((sum(sales)::numeric/(SELECT sum(sales) FROM clean_weekly_sales WHERE platform='Retail')::numeric)*100),2) as percentage
 FROM clean_weekly_sales
 WHERE platform = 'Retail'
 GROUP BY age_band, demographic
 ORDER BY retail_sales DESC;
 ```
+In the `WHERE` clause i filtered for only transactions done on the Retail platform. I selected the age band, demographic columns and summed the sales. Then I use a subquery to get the total sales for the Retail platform. I divided the sum of sales for each age band and demographic by the total Retail sales and multiplied by 100. I the rounded to two decimal places.
+
 
 **Results:**
 
@@ -267,11 +269,11 @@ Can we use the avg_transaction column to find the average transaction size for e
 **Query:**
 
 ```sql
-SELECT calendar_year,
-       platform,
-	   round(avg(avg_transaction),2) as avg_transaction_row,
-	   round((sum(sales)::numeric/sum(transactions)::numeric),2) as avg_transaction_group
-FROM clean_weekly_sales
+  SELECT calendar_year,
+         platform,
+	 round(avg(avg_transaction),2) as avg_transaction_row,
+	 round((sum(sales)::numeric/sum(transactions)::numeric),2) as avg_transaction_group
+    FROM clean_weekly_sales
 GROUP BY calendar_year,platform
 ORDER BY calendar_year;
 ```

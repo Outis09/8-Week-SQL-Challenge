@@ -68,7 +68,35 @@ ORDER BY percent_change;
 
 ----------------------------
 
+Age Band
+---------
 
+**Query:**
+```sql
+WITH age_band_sales as (
+SELECT age_band,
+       sum(CASE WHEN week_number between 13 and 24 then sales else 0 end) as tot_sales_bfr,
+	   sum(CASE WHEN week_number between 25 and 36 then sales else 0 end) as tot_sales_aft
+FROM clean_weekly_sales
+GROUP BY age_band)
+
+SELECT age_band,
+       tot_sales_bfr,
+	   tot_sales_aft,
+	   round(((tot_sales_aft::numeric-tot_sales_bfr::numeric)/tot_sales_bfr::numeric)*100,2) as percent_change
+FROM age_band_sales
+ORDER BY percent_change;
+```
+
+**Results:**
+| age_band     | tot_sales_bfr | tot_sales_aft | percent_change |
+| ------------ | ------------- | ------------- | -------------- |
+| unknown      | 8191628826    | 8146983408    | -0.55          |
+| Middle Aged  | 3276892347    | 3269748622    | -0.22          |
+| Young Adults | 2290835366    | 2285973456    | -0.21          |
+| Retirees     | 6646865322    | 6634706880    | -0.18          |
+
+-----------------------------
 
 
 Demographic

@@ -40,6 +40,37 @@ ORDER BY percent_change;
 
 ---------------------------
 
+Platform
+-----
+
+**Query:**
+```sql
+WITH platform_sales as (
+SELECT platform,
+       sum(CASE WHEN week_number between 13 and 24 then sales else 0 end) as tot_sales_bfr,
+	   sum(CASE WHEN week_number between 25 and 36 then sales else 0 end) as tot_sales_aft
+FROM clean_weekly_sales
+GROUP BY platform)
+
+SELECT platform,
+       tot_sales_bfr,
+	   tot_sales_aft,
+	   round(((tot_sales_aft::numeric-tot_sales_bfr::numeric)/tot_sales_bfr::numeric)*100,2) as percent_change
+FROM platform_sales
+ORDER BY percent_change;
+```
+
+**Results:**
+| platform | tot_sales_bfr | tot_sales_aft | percent_change |
+| -------- | ------------- | ------------- | -------------- |
+| Retail   | 19886040272   | 19768576165   | -0.59          |
+| Shopify  | 520181589     | 568836201     | 9.35           |
+
+----------------------------
+
+
+
+
 Demographic
 -----
 
@@ -69,3 +100,4 @@ ORDER BY percent_change;
 | Families    | 6605726904    | 6598087538    | -0.12          |
 
 -------------
+

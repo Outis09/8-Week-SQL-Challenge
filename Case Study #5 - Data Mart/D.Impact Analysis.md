@@ -12,18 +12,20 @@ Region
 
 **Query:**
 ```sql
+--gets total sales for the 12 weeks before and after the change for each region
 WITH region_sales as (
-SELECT region,
-       sum(CASE WHEN week_number between 13 and 24 then sales else 0 end) as tot_sales_bfr,
-	   sum(CASE WHEN week_number between 25 and 36 then sales else 0 end) as tot_sales_aft
-FROM clean_weekly_sales
-GROUP BY region)
+	SELECT region,
+	       sum(CASE WHEN week_number between 13 and 24 then sales else 0 end) as tot_sales_bfr,
+	       sum(CASE WHEN week_number between 25 and 36 then sales else 0 end) as tot_sales_aft
+	  FROM clean_weekly_sales
+      GROUP BY region
+                     )
 
-SELECT region,
-       tot_sales_bfr,
-	   tot_sales_aft,
-	   round(((tot_sales_aft::numeric-tot_sales_bfr::numeric)/tot_sales_bfr::numeric)*100,2) as percent_change
-FROM region_sales
+  SELECT region,
+         tot_sales_bfr,
+	 tot_sales_aft,
+	 round(((tot_sales_aft::numeric-tot_sales_bfr::numeric)/tot_sales_bfr::numeric)*100,2) as percent_change
+    FROM region_sales
 ORDER BY percent_change;
 ```
 
@@ -45,18 +47,20 @@ Platform
 
 **Query:**
 ```sql
+--gets total sales before and after the change on each Platform
 WITH platform_sales as (
-SELECT platform,
-       sum(CASE WHEN week_number between 13 and 24 then sales else 0 end) as tot_sales_bfr,
-	   sum(CASE WHEN week_number between 25 and 36 then sales else 0 end) as tot_sales_aft
-FROM clean_weekly_sales
-GROUP BY platform)
+	SELECT platform,
+	       sum(CASE WHEN week_number between 13 and 24 then sales else 0 end) as tot_sales_bfr,
+	       sum(CASE WHEN week_number between 25 and 36 then sales else 0 end) as tot_sales_aft
+	  FROM clean_weekly_sales
+      GROUP BY platform
+                        )
 
-SELECT platform,
-       tot_sales_bfr,
-	   tot_sales_aft,
-	   round(((tot_sales_aft::numeric-tot_sales_bfr::numeric)/tot_sales_bfr::numeric)*100,2) as percent_change
-FROM platform_sales
+  SELECT platform,
+         tot_sales_bfr,
+	 tot_sales_aft,
+	 round(((tot_sales_aft::numeric-tot_sales_bfr::numeric)/tot_sales_bfr::numeric)*100,2) as percent_change
+    FROM platform_sales
 ORDER BY percent_change;
 ```
 
@@ -73,18 +77,20 @@ Age Band
 
 **Query:**
 ```sql
+--gets total sales before and after the change for each age band
 WITH age_band_sales as (
-SELECT age_band,
-       sum(CASE WHEN week_number between 13 and 24 then sales else 0 end) as tot_sales_bfr,
-	   sum(CASE WHEN week_number between 25 and 36 then sales else 0 end) as tot_sales_aft
-FROM clean_weekly_sales
-GROUP BY age_band)
+	SELECT age_band,
+	       sum(CASE WHEN week_number between 13 and 24 then sales else 0 end) as tot_sales_bfr,
+	       sum(CASE WHEN week_number between 25 and 36 then sales else 0 end) as tot_sales_aft
+	  FROM clean_weekly_sales
+      GROUP BY age_band
+                        )
 
-SELECT age_band,
-       tot_sales_bfr,
-	   tot_sales_aft,
-	   round(((tot_sales_aft::numeric-tot_sales_bfr::numeric)/tot_sales_bfr::numeric)*100,2) as percent_change
-FROM age_band_sales
+  SELECT age_band,
+         tot_sales_bfr,
+	 tot_sales_aft,
+	 round(((tot_sales_aft::numeric-tot_sales_bfr::numeric)/tot_sales_bfr::numeric)*100,2) as percent_change
+    FROM age_band_sales
 ORDER BY percent_change;
 ```
 
@@ -104,18 +110,20 @@ Demographic
 **Query:**
 
 ```sql
+--gets total sales before and after the change for each demographic
 WITH demo_sales as (
-SELECT demographic,
-       sum(CASE WHEN week_number between 13 and 24 then sales else 0 end) as tot_sales_bfr,
-	   sum(CASE WHEN week_number between 25 and 36 then sales else 0 end) as tot_sales_aft
-FROM clean_weekly_sales
-GROUP BY demographic)
+	SELECT demographic,
+	       sum(CASE WHEN week_number between 13 and 24 then sales else 0 end) as tot_sales_bfr,
+	       sum(CASE WHEN week_number between 25 and 36 then sales else 0 end) as tot_sales_aft
+	  FROM clean_weekly_sales
+      GROUP BY demographic
+                    )
 
-SELECT demographic,
-       tot_sales_bfr,
-	   tot_sales_aft,
-	   round(((tot_sales_aft::numeric-tot_sales_bfr::numeric)/tot_sales_bfr::numeric)*100,2) as percent_change
-FROM demo_sales
+  SELECT demographic,
+         tot_sales_bfr,
+	 tot_sales_aft,
+	 round(((tot_sales_aft::numeric-tot_sales_bfr::numeric)/tot_sales_bfr::numeric)*100,2) as percent_change
+    FROM demo_sales
 ORDER BY percent_change;
 ```
 
@@ -133,18 +141,20 @@ Customer Type
 
 **Query:**
 ```sql
+--gets total sales before and after the change for each customer type
 WITH customer_sales as (
-SELECT customer_type,
-       sum(CASE WHEN week_number between 13 and 24 then sales else 0 end) as tot_sales_bfr,
-	   sum(CASE WHEN week_number between 25 and 36 then sales else 0 end) as tot_sales_aft
-FROM clean_weekly_sales
-GROUP BY customer_type)
+	SELECT customer_type,
+	       sum(CASE WHEN week_number between 13 and 24 then sales else 0 end) as tot_sales_bfr,
+	       sum(CASE WHEN week_number between 25 and 36 then sales else 0 end) as tot_sales_aft
+	  FROM clean_weekly_sales
+      GROUP BY customer_type
+                        )
 
-SELECT customer_type,
-       tot_sales_bfr,
-	   tot_sales_aft,
-	   round(((tot_sales_aft::numeric-tot_sales_bfr::numeric)/tot_sales_bfr::numeric)*100,2) as percent_change
-FROM customer_sales
+  SELECT customer_type,
+         tot_sales_bfr,
+	 tot_sales_aft,
+	 round(((tot_sales_aft::numeric-tot_sales_bfr::numeric)/tot_sales_bfr::numeric)*100,2) as percent_change
+    FROM customer_sales
 ORDER BY percent_change;
 ```
 
@@ -164,25 +174,26 @@ More detailed impact analysis
 **Query:**
 ```sql
 WITH overall_impact as (
-SELECT region,
-	   platform,
-	   age_band,
-	   demographic,
-	   customer_type,
-       sum(CASE WHEN week_number between 13 and 24 then sales else 0 end) as tot_sales_bfr,
-	   sum(CASE WHEN week_number between 25 and 36 then sales else 0 end) as tot_sales_aft
-FROM clean_weekly_sales
-GROUP BY region,platform,age_band,demographic,customer_type)
+	SELECT region,
+	       platform,
+	       age_band,
+	       demographic,
+	       customer_type,
+	       sum(CASE WHEN week_number between 13 and 24 then sales else 0 end) as tot_sales_bfr,
+	       sum(CASE WHEN week_number between 25 and 36 then sales else 0 end) as tot_sales_aft
+	  FROM clean_weekly_sales
+      GROUP BY region,platform,age_band,demographic,customer_type
+                      )
 
-SELECT region,
-       platform,
-	   age_band,
-	   demographic,
-	   customer_type,
-       tot_sales_bfr,
-	   tot_sales_aft,
-	   round(((tot_sales_aft::numeric-tot_sales_bfr::numeric)/tot_sales_bfr::numeric)*100,2) as percent_change
-FROM overall_impact
+  SELECT region,
+         platform,
+	 age_band,
+	 demographic,
+	 customer_type,
+	 tot_sales_bfr,
+	 tot_sales_aft,
+	 round(((tot_sales_aft::numeric-tot_sales_bfr::numeric)/tot_sales_bfr::numeric)*100,2) as percent_change
+    FROM overall_impact
 ORDER BY percent_change;
 ```
 

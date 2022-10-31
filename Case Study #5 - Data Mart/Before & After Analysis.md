@@ -101,3 +101,24 @@ The highest decrease in the 8 week period was recorded in the 25th week whihc is
 2.What about the entire 12 weeks before and after?
 ----
 
+**Query:**
+```sql
+WITH impact as(
+        SELECT SUM(CASE WHEN week_number BETWEEN 25 and 36 THEN sales ELSE 0 END)as sales_after,
+               SUM(CASE WHEN week_number BETWEEN 13 and 24 THEN sales ELSE 0 END)as sales_before
+          FROM clean_weekly_sales 
+         WHERE calendar_year=2020
+              )
+SELECT sales_before,
+       sales_after,
+	   sales_after-sales_before as change,
+       round(((sales_after::numeric-sales_before::numeric)/sales_before::numeric)*100,2) as percent_change
+  FROM impact;
+```
+
+**Results:**
+| sales_before | sales_after | change     | percent_change |
+| ------------ | ----------- | ---------- | -------------- |
+| 7126273147   | 6973947753  | -152325394 | -2.14          |
+
+

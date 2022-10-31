@@ -176,9 +176,48 @@ ORDER BY week_number;
 | 35          | 593379892 | 581075406       | 2.12           |
 | 36          | 591603888 | 593379892       | -0.30          |
 
-There were relatively high percentage decreases of 5.84%, 2.55%, 5.65% and 2.47% before the change was introduced. In the 12 weeks after the change was introduced, there were relatively high percentage decreases of 2.77%, 1.35%, and 1.85%. The percentage decreases in the 12 week period before the change are higher than the 12 week period after the change was introduced. Is the change the cause of the decrease? Are there extraneous variables affecting sales that have not been accounted for? More information is needed to answer these questions and the data does not provide enough information.
+There were relatively high percentage decreases of 5.84%, 2.55%, 5.65% and 2.47% before the change was introduced. In the 12 weeks after the change was introduced, there were relatively high percentage decreases of 2.77%, 1.35%, and 1.85%. The percentage decreases in the 12 week period before the change are higher than the 12 week period after the change was introduced. 
+* Is the change the cause of the decrease? 
+* Are there extraneous variables affecting sales that have not been accounted for?
+
+More information is needed to answer these questions and the data does not provide enough information.
 
 ----------------------------------------------
 
 3.How do the sale metrics for these 2 periods before and after compare with the previous years in 2018 and 2019?
 -----
+
+**Query:**
+
+```sql
+WITH avg_sales as (
+	SELECT calendar_year,
+	       avg(case when week_number between 13 and 24 then sales else 0 end)as avg_sales_before,
+	       avg(case when week_number between 25 and 35 then sales else 0 end)as avg_sales_after
+	  FROM clean_weekly_sales
+      GROUP BY calendar_year),
+prev_sales as (
+	SELECT calendar_year as year,
+	       avg_sales_before,
+	       LAG(avg_sales_before) OVER (ORDER BY calendar_year) as prev_before,
+	       avg_sales_after,
+	       LAG(avg_sales_after) OVER (ORDER BY calendar_year) as prev_after,
+	       avg_sales_after-avg_sales_before
+          FROM avg_sales)
+
+SELECT year,
+       avg_sales_before as avg_sls_first_twlv_wks,
+       round(((avg_sales_before-prev_before)/prev_before)*100,2) as prcnt_chng_frst_period,
+       avg_sales_after as avg_sls_scnd_twlv_wks,
+       round(((avg_sales_before-prev_after)/prev_after)*100,2) as prcnt_chng_scnd_period ,
+       round(((avg_sales_after-avg_sales_before)/avg_sales_before)*100,2) as prcnt_chng_two_periods
+  FROM prev_sales;
+```
+
+**Results:**
+
+| year | avg_sls_first_twlv_wks | prcnt_chng_frst_period | avg_sls_scnd_twlv_wks | prcnt_chng_scnd_period | prcnt_chng_two_periods |
+| ---- | ---------------------- | ---------------------- | --------------------- | ---------------------- | ---------------------- |
+| 2018 | 1122597.809231309231   |                        | 1043848.218322218322  |                        | -7.01                  |
+| 2019 | 1205919.130518570427   | 7.42                   | 1100445.131394533987  | 15.53                  | -8.75                  |
+| 2020 | 1247815.294519348625   | 3.47                   | 1117552.769217299947  | 13.39                  | -10.44                 |

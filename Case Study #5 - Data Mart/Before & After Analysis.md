@@ -122,3 +122,56 @@ SELECT sales_before,
 | 7126273147   | 6973947753  | -152325394 | -2.14          |
 
 
+
+I will compare the weeks in the 24 week period.
+
+**Query:**
+
+```sql
+WITH running_change as (
+	SELECT week_number,
+	       sum(sales) as tot_sales,
+	       LAG(sum(sales)) OVER(ORDER BY week_number) as prev_week_sales
+	  FROM clean_weekly_sales
+	 WHERE calendar_year = 2020 and week_number between 13 and 36
+      GROUP BY week_number
+      ORDER BY week_number
+	)
+  SELECT week_number,
+         tot_sales,
+	 prev_week_sales,
+	 round(((tot_sales::numeric-prev_week_sales::numeric)/prev_week_sales::numeric)*100,2) as percent_change
+    FROM running_change
+ORDER BY week_number;
+```
+
+**Results:**
+
+| week_number | tot_sales | prev_week_sales | percent_change |
+| ----------- | --------- | --------------- | -------------- |
+| 13          | 638197506 |                 |                |
+| 14          | 600898723 | 638197506       | -5.84          |
+| 15          | 585551930 | 600898723       | -2.55          |
+| 16          | 606143272 | 585551930       | 3.52           |
+| 17          | 571874343 | 606143272       | -5.65          |
+| 18          | 589783021 | 571874343       | 3.13           |
+| 19          | 601398593 | 589783021       | 1.97           |
+| 20          | 586547402 | 601398593       | -2.47          |
+| 21          | 585008090 | 586547402       | -0.26          |
+| 22          | 589120804 | 585008090       | 0.70           |
+| 23          | 585466073 | 589120804       | -0.62          |
+| 24          | 586283390 | 585466073       | 0.14           |
+| 25          | 570025348 | 586283390       | -2.77          |
+| 26          | 583242828 | 570025348       | 2.32           |
+| 27          | 575390599 | 583242828       | -1.35          |
+| 28          | 590335394 | 575390599       | 2.60           |
+| 29          | 585936402 | 590335394       | -0.75          |
+| 30          | 580874115 | 585936402       | -0.86          |
+| 31          | 576349635 | 580874115       | -0.78          |
+| 32          | 565709853 | 576349635       | -1.85          |
+| 33          | 580024393 | 565709853       | 2.53           |
+| 34          | 581075406 | 580024393       | 0.18           |
+| 35          | 593379892 | 581075406       | 2.12           |
+| 36          | 591603888 | 593379892       | -0.30          |
+
+----------------------------------------------

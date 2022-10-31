@@ -80,7 +80,7 @@ What is the total sales for each region for each month?
 GROUP BY region,calendar_year,month_number,month
 ORDER BY region,calendar_year,month_number;
 ```
-I selected the regions, the calendar year, month names by using `to_char` and the sum of sales. then I grouped by region, year and month.
+I selected the regions, the calendar year, month names by using `to_char`, and the sum of sales. then I grouped by region, year and month.
 
 **Results:**
 
@@ -120,11 +120,12 @@ What is the total count of transactions for each platform
 
 **Query:**
 ```sql
-SELECT platform,
-       count(transactions)
-FROM clean_weekly_sales
+  SELECT platform,
+         count(transactions)
+    FROM clean_weekly_sales
 GROUP BY platform;
 ```
+I selected the platforms and counted the number of transactions. Then I grouped the number of transactions by platform. 
 
 **Results:**
 
@@ -132,6 +133,10 @@ GROUP BY platform;
 | -------- | ----- |
 | Shopify  | 8549  |
 | Retail   | 8568  |
+
+There were 
+* 8549 Shopify transactions  
+* 8568 Retail transactions
 
 --------------------
 

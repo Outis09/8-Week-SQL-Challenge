@@ -89,3 +89,7 @@ ORDER BY week_number;
 | 28          | 590335394 | 575390599       | 2.60           |
 
 ----------------------------------------
+
+2.What about the entire 12 weeks before and after?
+----
+

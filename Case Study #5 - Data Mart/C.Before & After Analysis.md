@@ -190,12 +190,14 @@ More information is needed to answer these questions and the data does not provi
 **Query:**
 
 ```sql
+--get average sales for 2 periods of 12 weeks for each year
 WITH avg_sales as (
 	SELECT calendar_year,
 	       avg(case when week_number between 13 and 24 then sales else 0 end)as avg_sales_before,
-	       avg(case when week_number between 25 and 35 then sales else 0 end)as avg_sales_after
+	       avg(case when week_number between 25 and 36 then sales else 0 end)as avg_sales_after
 	  FROM clean_weekly_sales
       GROUP BY calendar_year),
+--gets the previous sales for each period
 prev_sales as (
 	SELECT calendar_year as year,
 	       avg_sales_before,
@@ -218,6 +220,16 @@ SELECT year,
 
 | year | avg_sls_first_twlv_wks | prcnt_chng_frst_period | avg_sls_scnd_twlv_wks | prcnt_chng_scnd_period | prcnt_chng_two_periods |
 | ---- | ---------------------- | ---------------------- | --------------------- | ---------------------- | ---------------------- |
-| 2018 | 1122597.809231309231   |                        | 1043848.218322218322  |                        | -7.01                  |
-| 2019 | 1205919.130518570427   | 7.42                   | 1100445.131394533987  | 15.53                  | -8.75                  |
-| 2020 | 1247815.294519348625   | 3.47                   | 1117552.769217299947  | 13.39                  | -10.44                 |
+| 2018 | 1122597.809231309231   |                        | 1140894.789399789400  |                        | 1.63                   |
+| 2019 | 1205919.130518570427   | 7.42                   | 1202285.582165381920  | 5.70                   | -0.30                  |
+| 2020 | 1247815.294519348625   | 3.47                   | 1221143.014008054631  | 3.79                   | -2.14                  |
+
+Average sales in the initial 12 weeks in each year rose throughout the years. In 2019 it increased by 7.42% from 2018 and in 2020 it increased by 3.47 from 2019.
+
+Averag sales in the latter 12 weeks in each year also rose throughout the years. Increment of 5.70% in 2019 and 3.79% in 2020.
+
+In 2018, there was more sales in the latter 12 weeks compared to the first 12 weeks. There was an increment of 1.63%. However in 2019 and 2020, there was a decrease in average sales in the latter 12 weeks compared to the initial 12 weeks. In 2019, there was a decrement of 0.30 percent in average sales in the latter 12 weeks. In 2020,the year in which the change was introduced, there was a 2.16% decrease in average sales in the latter 12 weeks compared to the initial 12 weeks.  
+
+----------------------------
+
+

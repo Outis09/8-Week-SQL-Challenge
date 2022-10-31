@@ -147,23 +147,24 @@ What is the percentage of sales for Retail vs Shopify for each month?
 **Query:**
 
 ```sql
---gets total sales,total retail sales and total shopify sales
+--gets total sales,total retail sales and total shopify sales for each month in each year
 WITH platform_sales as(
-SELECT calendar_year as year,
-       to_char(week_date,'month') as month,
-	   sum(sales) as monthly_sales,
-	   sum(CASE WHEN platform = 'Retail' THEN sales ELSE 0 end)as retail_sales,
-	   sum(CASE WHEN platform = 'Shopify' THEN sales ELSE 0 end) as shopify_sales
-FROM clean_weekly_sales
-GROUP BY 1,month_number,2
-ORDER BY 1,month_number)
+	SELECT calendar_year as year,
+	       to_char(week_date,'month') as month,
+	       sum(sales) as monthly_sales,
+	       sum(CASE WHEN platform = 'Retail' THEN sales ELSE 0 end)as retail_sales,
+	       sum(CASE WHEN platform = 'Shopify' THEN sales ELSE 0 end) as shopify_sales
+	  FROM clean_weekly_sales
+      GROUP BY calendar_year,month_number,month
+      ORDER BY calendar_year,month_number)
 
 SELECT year,
        month,
-	   round(((retail_sales::numeric/monthly_sales::numeric)*100),2) as retail_sales_percentage,
-	   round(((shopify_sales::numeric/monthly_sales::numeric)*100),2) as shopify_sales_percentage
-FROM platform_sales;
+       round(((retail_sales::numeric/monthly_sales::numeric)*100),2) as retail_sales_percentage,
+       round(((shopify_sales::numeric/monthly_sales::numeric)*100),2) as shopify_sales_percentage
+  FROM platform_sales;
 ```
+I used a CTE,`platform_sales`, to get the sum of sales for each month and the sum of sales for each platform for each month in each year. In the main query, I divided the total monthly sales for each platform by the total monthly sales for each month and multiplied by 100. Then I rounded to two decimal places.
 
 **Results:**
 

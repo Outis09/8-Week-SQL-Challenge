@@ -226,7 +226,7 @@ SELECT year,
 
 Average sales in the initial 12 weeks in each year rose throughout the years. In 2019 it increased by 7.42% from 2018 and in 2020 it increased by 3.47 from 2019.
 
-Averag sales in the latter 12 weeks in each year also rose throughout the years. Increment of 5.70% in 2019 and 3.79% in 2020.
+Average sales in the latter 12 weeks in each year also rose throughout the years. Increment of 5.70% in 2019 and 3.79% in 2020.
 
 In 2018, there was more sales in the latter 12 weeks compared to the first 12 weeks. There was an increment of 1.63%. However in 2019 and 2020, there was a decrease in average sales in the latter 12 weeks compared to the initial 12 weeks. In 2019, there was a decrement of 0.30 percent in average sales in the latter 12 weeks. In 2020,the year in which the change was introduced, there was a 2.16% decrease in average sales in the latter 12 weeks compared to the initial 12 weeks.  
 

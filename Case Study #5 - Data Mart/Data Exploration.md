@@ -72,18 +72,19 @@ What is the total sales for each region for each month?
 **Query:**
 
 ```sql
-SELECT region,
-       calendar_year,
-	   to_char(week_date,'month') as month,
-	   sum(sales) AS tot_sales
-FROM clean_weekly_sales
+  SELECT region,
+         calendar_year as year,
+	 to_char(week_date,'month') as month,
+	 sum(sales) AS tot_sales
+    FROM clean_weekly_sales
 GROUP BY region,calendar_year,month_number,month
 ORDER BY region,calendar_year,month_number;
 ```
+I selected the regions, the calendar year, month names by using `to_char` and the sum of sales. then I grouped by region, year and month.
 
 **Results:**
 
-| region        | calendar_year | month     | tot_sales |
+| region        | year | month     | tot_sales |
 | ------------- | ------------- | --------- | --------- |
 | AFRICA        | 2018          | march     | 130542213 |
 | AFRICA        | 2018          | april     | 650194751 |
@@ -108,6 +109,8 @@ ORDER BY region,calendar_year,month_number;
 | ASIA          | 2018          | march     | 119180883 |
 | ASIA          | 2018          | april     | 603716301 |
 | ASIA          | 2018          | may       | 472634283 |
+
+The full results contained 140 rows so I displayed only the first few rows here.
 
 ------------------------------------------
 

@@ -129,6 +129,7 @@ I will compare the weeks in the 24 week period.
 **Query:**
 
 ```sql
+--gets total sales for each week and the sales of the previous week
 WITH running_change as (
 	SELECT week_number,
 	       sum(sales) as tot_sales,
@@ -178,3 +179,6 @@ ORDER BY week_number;
 There were relatively high percentage decreases of 5.84%, 2.55%, 5.65% and 2.47% before the change was introduced. In the 12 weeks after the change was introduced, there were relatively high percentage decreases of 2.77%, 1.35%, and 1.85%. The percentage decreases in the 12 week period before the change are higher than the 12 week period after the change was introduced. Is the change the cause of the decrease? Are there extraneous variables affecting sales that have not been accounted for? More information is needed to answer these questions and the data does not provide enough information.
 
 ----------------------------------------------
+
+3.How do the sale metrics for these 2 periods before and after compare with the previous years in 2018 and 2019?
+-----

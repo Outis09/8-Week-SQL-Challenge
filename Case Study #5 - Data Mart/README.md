@@ -23,4 +23,4 @@ The tasks include:
 * **[Before&After Analysis](https://github.com/Outis09/8-Week-SQL-Challenge/blob/main/Case%20Study%20%235%20-%20Data%20Mart/C.Before%20%26%20After%20Analysis.md)** - Analyzing sales performance 4 and 12 weeks before and after the change. Comparing the 12 weeks before and after periods to the sales performance in the past years.
 * **[Impact Analysis](https://github.com/Outis09/8-Week-SQL-Challenge/blob/main/Case%20Study%20%235%20-%20Data%20Mart/D.Impact%20Analysis.md)** - Analyzing which region, demographic, platform, customer type and age band felt the most impact of the change in terms of sales performance.
 
-In progress...
+

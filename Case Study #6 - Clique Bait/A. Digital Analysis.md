@@ -42,6 +42,27 @@ FROM cookie;
 
 ----------------------------------------------------------
 
+**Question 3**
+What is the unique number of visits by all users per month?
+-----
 
+**Query:**
 
+```sql
+  SELECT to_char(event_time,'month') as month,count(distinct(visit_id))
+    FROM events
+GROUP BY 1,date_trunc('month',event_time)
+ORDER BY date_trunc('month',event_time);
+```
 
+**Results:**
+
+| month     | count |
+| --------- | ----- |
+| january   | 876   |
+| february  | 1488  |
+| march     | 916   |
+| april     | 248   |
+| may       | 36    |
+
+--------------------

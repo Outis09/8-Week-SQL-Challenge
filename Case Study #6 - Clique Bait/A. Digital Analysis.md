@@ -115,3 +115,33 @@ SELECT round((count(distinct(visit_id))::numeric /
 
 --------------------------------------------------------
 
+**Question 6:**
+What is the percentage of visits which view the checkout page but do not have a purchase event?
+------
+
+**Query:**
+
+```sql
+--gets an array of page id and event type for each visit id
+with arrays as (
+           SELECT visit_id,
+	            array_agg(page_id) as pages,
+	            array_agg(event_type) as events
+             FROM events
+         GROUP BY visit_id
+                )
+         
+SELECT count(visit_id) as num_of_visits,
+       round(100*count(visit_id)/(select count(distinct(visit_id)) FROM events)::numeric,2) as prcnt_of_all_vsts,
+       round(100*count(visit_id)/(select count(visit_id) from events where page_id=12)::numeric,2) as prcnt_of_all_chckots
+FROM arrays
+WHERE 12 = ANY(pages::int[]) and 3 != ALL(events::int[]);
+```
+
+**Results:**
+
+| num_of_visits | prcnt_of_all_vsts | prcnt_of_all_chckots |
+| ------------- | ----------------- | -------------------- |
+| 326           | 9.15              | 15.50                |
+
+-----------------------------------------------

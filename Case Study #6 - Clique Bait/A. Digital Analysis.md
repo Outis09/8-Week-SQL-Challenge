@@ -145,3 +145,30 @@ WHERE 12 = ANY(pages::int[]) and 3 != ALL(events::int[]);
 | 326           | 9.15              | 15.50                |
 
 -----------------------------------------------
+
+**Question 7**
+What are the top 3 pages by number of views?
+--------
+
+**Query :**
+
+```sql
+  SELECT page_name,
+         count(event_type) as num_of_views
+    FROM events e
+    JOIN page_hierarchy ph
+      ON e.page_id = ph.page_id
+   WHERE event_type = 1
+GROUP BY page_name
+ORDER BY num_of_views DESC
+   LIMIT 3;
+```
+**Results:**
+
+| page_name    | num_of_views |
+| ------------ | ------------ |
+| All Products | 3174         |
+| Checkout     | 2103         |
+| Home Page    | 1782         |
+
+--------------------------------------------

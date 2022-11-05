@@ -197,3 +197,45 @@ ORDER BY num_of_views DESC;
 | Luxury           | 3032         | 1870             |
 
 -------------------------------------------
+
+**Question 9:**
+What are the top 3 products by purchases?
+--------
+
+**Query:**
+
+```sql
+WITH sequence as (
+	SELECT visit_id,
+	       page_id,
+	       page_name,
+	       event_type,
+	       event_name,
+	       RANK() OVER(PARTITION BY visit_id ORDER BY event_time)
+	  FROM events
+	  JOIN page_hierarchy
+	 USING (page_id)
+	  JOIN event_identifier
+	 USING (event_type)
+	 WHERE visit_id IN (SELECT visit_id FROM events WHERE event_type = 3)
+      GROUP BY 1,2,3,4,5,event_time
+      ORDER BY visit_id)
+
+  SELECT page_name,
+         count(event_name) as purchases
+    FROM sequence 
+   WHERE event_type = 2
+GROUP BY page_name
+ORDER BY purchases DESC
+   LIMIT 3;
+```
+
+**Results:**
+
+| page_name | purchases |
+| --------- | --------- |
+| Lobster   | 754       |
+| Oyster    | 726       |
+| Crab      | 719       |
+
+----------------------------------------

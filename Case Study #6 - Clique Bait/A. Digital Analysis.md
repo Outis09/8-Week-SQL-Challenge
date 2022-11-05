@@ -93,3 +93,25 @@ GROUP BY event_name;
 | Ad Click      | 702           |
 
 -----------------------------------------------------
+
+**Question 5**
+What is the percentage of visits which have a purchase event?
+-----
+
+**Query:**
+
+```sql
+SELECT round((count(distinct(visit_id))::numeric /
+             (select count(distinct(visit_id)) from events)::numeric)*100,2)
+  FROM events
+ WHERE event_type = 3;
+```
+
+**Results:**
+
+| round |
+| ----- |
+| 49.86 |
+
+--------------------------------------------------------
+

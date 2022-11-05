@@ -66,3 +66,30 @@ ORDER BY date_trunc('month',event_time);
 | may       | 36    |
 
 --------------------
+
+
+**Question 4**
+What is the number of events for each event type?
+-----
+
+**Query:**
+
+```sql
+  SELECT event_name, count(visit_id) as num_of_visits
+    FROM events e
+    JOIN event_identifier ei
+      ON e.event_type = ei.event_type
+GROUP BY event_name;
+```
+
+**Results:**
+
+| event_name    | num_of_visits |
+| ------------- | ------------- |
+| Purchase      | 1777          |
+| Ad Impression | 876           |
+| Add to Cart   | 8451          |
+| Page View     | 20928         |
+| Ad Click      | 702           |
+
+-----------------------------------------------------

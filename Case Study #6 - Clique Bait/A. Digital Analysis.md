@@ -172,3 +172,28 @@ ORDER BY num_of_views DESC
 | Home Page    | 1782         |
 
 --------------------------------------------
+
+**Question 8:**
+What is the number of views and cart adds for each product category?
+-----
+
+```sql
+  SELECT product_category,
+         sum(CASE WHEN event_type = 1 THEN 1 ELSE 0 END) as num_of_views,
+         sum(CASE WHEN event_type = 2 THEN 1 ELSE 0 END) as num_of_cart_adds
+    FROM page_hierarchy ph
+    JOIN events e
+      ON ph.page_id = e.page_id
+   WHERE product_category IS NOT NULL
+GROUP BY product_category
+ORDER BY num_of_views DESC;
+```
+
+**Results:**
+| product_category | num_of_views | num_of_cart_adds |
+| ---------------- | ------------ | ---------------- |
+| Shellfish        | 6204         | 3792             |
+| Fish             | 4633         | 2789             |
+| Luxury           | 3032         | 1870             |
+
+-------------------------------------------

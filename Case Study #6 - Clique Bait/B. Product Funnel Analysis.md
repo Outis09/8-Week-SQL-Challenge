@@ -65,6 +65,11 @@ SELECT *
 | Kingfish       | 1559  | 920       | 213       | 707       |
 | Crab           | 1564  | 949       | 230       | 719       |
 
+Below is a copy of the table above in Power BI. The table is sorted in descending order of views. Also, the darker the color, the higher the number in comparison to the other figures in the column.
+
+
+![clique4](https://user-images.githubusercontent.com/104911707/200325348-8aec0d01-b291-460c-ad07-a8ee5c32b20d.png)
+
 ------------------------------------------
 
 Additionally, create another table which further aggregates the data for the above points but this time for each product category instead of individual products.

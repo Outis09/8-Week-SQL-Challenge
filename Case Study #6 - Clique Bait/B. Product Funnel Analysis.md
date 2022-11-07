@@ -8,23 +8,26 @@ Using a single SQL query - create a new output table which has the following det
 **Query:**
 ```sql
 WITH 
+--gets number of time a product was added to cart but not purchased
 abandon as (
     SELECT page_name,
            count(event_type) as abandoned
       FROM events
       JOIN page_hierarchy
      USING (page_id)
-     WHERE event_type = 2 and visit_id NOT IN (SELECT visit_id FROM events where event_type =3)
+     WHERE event_type = 2 
+       AND visit_id NOT IN (SELECT visit_id FROM events where event_type =3)
   GROUP BY page_name 
              ),
-
+--gets number of times each product was purchased
 purchased as (
     SELECT page_name,
            count(event_type) as purchases
       FROM events
       JOIN page_hierarchy
      USING (page_id)
-     WHERE event_type = 2 and visit_id IN (SELECT DISTINCT visit_id FROM events WHERE event_type =3)
+     WHERE event_type = 2 
+       AND visit_id IN (SELECT DISTINCT visit_id FROM events WHERE event_type =3)
   GROUP BY page_name
              )
 	
@@ -66,6 +69,61 @@ SELECT *
 
 Additionally, create another table which further aggregates the data for the above points but this time for each product category instead of individual products.
 
+**Query:**
+```sql
+WITH 
+--gets number of times product from each category was added to cart and not purchased 
+abandon as (
+	SELECT product_category,
+	       count(event_type) as abandoned
+	  FROM events
+	  JOIN page_hierarchy
+	 USING (page_id)
+	 WHERE event_type = 2 
+	   AND visit_id NOT IN (SELECT visit_id FROM events where event_type =3)
+      GROUP BY product_category),
+--gets number of times products were purchased from each category
+purchased as (
+	SELECT product_category,
+	       count(event_type) as purchases
+	  FROM events
+	  JOIN page_hierarchy
+	 USING (page_id)
+	 WHERE event_type = 2 
+	   AND visit_id IN (SELECT DISTINCT visit_id FROM events WHERE event_type =3)
+      GROUP BY product_category)
+	
+        SELECT ph.product_category,
+	       sum(CASE WHEN event_type = 1 THEN 1 ELSE 0 END) as views,
+	       sum(CASE WHEN event_type = 2 THEN 1 ELSE 0 END) as cart_adds,
+	       abandoned,
+	       purchases
+	  INTO product_category_perf
+	  FROM page_hierarchy ph
+	  JOIN events e
+	    ON ph.page_id = e.page_id
+	  JOIN abandon ab
+	    ON ph.product_category = ab.product_category 
+	  JOIN purchased pc
+	    ON ph.product_category = pc.product_category 
+      GROUP BY ph.product_category,abandoned,purchases;
+```
+
+```sql
+SELECT *
+  FROM product_category_perf;
+```
+
+**Results:**
+| product_category | views | cart_adds | abandoned | purchases |
+| ---------------- | ----- | --------- | --------- | --------- |
+| Fish             | 4633  | 2789      | 674       | 2115      |
+| Shellfish        | 6204  | 3792      | 894       | 2898      |
+| Luxury           | 3032  | 1870      | 466       | 1404      |
+
+--------------------------------------------
+
+
 Use your 2 new output tables - answer the following questions:
 
 **Question 1**
@@ -75,7 +133,8 @@ Which product had the most views, cart adds and purchases?
 
 **Query:**
 ```sql
-  SELECT product,views
+  SELECT product,
+         views
     FROM product_performance
 ORDER BY views DESC
    LIMIT 1;
@@ -91,7 +150,8 @@ ORDER BY views DESC
 
 **Query:**
 ```sql
-  SELECT product, cart_adds
+  SELECT product, 
+         cart_adds
     FROM product_performance
 ORDER BY cart_adds DESC
    LIMIT 1;
@@ -106,7 +166,8 @@ ORDER BY cart_adds DESC
 
 **Query:**
 ```sql
-  SELECT product,purchases
+  SELECT product,
+         purchases
     FROM product_performance
 ORDER BY purchases DESC
    LIMIT 1;
@@ -124,7 +185,8 @@ Which product was most likely to be abandoned?
 
 **Query:**
 ```sql
-  SELECT product,abandoned
+  SELECT product,
+         abandoned
     FROM product_performance
 ORDER BY abandoned DESC
    LIMIT 1;
@@ -197,6 +259,8 @@ FROM product_performance;
 | avg_cnvrsn_rate |
 | ----- |
 | 75.93 |
+
+----------------------------
 
 
 

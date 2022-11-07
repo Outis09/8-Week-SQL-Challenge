@@ -166,7 +166,22 @@ ORDER BY prchs_vw_percent DESC;
 | Russian Caviar | 1563  | 697       | 44.59            |
 
 -------------------------------
+
+**Question 4:**
 What is the average conversion rate from view to cart add?
+-------
+
+**Query:**
+```sql
+SELECT round(100*sum(cart_adds)::numeric/sum(views),2) as conversion_rate
+  FROM product_performance;
+```
+**Results:**
+| conversion_rate |
+| ----- |
+| 60.93 |
+
+-------------------------
 What is the average conversion rate from cart add to purchase?
 
 

@@ -173,16 +173,31 @@ What is the average conversion rate from view to cart add?
 
 **Query:**
 ```sql
-SELECT round(100*sum(cart_adds)::numeric/sum(views),2) as conversion_rate
+SELECT round(100*sum(cart_adds)::numeric/sum(views),2) as avg_cnvrsn_rate
   FROM product_performance;
 ```
 **Results:**
-| conversion_rate |
+| avg_cnvrsn_rate |
 | ----- |
 | 60.93 |
 
 -------------------------
+
+**Question 5:**
 What is the average conversion rate from cart add to purchase?
+------
+
+**Query:**
+```sql
+SELECT round(100*sum(purchases)::numeric/sum(cart_adds),2) as avg_cnvrsn_rate
+FROM product_performance;
+```
+
+**Results:**
+| avg_cnvrsn_rate |
+| ----- |
+| 75.93 |
+
 
 
 

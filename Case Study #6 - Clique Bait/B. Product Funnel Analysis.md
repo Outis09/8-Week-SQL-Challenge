@@ -137,8 +137,35 @@ ORDER BY abandoned DESC
 
 ----------
 
-
+**Question 3:**
 Which product had the highest view to purchase percentage?
+-------
+
+**Query:**
+```sql
+  SELECT product,
+         views,
+	 purchases,
+	 round((100*purchases::numeric/views),2) as prchs_vw_percent
+    FROM product_performance
+ORDER BY prchs_vw_percent DESC;
+```
+
+**Results:**
+
+| product        | views | purchases | prchs_vw_percent |
+| -------------- | ----- | --------- | ---------------- |
+| Lobster        | 1547  | 754       | 48.74            |
+| Black Truffle  | 1469  | 707       | 48.13            |
+| Oyster         | 1568  | 726       | 46.30            |
+| Tuna           | 1515  | 697       | 46.01            |
+| Crab           | 1564  | 719       | 45.97            |
+| Abalone        | 1525  | 699       | 45.84            |
+| Salmon         | 1559  | 711       | 45.61            |
+| Kingfish       | 1559  | 707       | 45.35            |
+| Russian Caviar | 1563  | 697       | 44.59            |
+
+-------------------------------
 What is the average conversion rate from view to cart add?
 What is the average conversion rate from cart add to purchase?
 

@@ -72,12 +72,59 @@ Use your 2 new output tables - answer the following questions:
 Which product had the most views, cart adds and purchases?
 -----
 **Most views:**
+
 **Query:**
+```sql
+  SELECT product,views
+    FROM product_performance
+ORDER BY views DESC
+   LIMIT 1;
 ```
 
+**Results:**
+| product | views |
+| ------- | ----- |
+| Oyster  | 1568  |
 
 
+**Most cart adds:**
+
+**Query:**
+```sql
+  SELECT product, cart_adds
+    FROM product_performance
+ORDER BY cart_adds DESC
+   LIMIT 1;
+```
+
+**Results:**
+| product | cart_adds |
+| ------- | --------- |
+| Lobster | 968       |
+
+**Most purchases:**
+
+**Query:**
+```sql
+  SELECT product,purchases
+    FROM product_performance
+ORDER BY purchases DESC
+   LIMIT 1;
+```
+
+**Results:**
+| product | purchases |
+| ------- | --------- |
+| Lobster | 754       |
+
+
+**Question 2:**
 Which product was most likely to be abandoned?
+-----
+
+
+
+
 Which product had the highest view to purchase percentage?
 What is the average conversion rate from view to cart add?
 What is the average conversion rate from cart add to purchase?

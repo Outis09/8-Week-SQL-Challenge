@@ -199,6 +199,23 @@ ORDER BY abandoned DESC
 
 ----------
 
+I created the report below in Power BI. It contains
+* total number of views
+* total number of cart adds
+* total number of purchases
+* total number of abandoned products
+* top 3 products by views
+* top 3 products by cart adds
+* top 3 products by puchases
+* top 3 abandoned products
+
+![clique2](https://user-images.githubusercontent.com/104911707/200275536-49e63f29-28ff-4782-82e3-6bc2b58098b9.png)
+
+-----------------------------------
+
+
+
+
 **Question 3:**
 Which product had the highest view to purchase percentage?
 -------

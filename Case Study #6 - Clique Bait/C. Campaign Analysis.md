@@ -15,43 +15,43 @@ Generate a table that has 1 single row for every unique visit_id record and has 
 ```sql
 --gets the products added to cart ordered by seqience number
 WITH sequence_products as (
-SELECT user_id,
-       visit_id,
-	   string_agg(page_name,', ' ORDER BY sequence_number) as cart_products 
-FROM events e
-LEFT JOIN page_hierarchy
-USING (page_id)
-LEFT JOIN users
-USING (cookie_id)
-WHERE event_type = 2
-GROUP BY 1,2
-ORDER BY 1)
+	SELECT user_id,
+	       visit_id,
+	       string_agg(page_name,', ' ORDER BY sequence_number) as cart_products 
+	  FROM events e
+     LEFT JOIN page_hierarchy ph
+         USING (page_id)
+     LEFT JOIN users
+         USING (cookie_id)
+	 WHERE event_type = 2
+      GROUP BY 1,2
+      ORDER BY 1)
 
-SELECT u.user_id,
-       e.visit_id,
-	   MIN(event_time) as visit_start_time,
-	   sum(CASE WHEN event_type = 1 THEN 1 ELSE 0 END) as page_views,
-	   sum(CASE WHEN event_type = 2 THEN 1 ELSE 0 END) as cart_addds,
-	   CASE WHEN e.visit_id IN (SELECT DISTINCT visit_id FROM events WHERE event_type=3 ) THEN 1 ELSE 0 END AS purchase,
-	   CASE WHEN MIN(event_time) BETWEEN ci.start_date AND ci.end_date THEN campaign_name END AS campaign_name,
-	   sum(CASE WHEN event_type = 4 THEN 1 ELSE 0 END) as impression,
-	   sum(CASE WHEN event_type = 5 THEN 1 ELSE 0 END) as click,
-	   cart_products
-  INTO campaign_analysis
-  FROM events e 
-  JOIN users u
- USING (cookie_id)
- JOIN  campaign_identifier ci
-   ON  e.event_time BETWEEN ci.start_date AND ci.end_date
-LEFT JOIN sequence_products sp
-ON e.visit_id = sp.visit_id
-   GROUP BY 1,2,6,ci.start_date,ci.end_date,ci.campaign_name,sp.cart_products
-   ORDER BY 1,2,3;
+        SELECT u.user_id,
+	       e.visit_id,
+	       MIN(event_time) as visit_start_time,
+	       sum(CASE WHEN event_type = 1 THEN 1 ELSE 0 END) as page_views,
+	       sum(CASE WHEN event_type = 2 THEN 1 ELSE 0 END) as cart_addds,
+	       CASE WHEN e.visit_id IN (SELECT DISTINCT visit_id FROM events WHERE event_type=3 ) THEN 1 ELSE 0 END AS purchase,
+	       CASE WHEN MIN(event_time) BETWEEN ci.start_date AND ci.end_date THEN campaign_name END AS campaign_name,
+	       sum(CASE WHEN event_type = 4 THEN 1 ELSE 0 END) as impression,
+	       sum(CASE WHEN event_type = 5 THEN 1 ELSE 0 END) as click,
+	       cart_products
+	  INTO campaign_analysis
+	  FROM events e 
+	  JOIN users u
+	 USING (cookie_id)
+	  JOIN  campaign_identifier ci
+           ON  e.event_time BETWEEN ci.start_date AND ci.end_date
+     LEFT JOIN sequence_products sp
+         USING e.visit_id = sp.visit_id
+      GROUP BY 1,2,6,ci.start_date,ci.end_date,ci.campaign_name,sp.cart_products
+      ORDER BY 1,2,3;
 ```
 
 ```sql
 SELECT *
-FROM campaign_analysis;
+  FROM campaign_analysis;
 ```
 
 **Results:**

@@ -122,7 +122,20 @@ ORDER BY purchases DESC
 Which product was most likely to be abandoned?
 -----
 
+**Query:**
+```sql
+  SELECT product,abandoned
+    FROM product_performance
+ORDER BY abandoned DESC
+   LIMIT 1;
+```
 
+**Results:**
+| product        | abandoned |
+| -------------- | --------- |
+| Russian Caviar | 249       |
+
+----------
 
 
 Which product had the highest view to purchase percentage?

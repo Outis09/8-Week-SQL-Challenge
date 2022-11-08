@@ -19,7 +19,7 @@ The case study has been broken down into the following:
 
 **Users**
 
-Customers who visit the Clique Bait website are tagged via their cookie_id.
+Customers who visit the Clique Bait website are tagged via their `cookie_id`.
 
 Sample:
 

@@ -160,3 +160,27 @@ ORDER BY avg_daily_users DESC;
 |Half Off - Treat Your Shellf(ish)|8|
 
 In terms of average daily users, the 25% Off campaign was the most successful with and average of 12 unique users everyday. BOGOF and Half Off had an average of 8 unique visitors a day.
+
+-----------------------------------------------------------------
+
+Does clicking on an impression lead to higher purchase rates?
+-----
+
+**Query:**
+
+```sql
+SELECT count(visit_id) as num_of_visits,
+       sum(CASE WHEN purchase=1 THEN 1 ELSE 0 END) as num_of_purchases,
+       round(100*SUM(CASE WHEN purchase=1 THEN 1 ELSE 0 END)::numeric/COUNT(visit_id)) percentage
+  FROM campaign_analysis
+ WHERE click = 1;
+ ```
+ 
+ **Results:**
+ 
+ |num_of_visits|num_of_puchases|percentage|
+ |--------|---------|-------|
+ |599|537|90|
+ 
+ There were 559 visits from clicking on impressions. 537 of these visits resulted in purchases and this makes 90% of the number of visits that clicked on an impression. 
+```

@@ -95,6 +95,9 @@ The full table contains over 3000 rows so I displayed the results for the first 
 
 **Analyzing Campaigns**
 ---------------------------
+
+**Comaparing visits**
+
 The campaigns did not last for an equal number of days. The first two lasted for 13 days and the last campaign lasted for 59 days. Therefore comparing total visits for the campaigns is not a good metric. So I will rather calculate the average visits in a day for each campaign and compare.
 
 **Query:**
@@ -125,3 +128,35 @@ I used a CTE,`visits`, to get the number of visits and days for each campaign. I
 |BOGOF - Fishing For Compliments|20|
 
 The Half Off campaign had the highest daily visitors with an average of 40 visitors a day. This is followed by the 25% Off campaign which had 31 daily visits. The BOGOF had the least daily visitors with an average of 20 visits.
+
+**Comparing users**
+
+Another way of comparing campaigns is the daily number of users during each campaign.
+
+**Query:**
+
+```sql
+WITH users as (
+	SELECT ca.campaign_name,
+	       count(DISTINCT(user_id)) as num_of_users,
+	       ci.end_date - ci.start_date as camp_days 
+	  FROM campaign_analysis ca
+     LEFT JOIN campaign_identifier ci
+            ON ca.campaign_name = ci.campaign_name
+      GROUP BY ca.campaign_name,ci.end_date,ci.start_date)
+
+  SELECT campaign_name,
+         round(num_of_users/LEFT(camp_days::varchar,2)::numeric) as avg_daily_users
+    FROM visits
+ORDER BY avg_daily_users DESC;
+```
+
+**Results:**
+
+|campign_name|avg_daily_users|
+|-----------|-------|
+|25% Off - Living The Lux Life|12|
+|BOGOF - Fishing For Compliments|8|
+|Half Off - Treat Your Shellf(ish)|8|
+
+In terms of average daily users, the 25% Off campaign was the most successful with and average of 12 unique users everyday. BOGOF and Half Off had an average of 8 unique visitors a day.

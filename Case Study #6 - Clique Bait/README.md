@@ -17,6 +17,11 @@ The case study has been broken down into the following:
 **Available Data:**
 ----------
 
+**Entity Relationship Diagram**
+
+![Untitled-2](https://user-images.githubusercontent.com/104911707/200688942-4fe29a3c-73f1-4ed3-bd32-0089f6fc4fdd.png)
+
+
 **Users**
 
 Customers who visit the Clique Bait website are tagged via their `cookie_id`.

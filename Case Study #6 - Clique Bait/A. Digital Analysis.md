@@ -9,11 +9,15 @@ SELECT COUNT(DISTINCT(user_id)) as customers
 FROM users;
 ```
 
+I counted the distinct number of user IDs in the database.
+
 **Results:**
 
 |customers|
 |---------|
 |500|
+
+* There are 500 users
 
 --------------------------------------------------------
 
@@ -23,8 +27,10 @@ How many cookies does each user have on average?
 
 **Query:**
 ```sql
+--gets the number of cookies for each user
 WITH cookie as (
-      SELECT user_id,count(cookie_id) as cookies
+      SELECT user_id,
+             count(cookie_id) as cookies
         FROM users
     GROUP BY user_id
     ORDER BY user_id
@@ -34,12 +40,15 @@ SELECT round(avg(cookies))as avg_cookies
 FROM cookie;
 ```
 
+I used a CTE,`cookie`, to get the number of cookies for each user. In the main query, i calculated the average number of cookies and rounded to the nearest whole number
+
 **Results:**
 
 | avg_cookies        |
 | ------------------ |
 | 4 |
 
+* On the average, each user has 4 cookies
 ----------------------------------------------------------
 
 **Question 3**
@@ -49,21 +58,23 @@ What is the unique number of visits by all users per month?
 **Query:**
 
 ```sql
-  SELECT to_char(event_time,'month') as month,count(distinct(visit_id))
+  SELECT to_char(event_time,'Month') as month,count(distinct(visit_id))
     FROM events
 GROUP BY 1,date_trunc('month',event_time)
 ORDER BY date_trunc('month',event_time);
 ```
+I used `to_char` to extract month names from the `event_time` column. Then I counted the number of distinct visits and grouped by month.
 
 **Results:**
 
 | month     | count |
 | --------- | ----- |
-| january   | 876   |
-| february  | 1488  |
-| march     | 916   |
-| april     | 248   |
-| may       | 36    |
+| January   | 876   |
+| February  | 1488  |
+| March     | 916   |
+| April     | 248   |
+| May       | 36    |
+
 
 --------------------
 
@@ -75,12 +86,14 @@ What is the number of events for each event type?
 **Query:**
 
 ```sql
-  SELECT event_name, count(visit_id) as num_of_visits
+  SELECT event_name, 
+         count(visit_id) as num_of_visits
     FROM events e
     JOIN event_identifier ei
       ON e.event_type = ei.event_type
 GROUP BY event_name;
 ```
+I joined the `events` table to the `event_identifier`. I selected `event_name` and counted the number of visit IDs. I grouped the count by event name.
 
 **Results:**
 
@@ -106,6 +119,7 @@ SELECT round((count(distinct(visit_id))::numeric /
   FROM events
  WHERE event_type = 3;
 ```
+I counted the number of unique visit IDs that had a purchase and divided by the total number of unique visit IDs in the database. I multiplied by 100 and rounded to two decimal places
 
 **Results:**
 
@@ -113,6 +127,7 @@ SELECT round((count(distinct(visit_id))::numeric /
 | ----- |
 | 49.86 |
 
+* 49.86 of visits had a purchase event
 --------------------------------------------------------
 
 **Question 6:**
@@ -137,13 +152,16 @@ SELECT count(visit_id) as num_of_visits,
 FROM arrays
 WHERE 12 = ANY(pages::int[]) and 3 != ALL(events::int[]);
 ```
-
+I used a CTE,`arrays`, to get the pages and events for each visit in an array. In the main query, i filtered for visit IDs that had been to the checkout page but not purchased. That is, those with 12 in the page array but no 3 in the event array. I counted the number of visit IDs, divided by the unique number of visits in the database and multiplied by 100. I also divided the count of visits which met the condition by the number of visits that had viewed the checkout page and multiplied by 100.
 **Results:**
 
 | num_of_visits | prcnt_of_all_vsts | prcnt_of_all_chckots |
 | ------------- | ----------------- | -------------------- |
 | 326           | 9.15              | 15.50                |
 
+* There were 326 visits which viewed the checkout page but did not purchase anything
+* 9.15 percent of all visits viewed the checkout page but did not purchase anything
+* 15.50 percent of all visits that viewed the checkout page did not purchase anything
 -----------------------------------------------
 
 **Question 7**
@@ -163,6 +181,8 @@ GROUP BY page_name
 ORDER BY num_of_views DESC
    LIMIT 3;
 ```
+I joined the `page_hierarchy` table to the `events` table. I selected the page name and counted the number of events then grouped by page name. I ordered in descending order of the count. I limited the results to 3 so that only the top 3 were displayed.
+
 **Results:**
 
 | page_name    | num_of_views |
@@ -210,8 +230,7 @@ WITH sequence as (
 	       page_id,
 	       page_name,
 	       event_type,
-	       event_name,
-	       RANK() OVER(PARTITION BY visit_id ORDER BY event_time)
+	       event_name
 	  FROM events
 	  JOIN page_hierarchy
 	 USING (page_id)

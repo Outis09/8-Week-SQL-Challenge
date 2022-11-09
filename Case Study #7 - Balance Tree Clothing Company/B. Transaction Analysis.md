@@ -97,3 +97,24 @@ SELECT round(avg(discount),2) as avg_discount
 | 62.49        |
 
 ----------------------------
+
+**Question 5:**
+What is the percentage split of all transactions for members vs non-members?
+-----
+
+**Query:**
+
+```sql
+SELECT round(100*sum(CASE WHEN member = 't' THEN 1 ELSE 0 END)::numeric/count(txn_id)) as member_percentage,
+       round(100*sum(CASE WHEN member = 'f' THEN 1 ELSE 0 END)::numeric/count(txn_id)) as non_member_percentage
+  FROM sales;
+```
+
+**Results:**
+
+| member_percentage | non_member_percentage |
+| ----------------- | --------------------- |
+| 60                | 40                    |
+
+
+

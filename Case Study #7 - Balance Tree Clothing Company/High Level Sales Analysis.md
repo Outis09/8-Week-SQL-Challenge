@@ -35,3 +35,22 @@ SELECT sum(price*qty) as tot_sales
 
 
 -----------------------------------------------
+
+**Question 3:**
+What was the total discount amount for all products?
+-----
+
+**Query:**
+
+```sql
+SELECT round(sum((price*qty)*(discount::numeric/100))) as tot_discount
+  FROM sales;
+```
+
+**Results:**
+
+|tot_discount|
+|-------|
+|156229|
+
+--------------------------------------------

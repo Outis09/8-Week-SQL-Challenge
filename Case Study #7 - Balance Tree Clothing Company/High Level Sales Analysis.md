@@ -6,7 +6,7 @@ What was the total quantity sold for all products?
 
 ```sql
 SELECT sum(qty) as tot_qty
-FROM sales;
+  FROM sales;
 ```
 
 **Results:**
@@ -14,3 +14,24 @@ FROM sales;
 |tot_qty|
 |-------|
 |45216|
+
+-------------------------------------
+
+**Question 2:**
+What is the total generated revenue for all products before discounts?
+---------------
+
+**Query:**
+
+```sql
+SELECT sum(price*qty) as tot_sales
+  FROM sales;
+```
+**Results:**
+
+|tot_sales|
+|-------|
+|1289453|
+
+
+-----------------------------------------------

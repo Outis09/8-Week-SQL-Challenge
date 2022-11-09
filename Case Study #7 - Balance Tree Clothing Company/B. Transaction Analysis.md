@@ -117,4 +117,35 @@ SELECT round(100*sum(CASE WHEN member = 't' THEN 1 ELSE 0 END)::numeric/count(tx
 | 60                | 40                    |
 
 
+-------------------------------------
 
+**Question 6**
+What is the average revenue for member transactions and non-member transactions?
+-----
+
+**Query:**
+
+```sql
+WITH 
+--gets revenue for members
+mem_rev as (
+	SELECT ROUND((sum((price*qty)*((100-discount::numeric)/100)))/count(distinct(txn_id))) as avg_member_revenue
+	  FROM sales
+	 WHERE member = 't'),
+--gets revenue for non-members
+non_mem_rev as (
+	SELECT ROUND((sum((price*qty)*((100-discount::numeric)/100)))/count(distinct(txn_id))) as avg_non_member_revenue
+	  FROM sales
+	 WHERE member = 'f')
+
+SELECT avg_member_revenue,avg_non_member_revenue
+FROM mem_rev, non_mem_rev;
+```
+
+**Results:**
+
+| avg_member_revenue | avg_non_member_revenue |
+| ------------------ | ---------------------- |
+| 454                | 452                    |
+
+--------------

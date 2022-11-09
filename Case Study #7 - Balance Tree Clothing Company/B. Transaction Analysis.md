@@ -41,3 +41,33 @@ SELECT round(avg(uniq_prods)) as avg_uniq_prods
 |avg_uniq_prods|
 |---------|
 |6|
+
+
+**Question 3:**
+What are the 25th, 50th and 75th percentile values for the revenue per transaction?
+-----
+
+**Query:**
+
+```sql
+--gets revenue for each transaction
+WITH txn_revenue as (
+      SELECT txn_id,
+             ROUND(sum((price*qty)*((100-discount::numeric)/100))) as revenue
+        FROM sales
+    GROUP BY 1
+           )
+
+SELECT percentile_cont(0.25) WITHIN GROUP(ORDER BY revenue) as percentile_25,
+       percentile_cont(0.5) WITHIN GROUP(ORDER BY revenue) as percentile_50,
+	     percentile_cont(0.75) WITHIN GROUP(ORDER BY revenue) as percentile_75
+  FROM txn_revenue;
+```
+
+**Results:**
+
+| percentile_25 | percentile_50 | percentile_75 |
+| ------------- | ------------- | ------------- |
+| 326           | 441           | 573           |
+
+--------------------------------

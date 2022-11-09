@@ -71,3 +71,29 @@ SELECT percentile_cont(0.25) WITHIN GROUP(ORDER BY revenue) as percentile_25,
 | 326           | 441           | 573           |
 
 --------------------------------
+
+**Question 4:**
+What is the average discount value per transaction?
+-----
+
+**Query:**
+
+```sql
+--gets discount for each transaction
+WITH avg_discount as (
+	SELECT txn_id,
+	       sum((price*qty)*(discount::numeric/100)) as discount
+	  FROM sales
+      GROUP BY 1)
+
+SELECT round(avg(discount),2) as avg_discount
+  FROM avg_discount;
+```
+
+**Results:**
+
+| avg_discount |
+| ------------ |
+| 62.49        |
+
+----------------------------

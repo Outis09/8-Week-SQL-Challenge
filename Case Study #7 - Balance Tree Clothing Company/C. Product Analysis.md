@@ -251,6 +251,41 @@ SELECT segment_name as segment,
 | Socks   | White Striped Socks - Mens       | 62135   | 20.18 |
 | Socks   | Pink Fluro Polkadot Socks - Mens | 109330  | 35.50 |
 
+------------------------------------
 
+**Question 7:**
+What is the percentage split of revenue by segment for each category?
+-----
+
+**Query:**
+```sql
+--gets revenue and revenue percentage for each segment in each category
+WITH cat_percent as (
+	SELECT category_name,
+	       segment_name,
+	       sum(qty*s.price) as revenue,
+	       100*sum(qty*s.price)/sum(sum(qty*s.price)) OVER (PARTITION BY category_name) as percent_of_cat_rev
+	  FROM product_details pd
+	  JOIN sales s
+	    ON pd.product_id = s.prod_id
+      GROUP BY 1,2)
+
+SELECT category_name as category,
+       segment_name as segment,
+       revenue,
+       round(percent_of_cat_rev,2)
+  FROM cat_percent;
+```
+
+**Results:**
+
+| category | segment | revenue | round |
+| -------- | ------- | ------- | ----- |
+| Mens     | Socks   | 307977  | 43.13 |
+| Mens     | Shirt   | 406143  | 56.87 |
+| Womens   | Jeans   | 208350  | 36.21 |
+| Womens   | Jacket  | 366983  | 63.79 |
+
+--------------------------
 
 

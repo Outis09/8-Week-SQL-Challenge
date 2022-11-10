@@ -288,4 +288,32 @@ SELECT category_name as category,
 
 --------------------------
 
+**Question 8:**
+What is the percentage split of total revenue by category?
+-----
 
+**Query:**
+```sql
+--gets the revenue and revenue percentage for each category
+WITH cat_rev as (
+	SELECT category_name,
+	       sum(qty*s.price) as revenue,
+	       100*sum(qty*s.price)/sum(sum(qty*s.price)) OVER () as rev_percent
+	  FROM product_details pd
+	  JOIN sales s 
+	    ON pd.product_id = s.prod_id
+      GROUP BY 1)
+
+SELECT category_name as category,
+       revenue,
+       round(rev_percent,2) as rev_percent
+  FROM cat_rev;
+```
+
+**Results:**
+| category | revenue | rev_percent |
+| -------- | ------- | ----- |
+| Mens     | 714120  | 55.38 |
+| Womens   | 575333  | 44.62 |
+
+-----------------------------

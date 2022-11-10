@@ -58,6 +58,7 @@ What is the top selling product for each segment?
 
 **Query:**
 ```sql
+--gets the revenue for each product in each segment
 WITH seg_prod_rank as (
     SELECT segment_name,
            product_name,
@@ -90,6 +91,7 @@ Alternative
 **Query:**
 
 ```sql
+--gets the quantity for each ptoduct in each segment
 WITH seg_prod_rank as (
       SELECT segment_name,
              product_name,
@@ -142,3 +144,46 @@ GROUP BY category_name;
 |Womens|22734|575333|69621.43|
 
 ------------------------------------
+
+**Question 5:**
+What is the top selling product for each category?
+-----
+
+**Query:**
+
+```sql
+--gets the revenue for each product in each category
+WITH cat_prod_rank as (
+	SELECT category_name,
+	       product_name,
+	       sum(qty*s.price) as revenue,
+	       RANK() OVER (PARTITION BY category_name ORDER BY SUM(qty*s.price) DESC)
+	  FROM product_details pd
+	  JOIN sales s
+	    ON pd.product_id = s.prod_id
+      GROUP BY 1,2)
+
+SELECT category_name,
+       product_name,
+       revenue
+  FROM cat_prod_rank
+ WHERE rank = 1;
+```
+
+**Results:**
+
+|category_name|product_name|revenue|
+|-------------|----------|----------|
+|Mens|Blue Polo Shirt - Mens|217683|
+|Womens|Grey Fashion Jacket - Womens|209304|
+
+
+----------------------------------
+
+
+
+
+
+
+
+

@@ -118,3 +118,27 @@ SELECT segment_name,
 
 ----------------------------
 
+**Question 4:**
+What is the total quantity, revenue and discount for each category?
+-----
+
+**Query:**
+
+```sql
+  SELECT category_name,
+         sum(qty) as tot_qty,
+	 sum(qty*s.price) as tot_revenue,
+	 round(sum((qty*s.price)*(discount::numeric/100)),2)as tot_discount
+    FROM product_details pd
+    JOIN sales s
+      ON pd.product_id =s.prod_id
+GROUP BY category_name;
+```
+**Results:**
+
+|category_name|tot_qty|tot_revenue|tot_discount|
+|-------------|-------|------------|-----------|
+|Mens|22482|714120|86607.71|
+|Womens|22734|575333|69621.43|
+
+------------------------------------

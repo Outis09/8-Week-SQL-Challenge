@@ -177,12 +177,79 @@ SELECT category_name,
 |Mens|Blue Polo Shirt - Mens|217683|
 |Womens|Grey Fashion Jacket - Womens|209304|
 
+Alternative:
+
+**Query:**
+
+```sql
+--gets the quantity of each product in each category
+WITH cat_prod_rank as (
+	SELECT category_name,
+	       product_name,
+	       sum(qty) as tot_qty,
+	       RANK() OVER (PARTITION BY category_name ORDER BY sum(qty) DESC)
+	  FROM product_details pd
+	  JOIN sales s
+	    ON pd.product_id = s.prod_id
+      GROUP BY 1,2
+                         )
+
+SELECT category_name,
+       product_name,
+       tot_qty
+  FROM cat_prod_rank
+  WHERE rank = 1;
+```
+**Results:**
+
+|category_name|product_name|revenue|
+|-------------|----------|----------|
+|Mens|Blue Polo Shirt - Mens|3819|
+|Womens|Grey Fashion Jacket - Womens|3876|
 
 ----------------------------------
 
+**Question 6:**
+What is the percentage split of revenue by product for each segment?
+-----
 
+**Query:**
 
+```sql
+--gets the revenue and percentage of revenue for each product in each segment
+WITH seg_percent as (
+	SELECT segment_name,
+	       product_name,
+	       sum(qty*s.price) as revenue,
+	       100*sum(qty*s.price)/sum(sum(qty*s.price)) OVER (PARTITION BY segment_name) as percent_of_seg_rev
+	  FROM product_details pd
+	  JOIN sales s
+	    ON pd.product_id = s.prod_id
+      GROUP BY 1,2)
 
+SELECT segment_name as segment,
+       product_name as product,
+       revenue,
+       round(percent_of_seg_rev,2) as percent_of_seg_rev
+  FROM seg_percent;
+```
+
+**Results:**
+
+| segment | product                          | revenue | percent_of_seg_rev |
+| ------- | -------------------------------- | ------- | ----- |
+| Jacket  | Indigo Rain Jacket - Womens      | 71383   | 19.45 |
+| Jacket  | Khaki Suit Jacket - Womens       | 86296   | 23.51 |
+| Jacket  | Grey Fashion Jacket - Womens     | 209304  | 57.03 |
+| Jeans   | Navy Oversized Jeans - Womens    | 50128   | 24.06 |
+| Jeans   | Black Straight Jeans - Womens    | 121152  | 58.15 |
+| Jeans   | Cream Relaxed Jeans - Womens     | 37070   | 17.79 |
+| Shirt   | White Tee Shirt - Mens           | 152000  | 37.43 |
+| Shirt   | Blue Polo Shirt - Mens           | 217683  | 53.60 |
+| Shirt   | Teal Button Up Shirt - Mens      | 36460   | 8.98  |
+| Socks   | Navy Solid Socks - Mens          | 136512  | 44.33 |
+| Socks   | White Striped Socks - Mens       | 62135   | 20.18 |
+| Socks   | Pink Fluro Polkadot Socks - Mens | 109330  | 35.50 |
 
 
 

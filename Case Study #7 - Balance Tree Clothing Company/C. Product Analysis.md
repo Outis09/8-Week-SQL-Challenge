@@ -52,7 +52,69 @@ GROUP BY segment_name;
 
 --------------------------------------------------------------------
 
+**Question 3:**
+What is the top selling product for each segment?
+---
 
+**Query:**
+```sql
+WITH seg_prod_rank as (
+    SELECT segment_name,
+           product_name,
+           sum(qty*s.price) as revenue,
+           RANK() OVER (PARTITION BY segment_name ORDER BY SUM(qty*s.price) DESC)
+      FROM product_details pd
+      JOIN sales s
+        ON pd.product_id = s.prod_id
+  GROUP BY 1,2)
 
-
+SELECT segment_name,
+       product_name,
+	     revenue
+  FROM seg_prod_rank
+ WHERE rank = 1;
 ```
+
+**Results:**
+
+|segment_name|product_name|revenue|
+|------------|------------|------|
+|Jacket|Grey Fashion Jacket - Womens|209304
+|Jeans|Black Straight Jeans - Womens|121152|
+|Shirt|Blue Polo Shirt - Mens|217683|
+|Socks|Navy Solid Socks - Mens|136512|
+
+
+Alternative
+
+**Query:**
+
+```sql
+WITH seg_prod_rank as (
+      SELECT segment_name,
+             product_name,
+             sum(qty) as tot_qty,
+             RANK() OVER (PARTITION BY segment_name ORDER BY sum(qty) DESC)
+        FROM product_details pd
+        JOIN sales s
+          ON pd.product_id = s.prod_id
+    GROUP BY 1,2)
+
+SELECT segment_name,
+       product_name,
+	     tot_qty
+  FROM seg_prod_rank
+ WHERE rank = 1;
+```
+
+**Results:**
+
+|segment_name|product_name|tot_qty|
+|------------|------------|------|
+|Jacket|Grey Fashion Jacket - Womens|3876
+|Jeans|Navy Oversized Jeans - Womens|3856|
+|Shirt|Blue Polo Shirt - Mens|3819|
+|Socks|Navy Solid Socks - Mens|3792|
+
+----------------------------
+

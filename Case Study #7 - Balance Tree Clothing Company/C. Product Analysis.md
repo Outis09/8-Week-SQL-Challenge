@@ -317,3 +317,49 @@ SELECT category_name as category,
 | Womens   | 575333  | 44.62 |
 
 -----------------------------
+
+**Question 9:**
+
+**Query:**
+
+```sql
+WITH
+--gets the total number of transactions
+tot_txn as (
+	SELECT count(distinct(txn_id)) as tot_txns
+	  FROM sales),
+--gets the number of times a product was included in a transaction
+prod_qty as (
+	SELECT product_name,
+	       count(product_name) as qty
+          FROM product_details pd
+          JOIN sales s
+            ON pd.product_id = s.prod_id
+      GROUP BY 1)
+      
+  SELECT product_name,
+         round(100*qty::numeric/tot_txns::numeric,2) as penetration_percent
+    FROM prod_qty,tot_txn
+GROUP BY product_name,qty,tot_txns
+ORDER BY 2 DESC;
+```
+
+**Results:**
+
+
+| product_name                     | penetration_percent |
+| -------------------------------- | ------------------- |
+| Navy Solid Socks - Mens          | 51.24               |
+| Grey Fashion Jacket - Womens     | 51.00               |
+| Navy Oversized Jeans - Womens    | 50.96               |
+| White Tee Shirt - Mens           | 50.72               |
+| Blue Polo Shirt - Mens           | 50.72               |
+| Pink Fluro Polkadot Socks - Mens | 50.32               |
+| Indigo Rain Jacket - Womens      | 50.00               |
+| Khaki Suit Jacket - Womens       | 49.88               |
+| Black Straight Jeans - Womens    | 49.84               |
+| Cream Relaxed Jeans - Womens     | 49.72               |
+| White Striped Socks - Mens       | 49.72               |
+| Teal Button Up Shirt - Mens      | 49.68               |
+
+----------------------------------------

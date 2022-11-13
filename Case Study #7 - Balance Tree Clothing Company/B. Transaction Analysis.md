@@ -9,11 +9,14 @@ SELECT count(distinct(txn_id)) as num_of_txns
   FROM sales;
 ```
 
+Each transactio has a unique transaction ID so I counted the number of unique IDs in the sales table.
 **Results:**
 
 |num_of_txns|
 |---------|
 |2500|
+
+* There are 2500 unique transactions
 
 --------------------------
 
@@ -36,12 +39,15 @@ SELECT round(avg(uniq_prods)) as avg_uniq_prods
   FROM avg_prods;
 ```
 
+In the CTE,`avg_prods`, I counted the distinct number of products for each transaction ID. In the main query, I calculated the average number of unique products and rounded to the next whole number.
+
 **Results:**
 
 |avg_uniq_prods|
 |---------|
 |6|
 
+* The average unique products in each transaction is 6.
 
 **Question 3:**
 What are the 25th, 50th and 75th percentile values for the revenue per transaction?
@@ -64,11 +70,18 @@ SELECT percentile_cont(0.25) WITHIN GROUP(ORDER BY revenue) as percentile_25,
   FROM txn_revenue;
 ```
 
+The CTE,`txn_revenue`, gets the revenue for each transaction. NB: my calculation involved discount. Therefore if discount was 17% then revenue after discount was 83%.
+In the main query, I calculated the 25th, 50th and 75th percentile values for revenue.
 **Results:**
 
 | percentile_25 | percentile_50 | percentile_75 |
 | ------------- | ------------- | ------------- |
 | 326           | 441           | 573           |
+
+* The 25th percentile for revenue is $326
+* The 50th percentile for revenue is $441
+* The 75th percentile for revenue is $573
+
 
 --------------------------------
 
@@ -90,6 +103,7 @@ SELECT round(avg(discount),2) as avg_discount
   FROM avg_discount;
 ```
 
+The CTE,`avg_discount`,gets the discount for each transaction by multiplying the discount percentage with the results of the price * quantity for each product in each transaction. In the main query, I calculated the average discount and rounded to two decimal places.
 **Results:**
 
 | avg_discount |

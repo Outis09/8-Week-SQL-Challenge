@@ -37,6 +37,9 @@ ORDER BY 1)
 | 2020-11-01   | 75            | -5                |
 | 2020-12-01   | 84            | 12                |
 
+![ff01](https://user-images.githubusercontent.com/104911707/202230451-731db726-c6ee-4df1-9035-917128454dda.png)
+
+
 The table shows the month, the number of trials and the percentage change relative to the previous month. For example, in February 2020, there was a 22% decrease 
 in number of trials. However, in March 2020, there was a 38% increase in number of trials.
 The table only includes months in 2020 because there hadn't been any new trials in 2021 at the time the data was collected. Since the last subscription recorded was 

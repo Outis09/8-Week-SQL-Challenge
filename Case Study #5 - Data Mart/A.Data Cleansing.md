@@ -62,7 +62,7 @@ SELECT week_date :: date as week_date, --1
   INTO clean_weekly_sales --new table
   FROM weekly_sales;
 ```	   
-I numbered some of the statements to indicate which of the requirements I was tackling. The results contained more than 17000 rows so I just displayed the first 20 columns here.
+I numbered some of the statements to indicate which of the requirements I was tackling. The results contained more than 17000 rows so I just displayed the first 20 rows here.
 
 **Results:**
 

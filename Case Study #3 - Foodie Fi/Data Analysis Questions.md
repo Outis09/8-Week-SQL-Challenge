@@ -175,7 +175,9 @@ WITH plan_after_trial AS (
               SELECT COUNT(DISTINCT customer_id) as total_number 
                 FROM subscriptions)
 
-  SELECT plan_name, COUNT(customer_id) as num_of_customers, round((COUNT(customer_id)/total_number::numeric *100), 1)
+  SELECT plan_name, 
+         COUNT(customer_id) as num_of_customers, 
+         round((COUNT(customer_id)/total_number::numeric *100), 1) as percentage
     FROM plan_after_trial,total_customers
    WHERE rank = 2
 GROUP BY 1,total_number;
@@ -183,7 +185,7 @@ GROUP BY 1,total_number;
 I used a CTE(`plan_after_trial`) to rank the plan id for each customer and another CTE(`total_customers`) to get the total number of customers. I then queried the two CTEs for the plan name that had a rank of 2, counted the number of customers for each plan and calculated the percentage of the total.
 
 Results:
-| plan_name     | num_of_customers | round |
+| plan_name     | num_of_customers | percentage |
 | ------------- | ---------------- | ----- |
 | basic monthly | 546              | 54.6  |
 | churn         | 92               | 9.2   |

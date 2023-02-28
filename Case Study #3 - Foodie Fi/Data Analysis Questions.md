@@ -130,26 +130,29 @@ Results:
 How many customers have churned straight after their initial free trial - what percentage is this rounded to the nearest whole number?
 
 ```sql
-WITH churn_after_trial as (
+WITH 
+--ranks the plans for each customer
+plan_ranking AS (
   SELECT customer_id,
          plan_id,
-         start_date,
-         dense_rank() over (partition by customer_id order by plan_id) as rank
-    FROM subscriptions),
-       total_customers as (
-  SELECT COUNT(DISTINCT customer_id) as total_number FROM subscriptions)
+         DENSE_RANK() OVER (
+           PARTITION BY customer_id ORDER BY plan_id) as plan_ranks
+    FROM subscriptions)
 
-  SELECT COUNT(c.customer_id) as churn_after_trial_count, 
-         round(count(c.customer_id)/total_number:: double precision *100) as percentage_of_total
-    FROM churn_after_trial c,total_customers t
-   WHERE c.plan_id = 4 and c.rank = 2
-GROUP BY total_number;
+SELECT COUNT(pr.customer_id) as churn_after_trial_count, 
+       ROUND(COUNT(pr.customer_id)/ (
+          SELECT COUNT(DISTINCT customer_id) --total number of customers
+            FROM subscriptions)::double precision
+                 ) * 100) as churn_after_trial_percentage
+  FROM plan_ranking pr
+ WHERE pr.plan_id = 4 --4 is id for churn plan
+   AND pr.plan_ranks = 2; --rank of 2 means plan after trial
 ```
 
-I used a CTE to rank the plan ids for each customer according to the start date. The rationale is that for customers who churned after trial, the first rank would be the trial ID and the second rank would be the churn ID which is 4. Therefore i queried the CTE for the count of customers whose second rank was 2 and the plan id was 4.
+I used a CTE to rank the plan ids for each customer according to the plan ID. The rationale is that for customers who churned after trial, the first rank would be the trial ID and the second rank would be the churn ID which is 4. Therefore i queried the CTE for the count of customers whose second rank was 2 and the plan id was 4.
 
 Results:
-| churn_after_trial_count | percentage_of_total |
+| churn_after_trial_count | churn_after_trial_percentage |
 | ----------------------- | ------------------- |
 | 92                      | 9                   |
 

@@ -44,4 +44,3 @@ I selected the `month_year` column and counted the number of records then I grou
 
 ---
 
-[View on DB Fiddle](https://www.db-fiddle.com/f/iRdsT76vaus813crPP8Ma4/10)
